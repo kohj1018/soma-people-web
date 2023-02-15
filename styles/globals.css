@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  @media screen and (max-width: 768px) {
+    /* 웹을 앱 같이 보이게 바꿔주는 부분 */
+    html {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+  }
+
   html, body {
     @apply p-0 m-0
   }
@@ -14,4 +23,8 @@
   * {
     @apply box-border
   }
+}
+
+@layer components {
+
 }
