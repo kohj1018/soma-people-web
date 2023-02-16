@@ -33,7 +33,9 @@ module.exports = {
     'no-extra-boolean-cast': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
-    'spaced-comment': 'off'
+    'spaced-comment': 'off',
+    '@typescript-eslint/consistent-type-imports': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off',
   },
   settings: {
     react: {
