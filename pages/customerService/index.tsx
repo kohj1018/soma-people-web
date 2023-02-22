@@ -1,3 +1,4 @@
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import MainContainer from '../../components/layout/MainContainer'
@@ -8,7 +9,7 @@ import { useState } from 'react'
 
 //TODO: 나중에 디자인 완성되면 퍼블리싱 수정해야 함
 
-const CustomerService = () => {
+const CustomerService: NextPage = () => {
   const router = useRouter()
   const { userId, oauthId } = useSignInInfoStore()
   const [csType, setCsType] = useState<CsType>('문의')
