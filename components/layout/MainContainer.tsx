@@ -1,6 +1,7 @@
 import MainHeader from './MainHeader'
 import MainFooter from './MainFooter'
 import React from 'react'
+import MobileBottomNavigationBar from './MobileBottomNavigationBar'
 
 interface Props {
   children: React.ReactNode
@@ -9,9 +10,10 @@ interface Props {
 const MainContainer = ({ children }: Props) => {
   return (
     <>
-     <MainHeader />
+      <MainHeader />
       {children}
-     <MainFooter />
+      <MainFooter />
+      <MobileBottomNavigationBar />
     </>
   )
 }
