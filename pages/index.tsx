@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 
   return (
     <MainContainer>
-      <header className='fixed top-0 inset-x-0 px-5 py-3 flex items-center justify-between bg-zinc-900 z-50'>
+      <header className='fixed top-0 inset-x-0 px-5 py-3 flex items-center justify-between bg-zinc-900 z-50 lg:hidden'>
         <Image
           src={mainLogo}
           className='w-8 h-8'

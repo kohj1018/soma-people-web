@@ -1,4 +1,4 @@
-import { PostInfoType } from '../types/responseTypes'
+import { MainPagePostListInfoType, PostInfoType } from '../types/responseTypes'
 import { ec2 } from './apiConfig'
 import { INFINITE_SCROLL_LOAD_SIZE } from '../config'
 import { AddPostType } from '../types/addRequestTypes'
@@ -15,6 +15,12 @@ export const getPostInfoListInfinitely = async (boardId: number, lastPostId: num
   const res = await ec2.get<PostInfoType[]>(`/posts?boardId=${boardId}&lastPostId=${lastPostId}&size=${INFINITE_SCROLL_LOAD_SIZE}&userId=${userId}`)
   const postList: PostInfoType[] = res.data
   return { postList, nextLastPostId: postList[postList.length - 1]?.postId, isLast: postList.length < INFINITE_SCROLL_LOAD_SIZE }
+}
+
+/** 메인 페이지 - 각 게시판 글 5개씩 가져오기 */
+export const getPostFromEachBoard = async (userId: number): Promise<MainPagePostListInfoType> => {
+  const res = await ec2.get<MainPagePostListInfoType>(`/posts/main?userId=${userId}`)
+  return res.data
 }
 
 /** 게시글 검색하기 (전체 게시판 검색의 경우 boardIdToSearch 값을 0으로 하기) */

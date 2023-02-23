@@ -39,3 +39,8 @@ export interface CommentInfoType {
   updatedAt: string | null
 }
 
+export interface MainPagePostListInfoType {
+  qnaPostList: PostInfoType[]
+  freePostList: PostInfoType[]
+  applicantPostList: PostInfoType[]
+}
