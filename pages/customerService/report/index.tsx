@@ -14,7 +14,7 @@ const Report: NextPage = () => {
   const reportTargetId: number = parseInt(router.query.reportTargetId as string)
   const reportTargetType: ReportType = router.query.reportTargetType as ReportType
   const reportTargetTitle: string = router.query.reportTargetTitle as string
-  const userInfo: UserInfoType = useUserInfo(userId, router)
+  const userInfo = useUserInfo()
   const [content, setContent] = useState<string>('')
 
   return (
