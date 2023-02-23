@@ -42,7 +42,7 @@ const TermsAndConditions: NextPage = () => {
 
   return (
     <MainContainer>
-      <main className='relative min-h-screen pt-10 px-5 lg:mainWidthLimit lg:pt-28'>
+      <main className='relative min-h-screen pt-10 px-5 lg:pt-28'>
 
         <article className='space-y-1 lg:mt-8 lg:space-y-2'>
           <h2 className='text-xl font-semibold text-black lg:text-3xl'>약관동의</h2>

@@ -17,7 +17,7 @@ const CustomerService: NextPage = () => {
   const [csType, setCsType] = useState<CsType>('문의')
   const [content, setContent] = useState<string>('')
   const { setMessage, setIsSnackbarOpen } = useSnackbarOpenStore()
-  const userInfo: UserInfoType = useUserInfo(userId, router)
+  const userInfo: UserInfoType = useUserInfo()
 
   return (
     <MainContainer>

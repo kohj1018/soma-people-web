@@ -1,35 +1,41 @@
 import { useQuery } from '@tanstack/react-query'
 import { USER_INFO } from '../utils/constants/reactQueryKeyConstants'
 import { getUserInfoByUserId } from '../utils/apis/usersApi'
-import { NextRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useSnackbarOpenStore } from '../stores/stores'
 import { UserInfoType } from '../utils/types/responseTypes'
+import { useSignInInfoStore } from '../stores/localStorageStore/stores'
+import useSignInInfo from './useSignInInfo'
 
-function useUserInfo(userId: number | null, router: NextRouter): UserInfoType {  //TODO: 구현은 완료됐으나 추후 테스트 필요
-  const { data: userInfo, isError } = useQuery(
+function useUserInfo(): UserInfoType | null {
+  const router = useRouter()
+  const userId = useSignInInfoStore(state => state.userId)
+  const { setMessage } = useSnackbarOpenStore()
+
+  const { data: userInfo } = useQuery(
     [USER_INFO, userId],
-    () => { if (!!userId) getUserInfoByUserId(userId) },
+    () => getUserInfoByUserId(userId ?? 0),
     {
       enabled: !!userId,
+      staleTime: 600000,
+      cacheTime: Infinity,
+      refetchOnWindowFocus: false,
       onError: (error) => {
-        setMessage('로그인 후 이용해주세요!')
-        setIsSnackbarOpen(true)
-        router.replace('/auth/signIn')
+        setMessage('에러가 발생했습니다. 로그아웃 후 다시 이용해주세요.')
       }
     }
   )
-  const { setMessage, setIsSnackbarOpen } = useSnackbarOpenStore()
 
+  // 로그인 안한 경우 Redirect
   useEffect(() => {
-    if (!userId || isError) {
+    if (!userId) {
       setMessage('로그인 후 이용해주세요!')
-      setIsSnackbarOpen(true)
       router.replace('/auth/signIn')
     }
-  }, [userInfo, isError])
+  }, [userId])
 
-  return (userInfo as unknown as UserInfoType)  //TODO : 추후 수정
+  return userInfo ?? null
 }
 
 export default useUserInfo

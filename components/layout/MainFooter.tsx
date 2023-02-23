@@ -1,6 +1,6 @@
 const MainFooter = () => {
   return (
-    <div>
+    <div className='hidden'>
 
     </div>
   )

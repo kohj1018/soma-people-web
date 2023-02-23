@@ -1,6 +1,6 @@
 const MainHeader = () => {
   return (
-    <div>
+    <div className='hidden'>
 
     </div>
   )

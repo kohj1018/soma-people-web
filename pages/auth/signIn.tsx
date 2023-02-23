@@ -11,8 +11,7 @@ interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
 }
 
-// eslint-disable-next-line react/prop-types
-const SignIn: NextPage<Props> = ({ providers }) => {
+const SignIn: NextPage<Props> = ({ providers }: Props) => {
   const router = useRouter()
   const { userId, oauthId } = useSignInInfoStore()
   const [isLoading, setIsLoading] = useState<boolean>(false)
