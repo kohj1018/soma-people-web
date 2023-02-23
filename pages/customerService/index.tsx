@@ -6,6 +6,8 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/mater
 import { CsType } from '../../utils/airtableConfig'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import { useState } from 'react'
+import { UserInfoType } from '../../utils/types/responseTypes'
+import useUserInfo from '../../hooks/useUserInfo'
 
 //TODO: 나중에 디자인 완성되면 퍼블리싱 수정해야 함
 
@@ -15,6 +17,7 @@ const CustomerService: NextPage = () => {
   const [csType, setCsType] = useState<CsType>('문의')
   const [content, setContent] = useState<string>('')
   const { setMessage, setIsSnackbarOpen } = useSnackbarOpenStore()
+  const userInfo: UserInfoType = useUserInfo(userId, router)
 
   return (
     <MainContainer>

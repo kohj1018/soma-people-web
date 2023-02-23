@@ -2,8 +2,10 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
 import { ClientSafeProvider, getProviders, LiteralUnion, signIn } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import LoadingCircular from '../../components/layout/LoadingCircular'
+import { useSnackbarOpenStore } from '../../stores/stores'
+import { useRouter } from 'next/router'
 
 interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
@@ -11,8 +13,17 @@ interface Props {
 
 // eslint-disable-next-line react/prop-types
 const SignIn: NextPage<Props> = ({ providers }) => {
+  const router = useRouter()
   const { userId, oauthId } = useSignInInfoStore()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { setMessage } = useSnackbarOpenStore()
+
+  useEffect(() => {
+    if (!!userId && !!oauthId) {
+      setMessage('이미 로그인 되어 있습니다.')
+      router.replace('/')
+    }
+  }, [userId, oauthId])
 
   const goToSignIn = (providerId: LiteralUnion<BuiltInProviderType, string>) => {
     setIsLoading(true)

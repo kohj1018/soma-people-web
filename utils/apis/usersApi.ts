@@ -9,6 +9,12 @@ export const getUserInfoByUserId = async (userId: number): Promise<UserInfoType>
   return res.data
 }
 
+/** oauthId로 userId 불러오기 */
+export const getUserIdByOauthId = async (oauthId: string): Promise<number> => {
+  const res = await ec2.get<number>(`/users/findUserId/${oauthId}`)
+  return res.data
+}
+
 /** 새 유저 추가하기 */
 export const addUser = (addUserRequest: AddUserType) => ec2.post('/users', addUserRequest)
 

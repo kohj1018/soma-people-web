@@ -5,7 +5,7 @@ import { create } from 'zustand'
 export const useSnackbarOpenStore = create<SnackbarOpenState>((set) => ({
   message: '',
   setMessage: (message: string) => {
-    set((state) => ({ ...state, message: message }))
+    set((state) => ({ ...state, message: message, isSnackbarOpen: true }))
   },
   isSnackbarOpen: false,
   setIsSnackbarOpen: (isSnackbarOpen: boolean) => {

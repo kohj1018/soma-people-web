@@ -1,1 +1,1 @@
-export type UserType = '준비생' | '연수생' | '수료생' | '전멘토' | '현멘토' | '사무국'
+export type UserType = '준비생' | '연수생' | '멘토' | '사무국'

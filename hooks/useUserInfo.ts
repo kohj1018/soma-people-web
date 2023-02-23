@@ -9,9 +9,14 @@ import { UserInfoType } from '../utils/types/responseTypes'
 function useUserInfo(userId: number | null, router: NextRouter): UserInfoType {  //TODO: 구현은 완료됐으나 추후 테스트 필요
   const { data: userInfo, isError } = useQuery(
     [USER_INFO, userId],
-    () => { if (userId) getUserInfoByUserId(userId) },
+    () => { if (!!userId) getUserInfoByUserId(userId) },
     {
-      enabled: !!userId
+      enabled: !!userId,
+      onError: (error) => {
+        setMessage('로그인 후 이용해주세요!')
+        setIsSnackbarOpen(true)
+        router.replace('/auth/signIn')
+      }
     }
   )
   const { setMessage, setIsSnackbarOpen } = useSnackbarOpenStore()
@@ -22,7 +27,7 @@ function useUserInfo(userId: number | null, router: NextRouter): UserInfoType { 
       setIsSnackbarOpen(true)
       router.replace('/auth/signIn')
     }
-  }, [userInfo])
+  }, [userInfo, isError])
 
   return (userInfo as unknown as UserInfoType)  //TODO : 추후 수정
 }
