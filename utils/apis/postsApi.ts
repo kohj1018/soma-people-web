@@ -17,7 +17,7 @@ export const getPostInfoListInfinitely = async (boardId: number, lastPostId: num
   return { postList, nextLastPostId: postList[postList.length - 1]?.postId, isLast: postList.length < INFINITE_SCROLL_LOAD_SIZE }
 }
 
-/** 메인 페이지 - 각 게시판 글 5개씩 가져오기 */
+/** 메인 페이지 - 각 게시판 글 4개씩 가져오기 */
 export const getPostFromEachBoard = async (userId: number): Promise<MainPagePostListInfoType> => {
   const res = await ec2.get<MainPagePostListInfoType>(`/posts/main?userId=${userId}`)
   return res.data

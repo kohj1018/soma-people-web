@@ -26,7 +26,7 @@ function MobileBottomNavigationBar() {
   }
 
   return (
-    <footer className='fixed bottom-0 inset-x-0 py-1.5 flex items-center justify-center space-x-12 shadow-nav lg:hidden'>
+    <footer className='fixed h-14 bottom-0 inset-x-0 py-1.5 flex items-center justify-center space-x-12 bg-white shadow-nav z-50 lg:hidden'>
       <button onClick={() => changeTap('홈')} className={'flex flex-col items-center space-y-1' + (selectedTap === '홈' ? ' text-gray-700' : ' text-gray-200')}>
         <Home className='w-6 h-6' />
         <p className='text-xs font-bold'>홈</p>

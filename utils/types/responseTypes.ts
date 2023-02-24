@@ -24,6 +24,7 @@ export interface PostInfoType {
   content: string
   isAnonymous: boolean
   hits: number
+  commentsNum: number
   createdAt: string
   updatedAt: string | null
 }

@@ -7,7 +7,7 @@ interface Props {
 
 function MainArea({ children, className = '' }: Props) {
   return (
-    <main className={'paddingHeader lg:mainWidthLimit ' + className}>
+    <main className={'paddingHeader paddingBottom lg:mainWidthLimit ' + className}>
       {children}
     </main>
   )

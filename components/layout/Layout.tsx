@@ -12,7 +12,6 @@ function Layout({ children }: Props) {
 
   return (
     <>
-
       <div className='relative min-h-screen h-full min-w-[300px] w-full bg-white'>
         {children}
         <BottomCenterSnackbar isSnackbarOpen={isSnackbarOpen} setIsSnackbarOpen={setIsSnackbarOpen} message={message} />

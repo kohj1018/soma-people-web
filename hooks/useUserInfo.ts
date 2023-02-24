@@ -2,11 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { USER_INFO } from '../utils/constants/reactQueryKeyConstants'
 import { getUserInfoByUserId } from '../utils/apis/usersApi'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSnackbarOpenStore } from '../stores/stores'
 import { UserInfoType } from '../utils/types/responseTypes'
 import { useSignInInfoStore } from '../stores/localStorageStore/stores'
-import useSignInInfo from './useSignInInfo'
 
 function useUserInfo(): UserInfoType | null {
   const router = useRouter()
