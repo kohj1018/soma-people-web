@@ -1,4 +1,4 @@
-import { BoardIdOfLastViewedState, BottomNavValueState, MenuType, ScrollYState, SnackbarOpenState } from './storeTypes'
+import { BoardIdOfLastViewedState, ScrollYState, SnackbarOpenState } from './storeTypes'
 import { create } from 'zustand'
 
 /** 스낵바 띄우는 Store */
@@ -26,13 +26,5 @@ export const useScrollYStore = create<ScrollYState>((set) => ({
   scrollY: 0,
   setScrollY: (scrollY: number) => {
     set((state) => ({ ...state, scrollY: scrollY }))
-  }
-}))
-
-/** BottomNavigationBar 값을 저장하는 Store */
-export const useBottomNavValueStore = create<BottomNavValueState>((set) => ({
-  selectedTap: '홈',
-  setSelectedTap: (selectedTap: MenuType) => {
-    set((state) => ({ ...state, selectedTap: selectedTap }))
   }
 }))

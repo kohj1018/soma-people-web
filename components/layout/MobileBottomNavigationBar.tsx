@@ -2,7 +2,8 @@ import Home from '@mui/icons-material/Home'
 import Article from '@mui/icons-material/Article'
 import Person from '@mui/icons-material/Person'
 import { NextRouter } from 'next/router'
-import { MenuType } from '../../stores/storeTypes'
+
+export type MenuType = '홈' | '게시판' | '프로필'
 
 interface Props {
   router: NextRouter
@@ -10,7 +11,7 @@ interface Props {
   setSelectedTap: (selectedTap: MenuType) => void
 }
 
-function MobileBottomNavigationBar({ router, selectedTap, setSelectedTap }: Props) {
+function MobileBottomNavigationBar({ router, selectedTap, setSelectedTap }: Props) {  // TODO: 폐기 예정
 
   const changeTap = (menuName: MenuType) => {
     setSelectedTap(menuName)
