@@ -30,9 +30,9 @@
     @apply pt-14 lg:pt-[3.8125rem]
   }
 
-  .paddingBottom {
-    @apply pb-14 lg:pb-0
-  }
+  /*.paddingBottom {*/
+  /*  @apply pb-14 lg:pb-0*/
+  /*}*/
 
   .mainWidthLimit {
     padding-left: calc((100% - 50rem) / 2);

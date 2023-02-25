@@ -166,7 +166,7 @@ const Home: NextPage = () => {
                 >
                   <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
                   <div className='flex items-center space-x-1.5'>
-                    <QuestionAnswer className='w-4 h-4 text-gray-200' />
+                    <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
                     <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
                   </div>
                 </Link>
@@ -188,7 +188,7 @@ const Home: NextPage = () => {
                 >
                   <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
                   <div className='flex items-center space-x-1.5'>
-                    <QuestionAnswer className='w-4 h-4 text-gray-200' />
+                    <QuestionAnswer className='text-base text-gray-200' />
                     <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
                   </div>
                 </Link>

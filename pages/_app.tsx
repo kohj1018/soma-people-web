@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
           router.push('/board')
           break
         default:
-          router.push('/')
+          router.push('/user')
           break
       }
     }
