@@ -20,10 +20,11 @@ import useSignInInfo from '../hooks/useSignInInfo'
 import Search from '@mui/icons-material/Search'
 import React, { useState } from 'react'
 import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
+import QnAPreview from '../components/common/QnAPreview'
 
 const Home: NextPage = () => {
   const router = useRouter()
-  const { userId, oauthId } = useSignInInfo()
+  const { userId } = useSignInInfo()
   const [isSearch, setIsSearch] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const { data: mainPagePostSummaryData, isLoading } = useQuery(
@@ -137,14 +138,24 @@ const Home: NextPage = () => {
               <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
             </Link>
 
-            <section className='px-5 overflow-x-scroll whitespace-nowrap hide-scrollbar'>
-
+            <section className='px-5 flex flex items-center space-x-4 overflow-x-scroll whitespace-nowrap hide-scrollbar'>
+              {mainPagePostSummaryData?.qnaPostList.map((post) =>
+                <QnAPreview
+                  key={post.postId}
+                  title={post.title}
+                  userType={post.user.userType}
+                  cardinalNum={post.user.cardinalNum}
+                  isAnonymous={post.isAnonymous}
+                  commentsNum={post.commentsNum}
+                  createdAt={post.createdAt}
+                />
+              )}
             </section>
           </article>
 
           <article className='pt-8 px-5 bg-white'>
             <Link href='/' className='w-full flex items-center justify-between'>
-              <p className='text-lg font-semibold text-gray-900'>자유게시판 💻</p>
+              <p className='text-lg font-semibold text-gray-900'>자유게시판 🧑‍💻</p>
               <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
             </Link>
             <section className='py-2.5'>

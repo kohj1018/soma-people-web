@@ -3,14 +3,13 @@ import { useSession } from 'next-auth/react'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import MainContainer from '../../components/layout/MainContainer'
 import React, { Fragment, useState } from 'react'
-import { FormControl, MenuItem, Select } from '@mui/material'
 import { UserType } from '../../utils/types/userType'
 import MuiSelectUserType from '../../components/common/MuiSelectUserType'
-import dayjs from 'dayjs'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import { checkCharacter } from '../../utils/functions/checkCharacter'
 import { addUser } from '../../utils/apis/usersApi'
 import { AxiosResponse } from 'axios'
+import { THIS_YEAR_CARDINAL_NUM } from '../../utils/config'
 
 const SignUp = () => {
   const router = useRouter()
@@ -73,7 +72,7 @@ const SignUp = () => {
 
         <section className='mt-10 space-y-5'>
           <article className='w-full flex items-center space-x-4'>
-            <p className='text-base font-medium text-gray-900'>이름</p>
+            <p className='w-7 text-base font-medium text-gray-900'>이름</p>
             <input
               type='text'
               className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
@@ -85,20 +84,20 @@ const SignUp = () => {
             />
           </article>
           <article className='w-full flex items-center space-x-4'>
-            <p className='text-base font-medium text-gray-900'>유형</p>
+            <p className='w-7 text-base font-medium text-gray-900'>유형</p>
             <MuiSelectUserType userType={userType} setUserType={setUserType} />
           </article>
           {(userType === '연수생' || userType === '멘토') &&
             <>
               <article className='w-full flex items-center space-x-4'>
-                <p className='text-base font-medium text-gray-900'>기수</p>
+                <p className='w-7 text-base font-medium text-gray-900'>기수</p>
                 <input
                   type='number'
                   className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
                   placeholder='ex. 13'
                   maxLength={2}
                   value={cardinalNumStr}
-                  onChange={(e) => { if (!e.target.value || (parseInt(e.target.value) > 0 && parseInt(e.target.value) < dayjs().year() - 2008)) setCardinalNumStr(e.target.value) }}
+                  onChange={(e) => { if (!e.target.value || (parseInt(e.target.value) > 0 && parseInt(e.target.value) < THIS_YEAR_CARDINAL_NUM + 1)) setCardinalNumStr(e.target.value) }}
                   required
                 />
               </article>
