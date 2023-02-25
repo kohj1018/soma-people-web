@@ -3,7 +3,6 @@ import MainContainer from '../components/layout/MainContainer'
 import MainArea from '../components/layout/MainArea'
 import Image from 'next/image'
 import mainLogo from '../public/mainLogo.svg'
-import { useRouter } from 'next/router'
 import banner from '../public/banner.svg'
 import noticeIcon from '../public/icon/noticeIcon.svg'
 import scheduleIcon from '../public/icon/scheduleIcon.svg'
@@ -23,16 +22,16 @@ import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
 import QnAPreview from '../components/common/QnAPreview'
 
 const Home: NextPage = () => {
-  const router = useRouter()
   const { userId } = useSignInInfo()
-  const [isSearch, setIsSearch] = useState<boolean>(false)
+  const [isSearchMode, setIsSearchMode] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const { data: mainPagePostSummaryData, isLoading } = useQuery(
     [MAIN_PAGE_POST_SUMMARY, userId],
     () => getPostFromEachBoard(userId ?? 0),
     {
       enabled: !!userId,
-      staleTime: 60000
+      staleTime: 60000,
+      refetchOnWindowFocus: false
     }
   )
 
@@ -40,7 +39,7 @@ const Home: NextPage = () => {
     if (searchTerm) {
       setSearchTerm('')
     } else {
-      setIsSearch(false)
+      setIsSearchMode(false)
     }
   }
 
@@ -55,13 +54,13 @@ const Home: NextPage = () => {
           alt='소마인 로고'
         />
         <button
-          onClick={() => setIsSearch(true)}
-          className={'absolute right-5' + (isSearch ? ' hidden' : ' inline')}
+          onClick={() => setIsSearchMode(true)}
+          className={'absolute right-5' + (isSearchMode ? ' hidden' : ' inline')}
         >
           <Search className='w-6 h-6 text-white' />
         </button>
         {/* TODO: 일단 overflow-hidden으로 해놓긴 했는데 끊기는 느낌나서 추후 수정 필요 */}
-        <div className={'pl-4 pr-2 py-1.5 flex items-center space-x-1 bg-gray-100 rounded duration-500 overflow-hidden' + (isSearch ? ' visible grow' : ' invisible w-0')}>
+        <div className={'pl-4 pr-2 py-1.5 flex items-center space-x-1 bg-gray-100 rounded duration-500 overflow-hidden' + (isSearchMode ? ' visible grow' : ' invisible w-0')}>
           <input
             type='text'
             className='grow bg-gray-100 text-sm font-medium text-gray-700 placeholder:text-gray-400 focus:outline-none'
@@ -138,7 +137,7 @@ const Home: NextPage = () => {
               <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
             </Link>
 
-            <section className='px-5 flex flex items-center space-x-4 overflow-x-scroll whitespace-nowrap hide-scrollbar'>
+            <section className='px-5 flex items-center space-x-4 overflow-x-scroll whitespace-nowrap hide-scrollbar'>
               {mainPagePostSummaryData?.qnaPostList.map((post) =>
                 <QnAPreview
                   key={post.postId}

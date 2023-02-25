@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import duration, { Duration } from 'dayjs/plugin/duration'
 dayjs.extend(duration)
 
-export function getElapsedTime(timeToConvert: Dayjs): string {
+export function getElapsedTime(timeToConvert: Dayjs): string {  //TODO: 최적화 방법 찾아보기
   const timeDiffDuration: Duration = dayjs.duration(dayjs().diff(timeToConvert))
   const yearDiff: number = parseInt(timeDiffDuration.format('Y'))
   const monthDiff: number = parseInt(timeDiffDuration.format('M'))

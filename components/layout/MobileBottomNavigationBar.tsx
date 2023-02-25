@@ -1,14 +1,16 @@
 import Home from '@mui/icons-material/Home'
 import Article from '@mui/icons-material/Article'
 import Person from '@mui/icons-material/Person'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { NextRouter } from 'next/router'
+import { MenuType } from '../../stores/storeTypes'
 
-type MenuType = '홈' | '게시판' | '프로필'
+interface Props {
+  router: NextRouter
+  selectedTap: MenuType
+  setSelectedTap: (selectedTap: MenuType) => void
+}
 
-function MobileBottomNavigationBar() {
-  const router = useRouter()
-  const [selectedTap, setSelectedTap] = useState<MenuType>('홈')
+function MobileBottomNavigationBar({ router, selectedTap, setSelectedTap }: Props) {
 
   const changeTap = (menuName: MenuType) => {
     setSelectedTap(menuName)
@@ -17,7 +19,7 @@ function MobileBottomNavigationBar() {
         router.push('/')
         break
       case '게시판':
-        router.push('/')
+        router.push('/board')
         break
       case '프로필':
         router.push('/')
@@ -26,7 +28,7 @@ function MobileBottomNavigationBar() {
   }
 
   return (
-    <footer className='fixed h-14 bottom-0 inset-x-0 py-1.5 flex items-center justify-center space-x-12 bg-white shadow-nav z-50 lg:hidden'>
+    <nav className='fixed h-14 bottom-0 inset-x-0 py-1.5 flex items-center justify-center space-x-16 bg-white shadow-nav z-50 lg:hidden'>
       <button onClick={() => changeTap('홈')} className={'flex flex-col items-center space-y-1' + (selectedTap === '홈' ? ' text-gray-700' : ' text-gray-200')}>
         <Home className='w-6 h-6' />
         <p className='text-xs font-bold'>홈</p>
@@ -39,7 +41,7 @@ function MobileBottomNavigationBar() {
         <Person className='w-6 h-6' />
         <p className='text-xs font-bold'>프로필</p>
       </button>
-    </footer>
+    </nav>
   )
 }
 
