@@ -32,7 +32,7 @@ function UserTypeTag({ userType, cardinalNum, isAnonymous }: Props) {
   }, [])
 
   return (
-    <span className='px-1.5 py-1 flex items-center space-x-0.5 rounded bg-gray-100'>
+    <span className='px-1.5 py-1 inline-flex items-center space-x-0.5 rounded bg-gray-100'>
       <UserTypeIcon userType={userType} cardinalNum={cardinalNum} />
       <p className='text-xs font-semibold text-gray-600'>{processedUserType}</p>
     </span>
