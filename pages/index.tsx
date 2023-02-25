@@ -60,7 +60,7 @@ const Home: NextPage = () => {
           <Search className='w-6 h-6 text-white' />
         </button>
         {/* TODO: 일단 overflow-hidden으로 해놓긴 했는데 끊기는 느낌나서 추후 수정 필요 */}
-        <div className={'pl-4 pr-2 py-1.5 flex items-center space-x-1 bg-gray-100 rounded duration-500 overflow-hidden' + (isSearchMode ? ' visible grow' : ' invisible w-0')}>
+        <div className={'pl-4 pr-2 py-1.5 flex items-center justify-between space-x-1 bg-gray-100 rounded duration-500 overflow-hidden' + (isSearchMode ? ' visible grow' : ' invisible w-0')}>
           <input
             type='text'
             className='grow bg-gray-100 text-sm font-medium text-gray-700 placeholder:text-gray-400 focus:outline-none'
@@ -188,7 +188,7 @@ const Home: NextPage = () => {
                 >
                   <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
                   <div className='flex items-center space-x-1.5'>
-                    <QuestionAnswer className='text-base text-gray-200' />
+                    <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
                     <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
                   </div>
                 </Link>

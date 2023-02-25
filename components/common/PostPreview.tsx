@@ -23,7 +23,7 @@ function PostPreview({ postInfo }: Props) {
             <UserTypeTag userType={postInfo.user.userType} cardinalNum={postInfo.user.cardinalNum} isAnonymous={postInfo.isAnonymous} />
           </article>
           <div className='flex items-center space-x-1.5'>
-            <QuestionAnswer className='w-4 h-4 text-gray-200' />
+            <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
             <p className='text-sm font-semibold text-gray-500'>{postInfo.commentsNum}</p>
           </div>
         </footer>

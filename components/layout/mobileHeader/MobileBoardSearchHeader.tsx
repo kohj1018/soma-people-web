@@ -26,8 +26,9 @@ function MobileBoardSearchHeader({ searchTerm, setSearchTerm }: Props) {
       <Modal
         open={isSearchMode}
         onClose={handleModalClose}
+        className='relative w-screen h-screen'
       >
-        <div className='fixed w-full h-14 top-0 px-5 py-2.5 flex items-center justify-between space-x-4 bg-white'>
+        <div className='fixed h-14 top-0 inset-x-0 px-5 py-2.5 flex items-center justify-between space-x-4 bg-white'>
           <button onClick={() => setIsSearchMode(false)}>
             <KeyboardArrowLeft className='w-6 h-6 text-gray-700' />
           </button>
