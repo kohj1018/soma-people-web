@@ -11,7 +11,7 @@ interface Props {
 
 function PostPreview({ postInfo }: Props) {
   return (
-    <Link href={`/board/${postInfo.postId}`}>
+    <Link href={`/post/${postInfo.postId}`}>
       <div className='py-4 space-y-3.5 bg-white border-b border-gray-100'>
         <article className='space-y-1.5 font-medium'>
           <header className='text-base text-gray-900 truncate'>{postInfo.title}</header>
