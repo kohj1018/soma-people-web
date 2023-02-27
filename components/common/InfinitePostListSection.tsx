@@ -3,7 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { postKeys } from '../../utils/constants/reactQueryKeyConstants'
 import { ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID } from '../../utils/config'
 import { getPostInfoListInfinitely } from '../../utils/apis/postsApi'
-import { useBoardIdOfLastViewedStore, useScrollYStore } from '../../stores/stores'
+import { useBoardIdOfLastViewedStore } from '../../stores/stores'
 import { Fragment, useEffect } from 'react'
 import PostPreview from './PostPreview'
 import LoadingCircular from '../layout/LoadingCircular'
@@ -26,7 +26,6 @@ function InfinitePostListSection({ userId }: Props) {
       cacheTime: Infinity
     }
   )
-  const scrollY = useScrollYStore(state => state.scrollY) // 스크롤 위치 저장
 
   // useEffect(() => {  //TODO : 자유게시판은 글 수정/삭제했을 때 바로 반영이 되는데 나머지 게시판만 invalidateQueries가 안먹힘. 추후 수정해야할듯
   //   console.log("key : ", postKeys.list(boardIdOfLastViewed, userId ?? 1))
@@ -39,12 +38,6 @@ function InfinitePostListSection({ userId }: Props) {
   useEffect(() => {
     if (!!userId && inView) fetchNextPage()
   }, [inView])
-
-  // 스크롤 위치 유지
-  useEffect(() => {
-    // 기본값이 0이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤 시킴
-    if (scrollY !== 0) window.scrollTo(0, scrollY)
-  }, [])
 
   return (
     <>

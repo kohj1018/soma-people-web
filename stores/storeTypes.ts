@@ -10,7 +10,12 @@ export type BoardIdOfLastViewedState = {
   setBoardIdOfLastViewed: (boardIdOfLastViewed: number) => void
 }
 
-export type ScrollYState = {
-  scrollY: number
-  setScrollY: (scrollY: number) => void
+export type InfinitePostsScrollYState = {
+  infinitePostsScrollY: number
+  setInfinitePostsScrollY: (infinitePostsScrollY: number) => void
+}
+
+export type MainPageScrollYState = {
+  mainPageScrollY: number
+  setMainPageScrollY: (mainPageScrollY: number) => void
 }

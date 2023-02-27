@@ -26,7 +26,7 @@ function useCommentMutation(
     {
       onSuccess: () => {
         if (!!commentInfoBeforeUpdate) {
-          queryClient.invalidateQueries(postKeys.detail(commentInfoBeforeUpdate.postId))  //TODO: 댓글만 업데이트되고 글은 업데이트 안됨
+          queryClient.invalidateQueries(postKeys.detail(commentInfoBeforeUpdate.postId))
           if (isDelete) {
             setMessage('댓글이 삭제되었습니다.')
           } else {

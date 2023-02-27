@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import MainContainer from '../../components/layout/MainContainer'
-import { useBoardIdOfLastViewedStore } from '../../stores/stores'
+import { useBoardIdOfLastViewedStore, useInfinitePostsScrollYStore } from '../../stores/stores'
 import MobileBoardSearchHeader from '../../components/layout/mobileHeader/MobileBoardSearchHeader'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MobileBoardTap from '../../components/layout/mobileHeader/MobileBoardTap'
 import useBoardInfoList from '../../hooks/useBoardInfoList'
 import MainArea from '../../components/layout/MainArea'
@@ -18,6 +18,13 @@ const Board: NextPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const userInfo = useUserInfo()
   const boardInfoList = useBoardInfoList(userInfo)
+  const infinitePostsScrollY = useInfinitePostsScrollYStore(state => state.infinitePostsScrollY) // 스크롤 위치 저장
+
+  // 스크롤 위치 유지
+  useEffect(() => {
+    // 기본값이 0이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤 시킴
+    if (infinitePostsScrollY !== 0) window.scrollTo(0, infinitePostsScrollY)
+  }, [])
 
   return (
     <MainContainer>

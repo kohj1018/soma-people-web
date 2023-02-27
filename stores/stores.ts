@@ -1,4 +1,9 @@
-import { BoardIdOfLastViewedState, ScrollYState, SnackbarOpenState } from './storeTypes'
+import {
+  BoardIdOfLastViewedState,
+  InfinitePostsScrollYState,
+  MainPageScrollYState,
+  SnackbarOpenState,
+} from './storeTypes'
 import { create } from 'zustand'
 
 /** 스낵바 띄우는 Store */
@@ -21,10 +26,18 @@ export const useBoardIdOfLastViewedStore = create<BoardIdOfLastViewedState>((set
   }
 }))
 
-/** 스크롤 Y값을 저장하는 Store */
-export const useScrollYStore = create<ScrollYState>((set) => ({
-  scrollY: 0,
-  setScrollY: (scrollY: number) => {
-    set((state) => ({ ...state, scrollY: scrollY }))
+/** 게시글 무한 스크롤 Y값을 저장하는 Store */
+export const useInfinitePostsScrollYStore = create<InfinitePostsScrollYState>((set) => ({
+  infinitePostsScrollY: 0,
+  setInfinitePostsScrollY: (infinitePostsScrollY: number) => {
+    set((state) => ({ ...state, infinitePostsScrollY: infinitePostsScrollY }))
+  }
+}))
+
+/** 메인 페이지 스크롤 Y값을 저장하는 Store */
+export const useMainPageScrollYStore = create<MainPageScrollYState>((set) => ({
+  mainPageScrollY: 0,
+  setMainPageScrollY: (mainPageScrollY: number) => {
+    set((state) => ({ ...state, mainPageScrollY: mainPageScrollY }))
   }
 }))

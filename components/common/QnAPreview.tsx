@@ -3,6 +3,7 @@ import UserTypeTag from '../tag/UserTypeTag'
 import { UserType } from '../../utils/types/userType'
 import { getElapsedTime } from '../../utils/functions/getElapsedTime'
 import dayjs from 'dayjs'
+import { useMainPageScrollYStore } from '../../stores/stores'
 
 interface Props {
   postId: number
@@ -15,8 +16,13 @@ interface Props {
 }
 
 function QnAPreview({ postId, title, userType, cardinalNum, isAnonymous, commentsNum, createdAt }: Props) {
+  const setMainPageScrollY = useMainPageScrollYStore(state => state.setMainPageScrollY)
+
   return (
-    <Link href={`/post/${postId}`}>
+    <Link
+      href={`/post/${postId}`}
+      onClick={() => setMainPageScrollY(window.scrollY)}  // 클릭할 때 window.scrollY 저장
+    >
       <div className='w-[13.1875rem] h-[8.875rem] px-3.5 py-3 flex flex-col justify-between rounded-sm bg-gray-50'>
         <div className='space-y-2.5'>
           <UserTypeTag userType={userType} cardinalNum={cardinalNum} isAnonymous={isAnonymous} />

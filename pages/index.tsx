@@ -17,10 +17,10 @@ import LoadingCircular from '../components/layout/LoadingCircular'
 import QuestionAnswer from '@mui/icons-material/QuestionAnswer'
 import useSignInInfo from '../hooks/useSignInInfo'
 import Search from '@mui/icons-material/Search'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
 import QnAPreview from '../components/common/QnAPreview'
-import { useBoardIdOfLastViewedStore } from '../stores/stores'
+import { useBoardIdOfLastViewedStore, useMainPageScrollYStore } from '../stores/stores'
 import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
@@ -29,6 +29,7 @@ const Home: NextPage = () => {
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
+  const { mainPageScrollY, setMainPageScrollY } = useMainPageScrollYStore()
   const { data: mainPagePostSummaryData, isLoading } = useQuery(
     postKeys.mainPageSummary(userId ?? 0),
     () => getPostFromEachBoard(userId ?? 0),
@@ -39,6 +40,13 @@ const Home: NextPage = () => {
     }
   )
 
+  // 스크롤 위치 유지
+  useEffect(() => {
+    // 기본값이 0이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤 시킴
+    if (mainPageScrollY !== 0) window.scrollTo(0, mainPageScrollY)
+  }, [])
+
+
   const cancelSearch = () => {
     if (searchTerm) {
       setSearchTerm('')
@@ -48,6 +56,7 @@ const Home: NextPage = () => {
   }
 
   const moveToBoardPage = (boardId: number) => {
+    setMainPageScrollY(window.scrollY)  // 클릭할 때 window.scrollY 저장
     setBoardIdOfLastViewed(boardId)
     router.push('/board')
   }
@@ -179,6 +188,7 @@ const Home: NextPage = () => {
                   key={post.postId}
                   href={`/post/${post.postId}`}
                   className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
+                  onClick={() => setMainPageScrollY(window.scrollY)}
                 >
                   <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
                   <div className='flex items-center space-x-1.5'>
@@ -204,6 +214,7 @@ const Home: NextPage = () => {
                   key={post.postId}
                   href={`/post/${post.postId}`}
                   className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
+                  onClick={() => setMainPageScrollY(window.scrollY)}
                 >
                   <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
                   <div className='flex items-center space-x-1.5'>
