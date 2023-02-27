@@ -1,10 +1,11 @@
 import {
-  BoardIdOfLastViewedState,
+  BoardIdOfLastViewedState, BoardTapScrollXState,
   InfinitePostsScrollYState,
   MainPageScrollYState,
   SnackbarOpenState,
 } from './storeTypes'
 import { create } from 'zustand'
+import { RefObject, useRef } from 'react'
 
 /** 스낵바 띄우는 Store */
 export const useSnackbarOpenStore = create<SnackbarOpenState>((set) => ({
@@ -39,5 +40,13 @@ export const useMainPageScrollYStore = create<MainPageScrollYState>((set) => ({
   mainPageScrollY: 0,
   setMainPageScrollY: (mainPageScrollY: number) => {
     set((state) => ({ ...state, mainPageScrollY: mainPageScrollY }))
+  }
+}))
+
+/** 게시판 탭 스크롤 X값을 저장하는 Store */
+export const useBoardTapScrollXStore = create<BoardTapScrollXState>((set) => ({
+  boardTapScrollX: 0,
+  setBoardTapScrollX: (boardTapScrollX: number) => {
+    set((state) => ({ ...state, boardTapScrollX: boardTapScrollX }))
   }
 }))

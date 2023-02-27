@@ -1,3 +1,5 @@
+import { RefObject } from 'react'
+
 export type SnackbarOpenState = {
   message: string
   setMessage: (message: string) => void
@@ -18,4 +20,9 @@ export type InfinitePostsScrollYState = {
 export type MainPageScrollYState = {
   mainPageScrollY: number
   setMainPageScrollY: (mainPageScrollY: number) => void
+}
+
+export type BoardTapScrollXState = {
+  boardTapScrollX: number
+  setBoardTapScrollX: (boardTapScrollX: number) => void
 }
