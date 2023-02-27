@@ -6,6 +6,8 @@ export interface UserInfoType {
   userType: UserType
   cardinalNum: number | null
   isCertified: boolean
+  numOfPostsWritten: number
+  numOfCommentsWritten: number
   isDelete: boolean
   createdAt: string
   updatedAt: string | null

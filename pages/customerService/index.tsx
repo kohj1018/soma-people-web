@@ -1,27 +1,50 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import MainContainer from '../../components/layout/MainContainer'
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
-import { CsType } from '../../utils/airtableConfig'
+import { CsType, postCSContent } from '../../utils/airtableConfig'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import { useState } from 'react'
 import useUserInfo from '../../hooks/useUserInfo'
-
-//TODO: 나중에 디자인 완성되면 퍼블리싱 수정해야 함
+import MainArea from '../../components/layout/MainArea'
+import MobileCancelHeader from '../../components/layout/mobileHeader/MobileCancelHeader'
+import LoadingCircular from '../../components/layout/LoadingCircular'
 
 const CustomerService: NextPage = () => {
   const router = useRouter()
-  const { userId, oauthId } = useSignInInfoStore()
   const [csType, setCsType] = useState<CsType>('문의')
   const [content, setContent] = useState<string>('')
-  const { setMessage, setIsSnackbarOpen } = useSnackbarOpenStore()
+  const { setMessage } = useSnackbarOpenStore()
   const userInfo = useUserInfo()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const submitCSContent = () => {
+    if (!!userInfo) {
+      if (content.length < 11) {
+        setMessage('10자 이상 입력해주세요.')
+      } else {
+        setIsLoading(true)
+        postCSContent(csType, userInfo.userId, userInfo.name, content)
+          .then(() => {
+            setMessage('전송이 완료되었습니다! 감사합니다 😙')
+            router.back()
+          })
+          .catch(() => {
+            setMessage('전송에 실패했습니다. 잠시 후 다시 시도해주세요.')
+            setIsLoading(false)
+          })
+      }
+    }
+  }
+
+  if (isLoading) return <LoadingCircular />
 
   return (
     <MainContainer>
-      <main className='py-4 px-5 space-y-4 lg:py-8 lg:space-y-6'>
-        <FormControl fullWidth>
+      <MobileCancelHeader title='문의/건의하기' buttonFunc={submitCSContent} />
+
+      <MainArea className='px-5 space-y-4 lg:space-y-6'>
+        <FormControl className='!mt-8 !w-full'>
           <InputLabel>문의 유형</InputLabel>
           <Select
             value={csType}
@@ -41,14 +64,7 @@ const CustomerService: NextPage = () => {
           onChange={(e) => setContent(e.target.value)}
           placeholder='문의/건의 내용을 입력해주세요.'
         />
-        {/*<button*/}
-        {/*  onClick={submitCSContent}*/}
-        {/*  className={'w-full py-4 rounded-lg text-base font-bold lg:mt-20 lg:text-lg'*/}
-        {/*    + (content.length > 10 ? ' bg-blue-500 text-gray-50 shadow-button' : ' bg-gray-200 text-gray-400')}*/}
-        {/*>*/}
-        {/*  전송하기*/}
-        {/*</button>*/}
-      </main>
+      </MainArea>
     </MainContainer>
   )
 }
