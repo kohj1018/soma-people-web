@@ -9,7 +9,6 @@ function useBoardInfoList(userInfo: UserInfoType | null): BoardInfoType[] { //TO
     boardKeys.lists(),
     getAllBoardsInfo,
     {
-      enabled: !!userInfo,
       staleTime: Infinity,
       cacheTime: Infinity,
       refetchOnWindowFocus: false
@@ -51,7 +50,7 @@ function useBoardInfoList(userInfo: UserInfoType | null): BoardInfoType[] { //TO
           break
       }
     }
-  }, [boardInfoList])
+  }, [userInfo])
 
   return returnBoardInfoList
 }
