@@ -7,6 +7,9 @@ import { useBoardIdOfLastViewedStore } from '../../stores/stores'
 import { Fragment, useEffect } from 'react'
 import PostPreview from './PostPreview'
 import LoadingCircular from '../layout/LoadingCircular'
+import { isNotEmptyArray } from '../../utils/functions/isNotEmptyArray'
+import noPostsIcon from '../../public/icon/noPostsIcon.svg'
+import Image from 'next/image'
 
 interface Props {
   userId: number | null
@@ -42,13 +45,24 @@ function InfinitePostListSection({ userId }: Props) {
   return (
     <>
       <section className='mt-[3.125rem] px-5 py-4'>
-        {postInfoList?.pages.map((page, index) => (
-          <Fragment key={index}>
-            {page.postList.map((postInfo) =>
-              <PostPreview key={postInfo.postId} postInfo={postInfo} />
-            )}
-          </Fragment>
-        ))}
+        {isNotEmptyArray(postInfoList?.pages[0].postList) ? (
+          postInfoList?.pages.map((page, index) => (
+            <Fragment key={index}>
+              {page.postList.map((postInfo) =>
+                <PostPreview key={postInfo.postId} postInfo={postInfo} />
+              )}
+            </Fragment>
+          ))
+        ) : (
+          <div className='moveToCenter flex flex-col items-center space-y-5'>
+            <Image
+              src={noPostsIcon}
+              className='w-[3.75rem] h-[3.75rem]'
+              alt='게시글 없음 표시 아이콘'
+            />
+            <p className='text-base font-semibold text-gray-400'>첫 글을 작성해주세요</p>
+          </div>
+        )}
       </section>
 
       {/* 무한 스크롤 옵저버 */}
