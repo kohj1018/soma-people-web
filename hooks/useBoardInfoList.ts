@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import { BOARD_INFO_LIST } from '../utils/constants/reactQueryKeyConstants'
+import { boardKeys } from '../utils/constants/reactQueryKeyConstants'
 import { getAllBoardsInfo } from '../utils/apis/boardsApi'
 import { useEffect, useState } from 'react'
 import { BoardInfoType, UserInfoType } from '../utils/types/responseTypes'
 
 function useBoardInfoList(userInfo: UserInfoType | null): BoardInfoType[] { //TODO: 추후 최적화 할 수 있는 부분 찾아보기 (현재 계속 랜더링 됨)
   const { data: boardInfoList } = useQuery(
-    [BOARD_INFO_LIST],
+    boardKeys.lists(),
     getAllBoardsInfo,
     {
       enabled: !!userInfo,

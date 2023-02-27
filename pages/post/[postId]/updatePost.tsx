@@ -1,58 +1,57 @@
+import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next'
+import useUserInfo from '../../../hooks/useUserInfo'
 import { useRouter } from 'next/router'
-import MainContainer from '../../../components/layout/MainContainer'
+import { useQuery } from '@tanstack/react-query'
+import { PostInfoType } from '../../../utils/types/responseTypes'
+import { postKeys } from '../../../utils/constants/reactQueryKeyConstants'
+import { getPostInfoByPostId } from '../../../utils/apis/postsApi'
 import MobileCancelHeader from '../../../components/layout/mobileHeader/MobileCancelHeader'
 import MainArea from '../../../components/layout/MainArea'
-import React, { useState } from 'react'
 import CheckBox from '@mui/icons-material/CheckBox'
-import useUserInfo from '../../../hooks/useUserInfo'
-import { useSnackbarOpenStore } from '../../../stores/stores'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { addPost } from '../../../utils/apis/postsApi'
-import { postKeys } from '../../../utils/constants/reactQueryKeyConstants'
+import MainContainer from '../../../components/layout/MainContainer'
+import usePostMutation from '../../../hooks/usePostMutation'
 
-const AddPost: NextPage = () => {
+const UpdatePost: NextPage = () => {
   const router = useRouter()
-  const queryClient = useQueryClient()
   const userInfo = useUserInfo()
-  const boardId: number = parseInt(router.query.boardId as string)
-  const boardName: string = router.query.boardName as string
+  const postId: number = parseInt(router.query.postId as string)
+  const { data: postInfo } = useQuery<PostInfoType>(
+    postKeys.detail(postId),
+    () => getPostInfoByPostId(postId),
+    {
+      enabled: !!postId,
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      refetchOnWindowFocus: false
+    }
+  )
+
   const [title, setTitle] = useState<string>('')
   const [content, setContent] = useState<string>('')
   const [isAnonymous, setIsAnonymous] = useState<boolean>(true)
-  const { setMessage } = useSnackbarOpenStore()
-  const postMutation = useMutation(addPost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(postKeys.list(boardId, userInfo?.userId ?? 0))
-        .then(() => {
-          setMessage('게시글이 등록되었습니다.')
-          router.back()
-        })
-    }
-  })
+  const { handlePostMutation } = usePostMutation(postInfo, userInfo?.userId, false, title, content, isAnonymous)  // 게시글 수정 함수
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    if (!!userInfo) {
-      if (!title) {
-        setMessage('글 제목을 입력해주세요.')
-      } else if (!content) {
-        setMessage('본문 내용을 입력해주세요.')
-      } else {
-        postMutation.mutate({
-          boardId,
-          userId: userInfo.userId,
-          title,
-          content,
-          isAnonymous,
-        })
-      }
+  // 글 작성한게 본인이 아니라면 Redirect
+  useEffect(() => {
+    if (!!userInfo && !!postInfo
+      && userInfo.userId !== postInfo.user.userId) {
+      router.back()
     }
-  }
+  }, [userInfo, postInfo])
+
+  // 작성했던 글 내용 넣기
+  useEffect(() => {
+    if (!!postInfo) {
+      setTitle(postInfo.title)
+      setContent(postInfo.content)
+      setIsAnonymous(postInfo.isAnonymous)
+    }
+  }, [postInfo])
 
   return (
     <MainContainer>
-      <MobileCancelHeader title='글 작성하기' buttonFunc={handleSubmit} />
+      <MobileCancelHeader title='글 수정하기' buttonFunc={handlePostMutation} />
 
       <MainArea className='px-5'>
         <input
@@ -74,7 +73,7 @@ const AddPost: NextPage = () => {
       </MainArea>
 
       <article className='fixed bottom-0 inset-x-0 px-5 py-3.5 flex items-center justify-between bg-gray-50'>
-        <p className='text-sm font-semibold text-gray-400'><span>{boardName}</span>에 등록</p>
+        <p className='text-sm font-semibold text-gray-400'><span>{postInfo?.board.name}</span>에 등록</p>
         <button onClick={() => setIsAnonymous(!isAnonymous)} className='flex items-center space-x-0.5'>
           <p className='text-sm font-semibold text-gray-400'>익명</p>
           <CheckBox className={'!w-4 !h-4' + (isAnonymous ? ' text-gray-700' : ' text-gray-300')} />
@@ -84,4 +83,4 @@ const AddPost: NextPage = () => {
   )
 }
 
-export default AddPost
+export default UpdatePost

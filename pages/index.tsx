@@ -11,7 +11,7 @@ import peopleIcon from '../public/icon/peopleIcon.svg'
 import Link from 'next/link'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import { useQuery } from '@tanstack/react-query'
-import { MAIN_PAGE_POST_SUMMARY } from '../utils/constants/reactQueryKeyConstants'
+import { postKeys } from '../utils/constants/reactQueryKeyConstants'
 import { getPostFromEachBoard } from '../utils/apis/postsApi'
 import LoadingCircular from '../components/layout/LoadingCircular'
 import QuestionAnswer from '@mui/icons-material/QuestionAnswer'
@@ -20,13 +20,17 @@ import Search from '@mui/icons-material/Search'
 import React, { useState } from 'react'
 import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
 import QnAPreview from '../components/common/QnAPreview'
+import { useBoardIdOfLastViewedStore } from '../stores/stores'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
+  const router = useRouter()
   const { userId } = useSignInInfo()
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
+  const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { data: mainPagePostSummaryData, isLoading } = useQuery(
-    [MAIN_PAGE_POST_SUMMARY, userId],
+    postKeys.mainPageSummary(userId ?? 0),
     () => getPostFromEachBoard(userId ?? 0),
     {
       enabled: !!userId,
@@ -41,6 +45,11 @@ const Home: NextPage = () => {
     } else {
       setIsSearchMode(false)
     }
+  }
+
+  const moveToBoardPage = (boardId: number) => {
+    setBoardIdOfLastViewed(boardId)
+    router.push('/board')
   }
 
   if (isLoading) return <LoadingCircular />
@@ -132,15 +141,19 @@ const Home: NextPage = () => {
         <section className='mt-2 space-y-2'>
           {/* Q&A 게시판 미리보기 */}
           <article className='py-8 space-y-6 bg-white'>
-            <Link href='/' className='w-full px-5 flex items-center justify-between'>
+            <button
+              onClick={() => moveToBoardPage(2)}
+              className='w-full px-5 flex items-center justify-between'
+            >
               <p className='text-lg font-semibold text-gray-900'>최근에 올라온 Q&A 💬</p>
               <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
-            </Link>
+            </button>
 
             <section className='px-5 flex items-center space-x-4 overflow-x-scroll whitespace-nowrap hide-scrollbar'>
               {mainPagePostSummaryData?.qnaPostList.map((post) =>
                 <QnAPreview
                   key={post.postId}
+                  postId={post.postId}
                   title={post.title}
                   userType={post.user.userType}
                   cardinalNum={post.user.cardinalNum}
@@ -153,15 +166,18 @@ const Home: NextPage = () => {
           </article>
 
           <article className='pt-8 px-5 bg-white'>
-            <Link href='/' className='w-full flex items-center justify-between'>
+            <button
+              onClick={() => moveToBoardPage(1)}
+              className='w-full flex items-center justify-between'
+            >
               <p className='text-lg font-semibold text-gray-900'>자유게시판 🧑‍💻</p>
               <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
-            </Link>
+            </button>
             <section className='py-2.5'>
               {mainPagePostSummaryData?.freePostList.map((post) =>
                 <Link
                   key={post.postId}
-                  href='/'
+                  href={`/post/${post.postId}`}
                   className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
                 >
                   <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
@@ -175,15 +191,18 @@ const Home: NextPage = () => {
           </article>
 
           <article className='pt-8 px-5 bg-white'>
-            <Link href='/' className='w-full flex items-center justify-between'>
+            <button
+              onClick={() => moveToBoardPage(4)}
+              className='w-full flex items-center justify-between'
+            >
               <p className='text-lg font-semibold text-gray-900'>14기 준비생들을 도와주세요! 🙇‍♀️</p>
               <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
-            </Link>
+            </button>
             <section className='py-2.5'>
               {mainPagePostSummaryData?.applicantPostList.map((post) =>
                 <Link
                   key={post.postId}
-                  href='/'
+                  href={`/post/${post.postId}`}
                   className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
                 >
                   <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>

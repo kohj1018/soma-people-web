@@ -5,6 +5,7 @@ import { getElapsedTime } from '../../utils/functions/getElapsedTime'
 import dayjs from 'dayjs'
 
 interface Props {
+  postId: number
   title: string
   userType: UserType
   cardinalNum: number | null
@@ -13,9 +14,9 @@ interface Props {
   createdAt: string
 }
 
-function QnAPreview({ title, userType, cardinalNum, isAnonymous, commentsNum, createdAt }: Props) {
+function QnAPreview({ postId, title, userType, cardinalNum, isAnonymous, commentsNum, createdAt }: Props) {
   return (
-    <Link href='/'>
+    <Link href={`/post/${postId}`}>
       <div className='w-[13.1875rem] h-[8.875rem] px-3.5 py-3 flex flex-col justify-between rounded-sm bg-gray-50'>
         <div className='space-y-2.5'>
           <UserTypeTag userType={userType} cardinalNum={cardinalNum} isAnonymous={isAnonymous} />

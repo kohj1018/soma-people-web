@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import MainContainer from '../../components/layout/MainContainer'
-import { useBoardIdOfLastViewed } from '../../stores/stores'
+import { useBoardIdOfLastViewedStore } from '../../stores/stores'
 import MobileBoardSearchHeader from '../../components/layout/mobileHeader/MobileBoardSearchHeader'
 import { useState } from 'react'
 import MobileBoardTap from '../../components/layout/mobileHeader/MobileBoardTap'
@@ -14,14 +14,17 @@ import Mode from '@mui/icons-material/Mode'
 const InfinitePostListSection = dynamic(() => import('../../components/common/InfinitePostListSection'),{loading: () => <LoadingCircular />, ssr: false})
 
 const Board: NextPage = () => {
-  const { boardIdOfLastViewed, setBoardIdOfLastViewed } = useBoardIdOfLastViewed()
+  const { boardIdOfLastViewed, setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const [searchTerm, setSearchTerm] = useState<string>('')
   const userInfo = useUserInfo()
   const boardInfoList = useBoardInfoList(userInfo)
 
   return (
     <MainContainer>
+      {/* 검색 헤더 */}
       <MobileBoardSearchHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      {/* 게시판 탭 */}
       <MobileBoardTap
         boardInfoList={boardInfoList ?? []}
         boardIdOfLastViewed={boardIdOfLastViewed}
@@ -29,7 +32,10 @@ const Board: NextPage = () => {
       />
 
       <MainArea>
+        {/* 게시글 무한 스크롤 영역 */}
         <InfinitePostListSection userId={userInfo?.userId ?? null} />
+
+        {/* 글쓰기 버튼 */}
         <Link
           href={{
             pathname: `/board/${boardIdOfLastViewed}/addPost`,

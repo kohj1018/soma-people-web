@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { USER_INFO } from '../utils/constants/reactQueryKeyConstants'
+import { userKeys } from '../utils/constants/reactQueryKeyConstants'
 import { getUserInfoByUserId } from '../utils/apis/usersApi'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -13,7 +13,7 @@ function useUserInfo(): UserInfoType | null {
   const { setMessage } = useSnackbarOpenStore()
 
   const { data: userInfo } = useQuery(
-    [USER_INFO, userId],
+    userKeys.detail(userId ?? 0),
     () => getUserInfoByUserId(userId ?? 0),
     {
       enabled: !!userId,

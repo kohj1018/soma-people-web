@@ -14,7 +14,7 @@ export const useSnackbarOpenStore = create<SnackbarOpenState>((set) => ({
 }))
 
 /** 마지막으로 보고 있던 게시판 Id 관리하는 Store */
-export const useBoardIdOfLastViewed = create<BoardIdOfLastViewedState>((set) => ({
+export const useBoardIdOfLastViewedStore = create<BoardIdOfLastViewedState>((set) => ({
   boardIdOfLastViewed: 1,
   setBoardIdOfLastViewed: (boardIdOfLastViewed: number) => {
     set((state) => ({ ...state, boardIdOfLastViewed: boardIdOfLastViewed }))
