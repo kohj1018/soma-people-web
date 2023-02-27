@@ -31,8 +31,7 @@ const AddPost: NextPage = () => {
     }
   })
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const handleSubmit = () => {
     if (!!userInfo) {
       if (!title) {
         setMessage('글 제목을 입력해주세요.')
