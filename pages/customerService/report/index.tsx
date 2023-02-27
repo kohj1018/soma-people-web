@@ -1,6 +1,5 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useSignInInfoStore } from '../../../stores/localStorageStore/stores'
 import { postCSContent, ReportType } from '../../../utils/airtableConfig'
 import useUserInfo from '../../../hooks/useUserInfo'
 import MainContainer from '../../../components/layout/MainContainer'
@@ -21,8 +20,7 @@ const Report: NextPage = () => {
   const { setMessage } = useSnackbarOpenStore()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const submitCSContent = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const submitCSContent = () => {
     if (!!userInfo) {
       if (content.length > 10) {
         setIsLoading(true)
