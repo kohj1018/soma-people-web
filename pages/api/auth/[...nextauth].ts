@@ -9,7 +9,7 @@ export default NextAuth({
       options: {
         httpOnly: false,
         sameSite: "none",
-        path: "/",
+        path: "/auth/termsAndConditions",
         secure: true,
       },
     },
