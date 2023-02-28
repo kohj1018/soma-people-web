@@ -19,3 +19,8 @@ export const postKeys = {
   comments: (postId: number) => [...postKeys.detail(postId), 'commentsList'] as const,
   mainPageSummary: (userId: number) => [...postKeys.all, 'mainPagePostSummary', { userId }]
 }
+
+export const blockUserLogKeys = {
+  all: ['blockUserLogs'] as const,
+  list: (userId: number) => [...blockUserLogKeys.all, 'list', { userId }] as const
+}

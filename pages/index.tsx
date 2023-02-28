@@ -245,16 +245,3 @@ const Home: NextPage = () => {
 }
 
 export default Home
-
-// <Link
-// href={{
-//   pathname: '/customerService/report',
-//     query: {
-//     reportTargetId: 1,
-//       reportTargetType: '게시글',
-//       reportTargetTitle: '이게 맞나요?'
-//   }
-// }}
-// >
-// 신고하기
-// </Link>

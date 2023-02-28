@@ -61,6 +61,13 @@ const PostDetail: NextPage = () => {
     }
   }, [userInfo, isLoading])
 
+  // 프로필 확인 페이지로 이동 함수
+  const viewOtherUserProfile = () => {
+    if (!!postInfo && !postInfo.isAnonymous) {
+      router.push(`/profile/${postInfo.user.userId}`)
+    }
+  }
+
   return (
     <MainContainer>
       <MobileBackHeader title={postInfo?.board.name ?? ''}>
@@ -96,10 +103,13 @@ const PostDetail: NextPage = () => {
           {!!postInfo &&
             <article className='pt-8 px-5 pb-4 bg-white'>
               <article className='space-y-3 pb-5 border-b border-gray-100'>
-                <div className='flex items-center space-x-1.5'>
+                <button
+                  onClick={viewOtherUserProfile}
+                  className='flex items-center space-x-1.5'
+                >
                   <p className='text-sm font-medium text-gray-400'>{postInfo.isAnonymous ? '익명' : postInfo.user.name}</p>
                   <UserTypeTag userType={postInfo.user.userType} cardinalNum={postInfo.user.cardinalNum} isAnonymous={postInfo.isAnonymous} />
-                </div>
+                </button>
                 <h1 className='text-lg font-medium text-gray-900'>{postInfo.title}</h1>
               </article>
               <p className='mt-5 text-base font-normal text-gray-700'>{postInfo.content}</p>

@@ -22,13 +22,23 @@ function Comment({ router, commentInfo, userInfo, setCommentInfoToUpdate }: Prop
   const [isDeleteCommentDialogOpen, setIsDeleteCommentDialogOpen] = useState<boolean>(false)
   const { handleCommentMutation: deleteComment } = useCommentMutation(commentInfo, userInfo?.userId, true)  // 댓글 삭제 함수
 
+  // 프로필 확인 페이지로 이동 함수
+  const viewOtherUserProfile = () => {
+    if (!!commentInfo && !commentInfo.isAnonymous) {
+      router.push(`/profile/${commentInfo.user.userId}`)
+    }
+  }
+
   return (
     <article className='p-4 space-y-4 rounded bg-white'>
       <header className='w-full flex items-center justify-between'>
-        <div className='flex items-center space-x-1.5'>
+        <button
+          onClick={viewOtherUserProfile}
+          className='flex items-center space-x-1.5'
+        >
           <p className='text-sm font-medium text-gray-400'>{commentInfo.isAnonymous ? '익명' : commentInfo.user.name}</p>
           <UserTypeTag userType={commentInfo.user.userType} cardinalNum={commentInfo.user.cardinalNum} isAnonymous={commentInfo.isAnonymous} />
-        </div>
+        </button>
         <button onClick={(e) => setAnchorEl(e.currentTarget)}>
           <MoreVert className='!w-4 !h-4 text-gray-400' />
         </button>
