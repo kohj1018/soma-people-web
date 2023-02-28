@@ -19,35 +19,39 @@ function useBoardInfoList(userInfo: UserInfoType | null): BoardInfoType[] { //TO
   // 해당 유저에게 보여지는 게시판의 종류를 처리하는 부분
   useEffect(() => {
     if (!!boardInfoList && !!userInfo) {
-      switch (userInfo.userType) {
-        case '준비생':
-          setReturnBoardInfoList(boardInfoList.filter((boardInfo) => boardInfo.boardId === 4))
-          break
-        case '연수생':
-          setReturnBoardInfoList([
-            boardInfoList[0],
-            boardInfoList[1],
-            boardInfoList[2],
-            boardInfoList.find((boardInfo) =>
-              boardInfo.boardId === parseInt('1' + userInfo.cardinalNum)) as BoardInfoType,
-            boardInfoList[3]
-          ])
-          break
-        case '멘토':
-          setReturnBoardInfoList([
-            boardInfoList[0],
-            boardInfoList[1],
-            boardInfoList[2],
-            boardInfoList.find((boardInfo) =>
-              boardInfo.boardId === 100) as BoardInfoType,
-            boardInfoList[3]
-          ])
-          break
-        case '사무국':
-          setReturnBoardInfoList(boardInfoList)
-          break
-        default:
-          break
+      if (!userInfo.isCertified) {  // 소마인 인증 안했다면 준비생 게시판만 볼 수 있음
+        setReturnBoardInfoList(boardInfoList.filter((boardInfo) => boardInfo.boardId === 4))
+      } else {
+        switch (userInfo.userType) {
+          case '준비생':
+            setReturnBoardInfoList(boardInfoList.filter((boardInfo) => boardInfo.boardId === 4))
+            break
+          case '연수생':
+            setReturnBoardInfoList([
+              boardInfoList[0],
+              boardInfoList[1],
+              boardInfoList[2],
+              boardInfoList.find((boardInfo) =>
+                boardInfo.boardId === parseInt('1' + userInfo.cardinalNum)) as BoardInfoType,
+              boardInfoList[3]
+            ])
+            break
+          case '멘토':
+            setReturnBoardInfoList([
+              boardInfoList[0],
+              boardInfoList[1],
+              boardInfoList[2],
+              boardInfoList.find((boardInfo) =>
+                boardInfo.boardId === 100) as BoardInfoType,
+              boardInfoList[3]
+            ])
+            break
+          case '사무국':
+            setReturnBoardInfoList(boardInfoList)
+            break
+          default:
+            break
+        }
       }
     }
   }, [userInfo])
