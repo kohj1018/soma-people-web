@@ -38,6 +38,7 @@ export default NextAuth({
       if (user) {
         token.oauthId = user.id
       }
+      console.log("token : ", token)
       return token
     },
     async session({ session, token }) {
@@ -47,6 +48,7 @@ export default NextAuth({
       if (token) {
         session.refreshToken = token.refreshToken
       }
+      console.log("session : ", session)
       return session
     }
   },
