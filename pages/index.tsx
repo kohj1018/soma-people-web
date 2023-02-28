@@ -68,7 +68,7 @@ const Home: NextPage = () => {
       <header className='fixed h-14 top-0 inset-x-0 px-5 flex items-center justify-between bg-zinc-900 z-50 lg:hidden'>
         <Image
           src={mainLogo}
-          className='w-8 h-8 mr-1'
+          className='w-[6.8125rem] h-7'
           alt='소마인 로고'
         />
         <button
