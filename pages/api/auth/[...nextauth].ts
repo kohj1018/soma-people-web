@@ -9,7 +9,7 @@ export default NextAuth({
       options: {
         httpOnly: false,
         sameSite: "none",
-        path: "/auth/termsAndConditions",
+        path: "/",
         secure: true,
       },
     },
@@ -28,7 +28,14 @@ export default NextAuth({
     }),
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID as string,
-      clientSecret: process.env.APPLE_CLIENT_SECRET as string
+      clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          scope: "name",
+          response_mode: "form_post",
+          response_type: "code",
+        },
+      },
     })
   ],
   secret: process.env.JWT_SECRET,
@@ -43,7 +50,6 @@ export default NextAuth({
       if (user) {
         token.oauthId = user.id
       }
-      console.log("token : ", token)
       return token
     },
     async session({ session, token }) {
@@ -53,7 +59,6 @@ export default NextAuth({
       if (token) {
         session.refreshToken = token.refreshToken
       }
-      console.log("session : ", session)
       return session
     }
   },
