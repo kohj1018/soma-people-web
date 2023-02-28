@@ -42,9 +42,8 @@ const PostDetail: NextPage = () => {
 
   // 조회수 증가
   useEffect(() => {
-    if (!!userInfo && isLoading && !!postInfo) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
+    if (!!userInfo?.userId && isLoading && !!postInfo) {
+      // @ts-ignore
       if (userInfo.userId !== postInfo.user.userId)
       increaseView(postId , userInfo.userId)
     }
