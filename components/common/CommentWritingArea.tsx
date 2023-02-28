@@ -81,7 +81,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
     <article className='fixed bottom-0 inset-x-0 px-5 py-3 flex items-center justify-between space-x-4 bg-white z-50'>
       <button
         onClick={() => setIsCommentAnonymous(!isCommentAnonymous)}
-        className='w-auto flex items-center space-x-0.5'
+        className='w-[2.6875rem] flex items-center space-x-0.5'
       >
         <p className='text-sm font-semibold text-gray-400'>익명</p>
         <CheckBox className={'!w-4 !h-4' + (isCommentAnonymous ? ' text-gray-700' : ' text-gray-300')} />
