@@ -7,6 +7,8 @@ interface Props {
 }
 
 function Layout({ children }: Props) {
+  // const router = useRouter()
+  // const [selectedTap, setSelectedTap] = useState<MenuType>('홈')
   const { message, isSnackbarOpen, setIsSnackbarOpen } = useSnackbarOpenStore()
 
   return (
