@@ -78,55 +78,57 @@ const SignUp = () => {
 
   return (
     <MainContainer>
-      <main className='px-5 py-10'>
-        <h1 className='text-2xl font-semibold text-gray-900'>기본 정보를<br/>입력해 주세요 🤗</h1>
+      <main className='w-screen h-screen px-5 py-10 flex flex-col justify-between'>
+        <div className='space-y-5'>
+          <h1 className='text-2xl font-semibold text-gray-900'>기본 정보를<br/>입력해 주세요 🤗</h1>
 
-        <section className='mt-10 space-y-5'>
-          <article className='w-full flex items-center space-x-4'>
-            <p className='w-7 text-base font-medium text-gray-900'>이름</p>
-            <input
-              type='text'
-              className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
-              placeholder='실명을 입력해주세요.'
-              maxLength={20}
-              value={name}
-              onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
-              required
-            />
-          </article>
-          <article className='w-full flex items-center space-x-4'>
-            <p className='w-7 text-base font-medium text-gray-900'>유형</p>
-            <MuiSelectUserType userType={userType} setUserType={setUserType} />
-          </article>
-          {(userType === '연수생' || userType === '멘토') &&
-            <>
-              <article className='w-full flex items-center space-x-4'>
-                <p className='w-7 text-base font-medium text-gray-900'>기수</p>
-                <input
-                  type='number'
-                  className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
-                  placeholder='ex. 13'
-                  maxLength={2}
-                  value={cardinalNumStr}
-                  onChange={(e) => { if (!e.target.value || (parseInt(e.target.value) > 0 && parseInt(e.target.value) < THIS_YEAR_CARDINAL_NUM + 1)) setCardinalNumStr(e.target.value) }}
-                  required
-                />
-              </article>
-              <Fragment>
-                {userType === '멘토' &&
-                  <div className='px-5 py-2 bg-blue-50 rounded-[2rem]'>
-                    <p className='text-sm font-medium text-blue-900'>✅ 처음 멘토를 시작한 기수를 적어주세요</p>
-                  </div>
-                }
-              </Fragment>
-            </>
-          }
-        </section>
+          <section className='space-y-5'>
+            <article className='w-full flex items-center space-x-4'>
+              <p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>
+              <input
+                type='text'
+                className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
+                placeholder='실명을 입력해주세요.'
+                maxLength={20}
+                value={name}
+                onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
+                required
+              />
+            </article>
+            <article className='w-full flex items-center space-x-4'>
+              <p className='text-base font-medium text-gray-900'>유형</p>
+              <MuiSelectUserType userType={userType} setUserType={setUserType} />
+            </article>
+            {(userType === '연수생' || userType === '멘토') &&
+              <>
+                <article className='w-full flex items-center space-x-4'>
+                  <div className='w-7 text-base font-medium text-gray-900'>기수</div>
+                  <input
+                    type='number'
+                    className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
+                    placeholder='ex. 13'
+                    maxLength={2}
+                    value={cardinalNumStr}
+                    onChange={(e) => { if (!e.target.value || (parseInt(e.target.value) > 0 && parseInt(e.target.value) < THIS_YEAR_CARDINAL_NUM + 1)) setCardinalNumStr(e.target.value) }}
+                    required
+                  />
+                </article>
+                <Fragment>
+                  {userType === '멘토' &&
+                    <div className='px-5 py-2 bg-blue-50 rounded-[2rem]'>
+                      <p className='text-sm font-medium text-blue-900'>✅ 처음 멘토를 시작한 기수를 적어주세요</p>
+                    </div>
+                  }
+                </Fragment>
+              </>
+            }
+          </section>
+        </div>
 
         {!!name && ((userType === '연수생' && !!cardinalNumStr) || (userType === '멘토' && !!cardinalNumStr) || userType === '준비생' || userType === '사무국') &&
           <button
             onClick={(e) => handleSignUp(e)}
-            className='absolute inset-x-5 bottom-10 py-4 rounded bg-slate-900 text-base font-semibold text-white'
+            className='w-full py-4 rounded bg-slate-900 text-base font-semibold text-white'
           >
             가입하기
           </button>

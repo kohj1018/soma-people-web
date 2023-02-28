@@ -56,7 +56,7 @@ const TermsAndConditions: NextPage = () => {
               className={'w-5 h-5 flex items-center justify-center rounded-full border-2 lg:w-8 lg:h-8'
                 + (agreeTerms ? ' bg-gray-600 border-gray-600' : ' bg-gray-200 border-gray-200')}
             >
-              <Check className='w-3 h-3 text-white lg:w-4 lg:h-4' />
+              <Check className='!w-3 !h-3 text-white lg:w-4 lg:h-4' />
             </button>
           </div>
           <div className='h-32 p-4 text-xs font-medium text-gray-500 bg-gray-100 overflow-auto lg:text-sm'>
@@ -72,7 +72,7 @@ const TermsAndConditions: NextPage = () => {
               className={'w-5 h-5 flex items-center justify-center rounded-full border-2 lg:w-8 lg:h-8'
                 + (agreePolicy ? ' bg-gray-600 border-gray-600' : ' bg-gray-200 border-gray-200')}
             >
-              <Check className='w-3 h-3 text-white lg:w-4 lg:h-4' />
+              <Check className='!w-3 !h-3 text-white lg:w-4 lg:h-4' />
             </button>
           </div>
           <div className='h-32 p-4 text-xs font-medium text-gray-500 bg-gray-100 overflow-auto lg:text-sm'>
