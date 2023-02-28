@@ -32,7 +32,7 @@ const Profile: NextPage = () => {
 
         <section className='relative mt-8 space-y-4 z-10'>
           {/* 프로필 정보 */}
-          <article className='p-7 rounded bg-white shadow-profileCard'>
+          <article className='p-7 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'>
             <header className='flex items-center space-x-2'>
               <p className='text-xl font-semibold text-gray-900'>{userInfo.name}</p>
               <UserTypeTag userType={userInfo.userType} cardinalNum={userInfo.cardinalNum} isAnonymous={false} />
@@ -68,19 +68,26 @@ const Profile: NextPage = () => {
           </article>
 
           {/* 소마인 인증 */}
-          <Link
-            href='/profile/certification'
-            className='block p-4 space-y-2 rounded bg-white shadow-profileCard'
-          >
-            <header className='w-full flex items-center justify-between'>
-              <div className='flex items-center space-x-2'>
-                <VerifiedUser className='!w-6 !h-6 text-blue-500' />
-                <p className='text-base font-semibold text-gray-900'>소마인 인증하기</p>
-              </div>
-              <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
-            </header>
-            <p className='text-sm font-medium text-gray-400'>소마인 인증을 받으면 연수생/수료생 게시판을 이용할 수 있어요!</p>
-          </Link>
+          {userInfo.isCertified ? (
+            <div className='w-full p-4 flex items-center space-x-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'>
+              <VerifiedUser className='!w-6 !h-6 text-blue-500' />
+              <p className='text-base font-semibold text-gray-900'>소마인 인증 완료</p>
+            </div>
+          ) : (
+            <Link
+              href='/profile/certification'
+              className='block p-4 space-y-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'
+            >
+              <header className='w-full flex items-center justify-between'>
+                <div className='flex items-center space-x-2'>
+                  <VerifiedUser className='!w-6 !h-6 text-blue-500' />
+                  <p className='text-base font-semibold text-gray-900'>소마인 인증하기</p>
+                </div>
+                <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
+              </header>
+              <p className='text-sm font-medium text-gray-400'>소마인 인증을 받으면 연수생/수료생 게시판을 이용할 수 있어요!</p>
+            </Link>
+          )}
         </section>
 
         {/* 서비스 목록 */}
