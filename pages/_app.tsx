@@ -21,8 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   // Flutter Bridge Function 세팅
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
+    // @ts-ignore
     window.changePage = (index: number) => {
       switch (index) {
         case 0:

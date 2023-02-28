@@ -46,6 +46,16 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
                   <p className='font-roboto text-base font-medium text-blue-500 lg:text-[1.4375rem]'>구글 계정으로 로그인하기</p>
                 </button>
               )
+            case 'Apple':
+              return (
+                <button
+                  key={provider.name}
+                  className='pl-2 pr-4 py-3 flex items-center justify-between space-x-6 rounded border border-blue-500'
+                  onClick={() => goToSignIn(provider.id)}
+                >
+                  <p className='font-roboto text-base font-medium text-blue-500 lg:text-[1.4375rem]'>애플 계정으로 로그인하기</p>
+                </button>
+              )
             default:
               return (
                 <p>에러</p>

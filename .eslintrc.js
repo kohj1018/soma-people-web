@@ -36,7 +36,9 @@ module.exports = {
     'spaced-comment': 'off',
     '@typescript-eslint/consistent-type-imports': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
-    'no-useless-escape': 'off'
+    'no-useless-escape': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/prefer-ts-expect-error': 'off'
   },
   settings: {
     react: {
