@@ -16,14 +16,8 @@ export default NextAuth({
       }
     }),
     AppleProvider({
-      clientId: process.env.APPLE_ID as string,
-      // @ts-ignore
-      clientSecret: {
-        appleId: process.env.APPLE_ID as string,
-        teamId: process.env.APPLE_TEAM_ID as string,
-        privateKey: process.env.APPLE_PRIVATE_KEY as string,
-        keyId: process.env.APPLE_KEY_ID as string
-      }
+      clientId: process.env.APPLE_CLIENT_ID as string,
+      clientSecret: process.env.APPLE_CLIENT_SECRET as string
     })
   ],
   secret: process.env.JWT_SECRET,

@@ -85,7 +85,7 @@ const Profile: NextPage = () => {
 
         {/* 서비스 목록 */}
         <article className='mt-10 space-y-3'>
-          <header className='text-sm font-medium text-[#C1C1C1]'>서비스</header>
+          <header className='text-sm font-medium text-gray-400'>서비스</header>
           <section className='space-y-6'>
             <Link
               href='/customerService'
@@ -120,7 +120,7 @@ const Profile: NextPage = () => {
 
         {/* 기타 목록 */}
         <article className='mt-10 space-y-3'>
-          <header className='text-sm font-medium text-[#C1C1C1]'>기타</header>
+          <header className='text-sm font-medium text-gray-400'>기타</header>
           <section className='space-y-6'>
             <a
               href='https://somapeople.notion.site/c296bd79d0b543ce8b977a55eb303ef5'
