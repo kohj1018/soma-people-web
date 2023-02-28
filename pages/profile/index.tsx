@@ -26,7 +26,7 @@ const Profile: NextPage = () => {
       <MainArea className='relative px-5 pb-8'>
         <Image
           src={profilePageBackGround}
-          className='absolute top-14 w-full h-auto z-0'
+          className='absolute top-14 inset-x-0 h-auto z-0 lg:hidden'
           alt='배경 이미지'
         />
 

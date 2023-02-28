@@ -29,7 +29,7 @@ export default NextAuth({
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID as string,
       clientSecret: process.env.APPLE_CLIENT_SECRET as string,
-      authorization: {
+      authorization: {  // Apple의 callBackUrl 버그 해결을 위해 추가
         params: {
           scope: "name",
           response_mode: "form_post",

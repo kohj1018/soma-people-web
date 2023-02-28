@@ -59,6 +59,8 @@ const SignUp = () => {
         })
       } catch (error) {
         setMessage('오류가 발생했습니다. 다시 시도해주세요')
+        setUserId(null)
+        setOauthId(null)
         router.replace('/auth/signIn')
       }
     }
