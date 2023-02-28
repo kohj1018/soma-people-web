@@ -83,7 +83,7 @@ const SignUp = () => {
           <h1 className='text-2xl font-semibold text-gray-900'>기본 정보를<br/>입력해 주세요 🤗</h1>
 
           <section className='space-y-5'>
-            <article className='w-full flex items-center space-x-4'>
+            <article className='w-full flex items-center justify-between space-x-4'>
               <p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>
               <input
                 type='text'
@@ -95,13 +95,13 @@ const SignUp = () => {
                 required
               />
             </article>
-            <article className='w-full flex items-center space-x-4'>
+            <article className='w-full flex items-center justify-between space-x-4'>
               <p className='text-base font-medium text-gray-900'>유형</p>
               <MuiSelectUserType userType={userType} setUserType={setUserType} />
             </article>
             {(userType === '연수생' || userType === '멘토') &&
               <>
-                <article className='w-full flex items-center space-x-4'>
+                <article className='w-full flex items-center justify-between space-x-4'>
                   <p className='text-base font-medium text-gray-900 whitespace-nowrap'>기수</p>
                   <input
                     type='number'
