@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import MainContainer from '../../components/layout/MainContainer'
-import { useBoardIdOfLastViewedStore, useInfinitePostsScrollYStore } from '../../stores/stores'
+import { useBoardIdOfLastViewedStore, useInfinitePostsScrollYStore, useSnackbarOpenStore } from '../../stores/stores'
 import MobileBoardSearchHeader from '../../components/layout/mobileHeader/MobileBoardSearchHeader'
 import { useEffect, useState } from 'react'
 import MobileBoardTap from '../../components/layout/mobileHeader/MobileBoardTap'
@@ -11,20 +11,34 @@ import LoadingCircular from '../../components/layout/LoadingCircular'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Mode from '@mui/icons-material/Mode'
+import { useRouter } from 'next/router'
 const InfinitePostListSection = dynamic(() => import('../../components/common/InfinitePostListSection'),{loading: () => <LoadingCircular />, ssr: false})
 
 const Board: NextPage = () => {
+  const router = useRouter()
   const { boardIdOfLastViewed, setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const [searchTerm, setSearchTerm] = useState<string>('')
   const userInfo = useUserInfo()
   const boardInfoList = useBoardInfoList(userInfo)
   const infinitePostsScrollY = useInfinitePostsScrollYStore(state => state.infinitePostsScrollY) // 스크롤 위치 저장
+  const { setMessage } = useSnackbarOpenStore()
+
+  // 소마인 인증 안했는데 준비생 게시판 외 게시판 보는 경우 Redirect
+  useEffect(() => {
+    if (boardIdOfLastViewed !== 4) {
+      if (!!userInfo && !userInfo.isCertified) {
+        setMessage('해당 게시판은 프로필 탭에서 소마인 인증을 받은 후 이용할 수 있습니다.')
+        router.back()
+      }
+    }
+  }, [userInfo])
 
   // 스크롤 위치 유지
   useEffect(() => {
     // 기본값이 0이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤 시킴
     if (infinitePostsScrollY !== 0) window.scrollTo(0, infinitePostsScrollY)
   }, [])
+
 
   return (
     <MainContainer>

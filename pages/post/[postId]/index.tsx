@@ -19,12 +19,14 @@ import dynamic from 'next/dynamic'
 import CommentWritingArea from '../../../components/common/CommentWritingArea'
 import usePostMutation from '../../../hooks/usePostMutation'
 import { MuiDialog } from '../../../components/common/MuiDialog'
+import { useSnackbarOpenStore } from '../../../stores/stores'
 const CommentListSection = dynamic(() => import('../../../components/common/CommentListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const PostDetail: NextPage = () => {
   const router = useRouter()
   const userInfo = useUserInfo()
   const postId: number = parseInt(router.query.postId as string)
+  const { setMessage } = useSnackbarOpenStore()
   const { data: postInfo, isLoading } = useQuery<PostInfoType>(
     postKeys.detail(postId),
     () => getPostInfoByPostId(postId),
@@ -39,6 +41,16 @@ const PostDetail: NextPage = () => {
   const { handlePostMutation: deletePost } = usePostMutation(postInfo, userInfo?.userId, true)  // 게시글 삭제 함수
 
   const [commentInfoToUpdate, setCommentInfoToUpdate] = useState<CommentInfoType | null>(null)  // 수정할 댓글 State
+
+  // 소마인 인증 안했는데 준비생 게시판 외 게시판의 글을 보는 경우 Redirect
+  useEffect(() => {
+    if (!!postInfo && !!userInfo) {
+      if (postInfo.board.boardId !== 4 && !userInfo.isCertified) {
+        setMessage('해당 게시판은 프로필 탭에서 소마인 인증을 받은 후 이용할 수 있습니다.')
+        router.back()
+      }
+    }
+  }, [postInfo, userInfo])
 
   // 조회수 증가
   useEffect(() => {
