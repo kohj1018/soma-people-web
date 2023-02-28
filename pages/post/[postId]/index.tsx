@@ -78,7 +78,7 @@ const PostDetail: NextPage = () => {
         }
       </MobileBackHeader>
 
-      <MainArea className='min-h-screen pb-16 bg-gray-100'>
+      <MainArea className='min-h-screen pb-16 bg-gray-50'>
         <Suspense fallback={<LoadingCircular />}>
           {/* Post 상세 */}
           {!!postInfo &&
