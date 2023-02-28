@@ -15,7 +15,6 @@ import { postKeys } from '../utils/constants/reactQueryKeyConstants'
 import { getPostFromEachBoard } from '../utils/apis/postsApi'
 import LoadingCircular from '../components/layout/LoadingCircular'
 import QuestionAnswer from '@mui/icons-material/QuestionAnswer'
-import useSignInInfo from '../hooks/useSignInInfo'
 import Search from '@mui/icons-material/Search'
 import React, { useEffect, useState } from 'react'
 import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
@@ -23,19 +22,20 @@ import QnAPreview from '../components/common/QnAPreview'
 import { useBoardIdOfLastViewedStore, useMainPageScrollYStore } from '../stores/stores'
 import { useRouter } from 'next/router'
 import { SearchModal } from '../components/layout/mobileHeader/MobileBoardSearchHeader'
+import useUserInfo from '../hooks/useUserInfo'
 
 const Home: NextPage = () => {
   const router = useRouter()
-  const { userId } = useSignInInfo()
+  const userInfo = useUserInfo()
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { mainPageScrollY, setMainPageScrollY } = useMainPageScrollYStore()
   const { data: mainPagePostSummaryData, isLoading } = useQuery(
-    postKeys.mainPageSummary(userId ?? 0),
-    () => getPostFromEachBoard(userId ?? 0),
+    postKeys.mainPageSummary(userInfo?.userId ?? 0),
+    () => getPostFromEachBoard(userInfo?.userId ?? 0),
     {
-      enabled: !!userId,
+      enabled: !!userInfo?.userId,
       staleTime: 60000,
       refetchOnWindowFocus: false
     }
@@ -72,19 +72,23 @@ const Home: NextPage = () => {
           className='w-[6.8125rem] h-7'
           alt='소마인 로고'
         />
-        <button
-          onClick={() => setIsSearchMode(true)}
-          className={'absolute right-5' + (isSearchMode ? ' hidden' : ' inline')}
-        >
-          <Search className='w-6 h-6 text-white' />
-        </button>
+        {!!userInfo?.isCertified &&
+          <>
+            <button
+              onClick={() => setIsSearchMode(true)}
+              className={'absolute right-5' + (isSearchMode ? ' hidden' : ' inline')}
+            >
+              <Search className='w-6 h-6 text-white' />
+            </button>
 
-        <SearchModal
-          isSearchMode={isSearchMode}
-          setIsSearchMode={setIsSearchMode}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
+            <SearchModal
+              isSearchMode={isSearchMode}
+              setIsSearchMode={setIsSearchMode}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+            />
+          </>
+        }
 
         {/* TODO: 일단 overflow-hidden으로 해놓긴 했는데 끊기는 느낌나서 추후 수정 필요 */}
         {/*<div className={'pl-4 pr-2 py-1.5 flex items-center justify-between space-x-1 bg-gray-100 rounded duration-500 overflow-hidden' + (isSearchMode ? ' visible grow' : ' invisible w-0')}>*/}
