@@ -85,22 +85,21 @@ const SignUp = () => {
           <section className='space-y-5'>
             <article className='w-full flex items-center space-x-4'>
               <p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>
-              <input
-                type='text'
-                className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
-                placeholder='실명을 입력해주세요.'
-                maxLength={20}
-                value={name}
-                onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
-                required
-              />
+              {/*<input*/}
+              {/*  type='text'*/}
+              {/*  className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'*/}
+              {/*  placeholder='실명을 입력해주세요.'*/}
+              {/*  maxLength={20}*/}
+              {/*  value={name}*/}
+              {/*  onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가*/}
+              {/*  required*/}
+              {/*/>*/}
             </article>
             <article className='w-full flex items-center space-x-4'>
               <p className='text-base font-medium text-gray-900'>유형</p>
-              {/*<MuiSelectUserType userType={userType} setUserType={setUserType} />*/}
+              <MuiSelectUserType userType={userType} setUserType={setUserType} />
             </article>
-            {/*{(userType === '연수생' || userType === '멘토') &&*/}
-            {
+            {(userType === '연수생' || userType === '멘토') &&
               <>
                 <article className='w-full flex items-center space-x-4'>
                   <p className='text-base font-medium text-gray-900 whitespace-nowrap'>기수</p>
