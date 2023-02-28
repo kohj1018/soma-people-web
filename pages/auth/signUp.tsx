@@ -105,7 +105,7 @@ const SignUp = () => {
                   <p className='text-base font-medium text-gray-900 whitespace-nowrap'>기수</p>
                   <input
                     type='number'
-                    className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
+                    className='w-full px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
                     placeholder='ex. 13'
                     maxLength={2}
                     value={cardinalNumStr}
