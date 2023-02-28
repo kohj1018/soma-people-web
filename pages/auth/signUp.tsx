@@ -20,6 +20,15 @@ const SignUp = () => {
   const [cardinalNumStr, setCardinalNumStr] = useState<string>('')
   const { setMessage } = useSnackbarOpenStore()
 
+  // 이름 입력 제한 함수
+  const nameInputRestriction = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length < e.target.maxLength + 1) {
+      if (!(/[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g).test(e.target.value)) {  // 한글만 입력되게 제한
+        setName(e.target.value)
+      }
+    }
+  }
+
   // 유저 가입 함수
   const handleSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -81,7 +90,7 @@ const SignUp = () => {
               placeholder='실명을 입력해주세요.'
               maxLength={20}
               value={name}
-              onChange={(e) => { if (e.target.value.length < e.target.maxLength + 1) setName(e.target.value) }} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
+              onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
               required
             />
           </article>
