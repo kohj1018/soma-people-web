@@ -83,7 +83,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
         onClick={() => setIsCommentAnonymous(!isCommentAnonymous)}
         className='flex items-center space-x-0.5'
       >
-        <p className='w-auto text-sm font-semibold text-gray-400'>익명</p>
+        <p className='w-[1.5625rem] text-sm font-semibold text-gray-400'>익명</p>
         <CheckBox className={'!w-4 !h-4' + (isCommentAnonymous ? ' text-gray-700' : ' text-gray-300')} />
       </button>
       <textarea
