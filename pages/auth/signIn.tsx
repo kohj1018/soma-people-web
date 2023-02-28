@@ -6,6 +6,11 @@ import { useEffect, useState } from 'react'
 import LoadingCircular from '../../components/layout/LoadingCircular'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
+import signInBackGround from '../../public/signInBackGround.svg'
+import mainLogo from '../../public/mainLogo.svg'
+import googleLogo from '../../public/icon/signInIcon/googleLogo.svg'
+import appleLogo from '../../public/icon/signInIcon/appleLogo.svg'
 
 interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
@@ -32,37 +37,52 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
   if (isLoading) return <LoadingCircular />
 
   return (
-    <div>
-      {providers &&
-        Object.values(providers).map((provider) => {
-          switch (provider.name) {
-            case 'Google':
-              return (
-                <button
-                  key={provider.name}
-                  className='pl-2 pr-4 py-3 flex items-center justify-between space-x-6 rounded border border-blue-500'
-                  onClick={() => goToSignIn(provider.id)}
-                >
-                  <p className='font-roboto text-base font-medium text-blue-500 lg:text-[1.4375rem]'>구글 계정으로 로그인하기</p>
-                </button>
-              )
-            case 'Apple':
-              return (
-                <button
-                  key={provider.name}
-                  className='pl-2 pr-4 py-3 flex items-center justify-between space-x-6 rounded border border-blue-500'
-                  onClick={() => goToSignIn(provider.id)}
-                >
-                  <p className='font-roboto text-base font-medium text-blue-500 lg:text-[1.4375rem]'>애플 계정으로 로그인하기</p>
-                </button>
-              )
-            default:
-              return (
-                <p>에러</p>
-              )
-          }
-        })
-      }
+    <div className='w-full h-screen relative overflow-hidden'>
+      <Image
+        src={signInBackGround}
+        className='w-full h-auto'
+        alt='로그인 배경화면'
+      />
+      <Image
+        src={mainLogo}
+        className='moveToCenter'
+        alt='소마인 로고'
+      />
+
+      <section className='absolute top-3/4 moveToXAxisCenter w-3/4 flex flex-col items-center space-y-5'>
+        {providers &&
+          Object.values(providers).map((provider) => {
+            switch (provider.name) {
+              case 'Google':
+                return (
+                  <button
+                    key={provider.name}
+                    className='w-full h-10 px-10 flex items-center justify-center space-x-2 rounded bg-white'
+                    onClick={() => goToSignIn(provider.id)}
+                  >
+                    <Image src={googleLogo} className='w-[1.125rem] h-[1.125rem]' alt='구글 로고' />
+                    <p className='font-roboto text-sm font-medium text-black'>Google 계정으로 로그인</p>
+                  </button>
+                )
+              case 'Apple':
+                return (
+                  <button
+                    key={provider.name}
+                    className='w-full h-10 px-10 flex items-center justify-center rounded bg-white'
+                    onClick={() => goToSignIn(provider.id)}
+                  >
+                    <Image src={appleLogo} className='w-10 h-10' alt='애플 로고' />
+                    <p className='font-roboto text-sm font-medium text-black'>Apple 계정으로 로그인</p>
+                  </button>
+                )
+              default:
+                return (
+                  <p>에러</p>
+                )
+            }
+          })
+        }
+      </section>
     </div>
   )
 }
