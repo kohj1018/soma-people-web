@@ -84,7 +84,7 @@ const SignUp = () => {
 
           <section className='space-y-5'>
             <article className='w-full flex items-center space-x-4'>
-              <p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>
+              <p className='text-base font-medium text-gray-900'>이름</p>
               <input
                 type='text'
                 className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
@@ -102,7 +102,7 @@ const SignUp = () => {
             {(userType === '연수생' || userType === '멘토') &&
               <>
                 <article className='w-full flex items-center space-x-4'>
-                  <div className='w-7 text-base font-medium text-gray-900'>기수</div>
+                  <p className='text-base font-medium text-gray-900'>기수</p>
                   <input
                     type='number'
                     className='grow px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
