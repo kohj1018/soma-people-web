@@ -36,13 +36,15 @@ const Certification: NextPage = () => {
 
   const uploadImage = () => {
     if (!!image) {
-      if (uploadImageUrl) {
+      if (!process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || !process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) {
+        setMessage('잠시만 기다려주세요...')
+      } else if (uploadImageUrl) {
         setMessage('이미 업로드 되었습니다. 상단의 등록버튼을 눌러 완료해주세요.')
       } else {
         const data = new FormData()
         data.append('file', image)
-        data.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string)
-        data.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME as string)
+        data.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET )
+        data.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME )
         if (!!userInfo) {
           data.append('public_id', userInfo.userId + '_' + userInfo.name + '_' + (userInfo.cardinalNum ? `${userInfo.cardinalNum}기` : '') + '_' + userInfo.userType + '_' + dayjs().format('YY-MM-DD_HH:mm'))
         }
