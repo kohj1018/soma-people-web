@@ -11,3 +11,12 @@ export type SignInInfoPersist = (
   config: StateCreator<SignInInfoState>,
   options: PersistOptions<SignInInfoState>
 ) => StateCreator<SignInInfoState>
+
+export type CertificationRequestState = {
+  isAlreadyRequest: boolean
+  setIsAlreadyRequest: (isAlreadyRequest: boolean) => void
+}
+export type CertificationRequestPersist = (
+  config: StateCreator<CertificationRequestState>,
+  options: PersistOptions<CertificationRequestState>
+) => StateCreator<CertificationRequestState>

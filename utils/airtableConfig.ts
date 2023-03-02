@@ -20,7 +20,7 @@ export const postCSContent = (csType: CsType, userId: number, name: string = 'na
 ])
 
 // @ts-ignore
-export const sendVerificationRequest = (userId: number, name: string, userType: UserType, cardinalNum: number | null, imgUrl: string) => base('certification').create([
+export const sendCertificationRequest = (userId: number, name: string, userType: UserType, cardinalNum: number | null, imgUrl: string) => base('certification').create([
     {
         "fields": {
             "userId": userId,

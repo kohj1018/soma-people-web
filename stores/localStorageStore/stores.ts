@@ -1,6 +1,11 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { SignInInfoPersist, SignInInfoState } from './storeTypes'
+import {
+  CertificationRequestPersist,
+  CertificationRequestState,
+  SignInInfoPersist,
+  SignInInfoState,
+} from './storeTypes'
 
 /** 유저 아이디와 OAuth에서 받은 id를 저장하는 Store */
 export const useSignInInfoStore = create<SignInInfoState>(
@@ -17,6 +22,21 @@ export const useSignInInfoStore = create<SignInInfoState>(
     }),
     {
       name: 'signInInfo'
+    }
+  )
+)
+
+/** 소마인 인증 신청 여부를 저장하는 Store */
+export const useCertificationRequestStore = create<CertificationRequestState>(
+  (persist as CertificationRequestPersist)(
+    (set) => ({
+      isAlreadyRequest: false,
+      setIsAlreadyRequest: (isAlreadyRequest: boolean) => {
+        set((state) => ({...state, isAlreadyRequest: isAlreadyRequest}))
+      }
+    }),
+    {
+      name: 'certificationRequest'
     }
   )
 )

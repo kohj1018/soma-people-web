@@ -11,9 +11,21 @@ import Mode from '@mui/icons-material/Mode'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import VerifiedUser from '@mui/icons-material/VerifiedUser'
 import { VERSION } from '../../utils/config'
+import { useCertificationRequestStore } from '../../stores/localStorageStore/stores'
+import { useRouter } from 'next/router'
+import { MuiDialog } from '../../components/common/MuiDialog'
+import { useState } from 'react'
 
 const Profile: NextPage = () => {
+  const router = useRouter()
   const userInfo = useUserInfo()
+  const [isRequestAgainDialogOpen, setIsRequestAgainDialogOpen] = useState<boolean>(false)
+  const { isAlreadyRequest, setIsAlreadyRequest } = useCertificationRequestStore()
+
+  const resetCertificationRequest = () => {
+    setIsAlreadyRequest(false)
+    router.push('/profile/certification')
+  }
 
   if (!userInfo) return <LoadingCircular />
 
@@ -74,19 +86,38 @@ const Profile: NextPage = () => {
               <p className='text-base font-semibold text-gray-900'>소마인 인증 완료</p>
             </div>
           ) : (
-            <Link
-              href='/profile/certification'
-              className='block p-4 space-y-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'
-            >
-              <header className='w-full flex items-center justify-between'>
-                <div className='flex items-center space-x-2'>
-                  <VerifiedUser className='!w-6 !h-6 text-blue-500' />
-                  <p className='text-base font-semibold text-gray-900'>소마인 인증하기</p>
+            <>
+              {isAlreadyRequest ? (
+                <div className='p-4 space-y-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'>
+                  <div className='flex items-center space-x-2'>
+                    <VerifiedUser className='!w-6 !h-6 text-blue-500' />
+                    <p className='text-base font-semibold text-gray-900'>소마인 인증 대기중 ...</p>
+                  </div>
+                  <div className='w-full flex items-center justify-end'>
+                    <button
+                      onClick={() => setIsRequestAgainDialogOpen(true)}
+                      className='text-xs font-medium text-red-400'
+                    >
+                      인증 재요청하기
+                    </button>
+                  </div>
                 </div>
-                <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
-              </header>
-              <p className='text-sm font-medium text-gray-400'>소마인 인증을 받으면 연수생/수료생 게시판을 이용할 수 있어요!</p>
-            </Link>
+              ) : (
+                <Link
+                  href='/profile/certification'
+                  className='block p-4 space-y-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'
+                >
+                  <header className='w-full flex items-center justify-between'>
+                    <div className='flex items-center space-x-2'>
+                      <VerifiedUser className='!w-6 !h-6 text-blue-500' />
+                      <p className='text-base font-semibold text-gray-900'>소마인 인증하기</p>
+                    </div>
+                    <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
+                  </header>
+                  <p className='text-sm font-medium text-gray-400'>소마인 인증을 받으면 연수생/수료생 게시판을 이용할 수 있어요!</p>
+                </Link>
+              )}
+            </>
           )}
         </section>
 
@@ -143,6 +174,16 @@ const Profile: NextPage = () => {
           </section>
         </article>
       </MainArea>
+
+      {/* 인증 재요청 확인 다이얼로그 */}
+      <MuiDialog
+        isDialogOpen={isRequestAgainDialogOpen}
+        setIsDialogOpen={setIsRequestAgainDialogOpen}
+        dialogTitle='인증 재요청'
+        dialogContent='인증에는 최대 1~2일이 걸립니다. 기한을 넘기거나 문제가 발생해 운영자가 요구한 경우에만 재요청하는 것을 권고합니다. 인증을 재요청 하시겠습니까?'
+        executedBtnName='예'
+        funcToBeExecuted={resetCertificationRequest}
+      />
     </MainContainer>
   )
 }
