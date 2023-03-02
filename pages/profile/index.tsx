@@ -22,6 +22,7 @@ const Profile: NextPage = () => {
   const [isRequestAgainDialogOpen, setIsRequestAgainDialogOpen] = useState<boolean>(false)
   const { isAlreadyRequest, setIsAlreadyRequest } = useCertificationRequestStore()
 
+  // 인증 재요청 함수
   const resetCertificationRequest = () => {
     setIsAlreadyRequest(false)
     router.push('/profile/certification')

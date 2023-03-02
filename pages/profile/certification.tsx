@@ -41,13 +41,13 @@ const Certification: NextPage = () => {
       } else {
         const data = new FormData()
         data.append('file', image)
-        data.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET as string)
-        data.append('cloud_name', process.env.CLOUDINARY_CLOUD_NAME as string)
+        data.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string)
+        data.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME as string)
         if (!!userInfo) {
           data.append('public_id', userInfo.userId + '_' + userInfo.name + '_' + (userInfo.cardinalNum ? `${userInfo.cardinalNum}기` : '') + '_' + userInfo.userType + '_' + dayjs().format('YY-MM-DD_HH:mm'))
         }
 
-        fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
           method: 'post',
           body: data
         }).then((res) => res.json())
