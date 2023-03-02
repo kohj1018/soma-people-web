@@ -40,6 +40,7 @@ const Home: NextPage = () => {
       refetchOnWindowFocus: false
     }
   )
+  const [isOutLinkLoading, setIsOutLinkLoading] = useState<boolean>(false)
 
   // 스크롤 위치 유지
   useEffect(() => {
@@ -56,13 +57,19 @@ const Home: NextPage = () => {
   //   }
   // }
 
+  // 게시판으로 이동하기 함수
   const moveToBoardPage = (boardId: number) => {
     setMainPageScrollY(window.scrollY)  // 클릭할 때 window.scrollY 저장
     setBoardIdOfLastViewed(boardId)
     router.push('/board')
   }
 
-  if (isLoading) return <LoadingCircular />
+  const moveToOutLink = (link: string) => {
+    setIsOutLinkLoading(true)
+    window.location.href = link
+  }
+
+  if (isLoading || isOutLinkLoading) return <LoadingCircular />
 
   return (
     <MainContainer showFooterOnMobile={true}>
@@ -113,8 +120,8 @@ const Home: NextPage = () => {
           alt='배너'
         />
         <article className='py-6 flex items-center justify-center space-x-6 bg-white'>
-          <a
-            href='https://www.swmaestro.org/sw/bbs/B0000002/list.do?menuNo=200019'
+          <button
+            onClick={() => moveToOutLink('https://www.swmaestro.org/sw/bbs/B0000002/list.do?menuNo=200019')}
             className='flex flex-col items-center space-y-1'
           >
             <Image
@@ -123,9 +130,9 @@ const Home: NextPage = () => {
               alt='소마공지 아이콘'
             />
             <p className='text-sm font-medium text-slate-400'>소마공지</p>
-          </a>
-          <a
-            href='https://www.swmaestro.org/sw/main/contents.do?menuNo=200033'
+          </button>
+          <button
+            onClick={() => moveToOutLink('https://www.swmaestro.org/sw/main/contents.do?menuNo=200033')}
             className='flex flex-col items-center space-y-1'
           >
             <Image
@@ -134,9 +141,9 @@ const Home: NextPage = () => {
               alt='소마일정 아이콘'
             />
             <p className='text-sm font-medium text-slate-400'>소마일정</p>
-          </a>
-          <a
-            href='https://www.swmaestro.org/sw/main/main.do'
+          </button>
+          <button
+            onClick={() => moveToOutLink('https://www.swmaestro.org/sw/main/main.do')}
             className='flex flex-col items-center space-y-1'
           >
             <Image
@@ -145,9 +152,9 @@ const Home: NextPage = () => {
               alt='소마홈피 아이콘'
             />
             <p className='text-sm font-medium text-slate-400'>소마홈피</p>
-          </a>
-          <Link
-            href='/'
+          </button>
+          <button
+            onClick={() => moveToBoardPage(4)}
             className='flex flex-col items-center space-y-1'
           >
             <Image
@@ -156,7 +163,7 @@ const Home: NextPage = () => {
               alt='14기 준비 아이콘'
             />
             <p className='text-sm font-medium text-slate-400'>14기 준비</p>
-          </Link>
+          </button>
         </article>
 
         {/* 게시판 미리보기 */}
