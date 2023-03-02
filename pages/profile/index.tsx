@@ -181,7 +181,7 @@ const Profile: NextPage = () => {
         isDialogOpen={isRequestAgainDialogOpen}
         setIsDialogOpen={setIsRequestAgainDialogOpen}
         dialogTitle='인증 재요청'
-        dialogContent='인증에는 최대 1~2일이 걸립니다. 기한을 넘기거나 문제가 발생해 운영자가 요구한 경우에만 재요청하는 것을 권고합니다. 인증을 재요청 하시겠습니까?'
+        dialogContent='인증에는 최대 1~2일이 걸립니다. 너무 오래 걸리거나, 운영자가 재요청을 요구한 경우에만 진행하는 것을 권고합니다. 인증을 재요청 하시겠습니까?'
         executedBtnName='예'
         funcToBeExecuted={resetCertificationRequest}
       />

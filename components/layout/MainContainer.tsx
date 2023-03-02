@@ -5,9 +5,10 @@ import Head from 'next/head'
 
 interface Props {
   children: React.ReactNode
+  showFooterOnMobile?: boolean
 }
 
-const MainContainer = ({ children }: Props) => {
+const MainContainer = ({ children, showFooterOnMobile = false }: Props) => {
   return (
     <>
       <Head>
@@ -16,7 +17,7 @@ const MainContainer = ({ children }: Props) => {
 
       <MainHeader />
       {children}
-      <MainFooter />
+      <MainFooter showFooterOnMobile={showFooterOnMobile} />
     </>
   )
 }

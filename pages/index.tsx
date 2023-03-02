@@ -65,7 +65,7 @@ const Home: NextPage = () => {
   if (isLoading) return <LoadingCircular />
 
   return (
-    <MainContainer>
+    <MainContainer showFooterOnMobile={true}>
       <header className='fixed h-14 top-0 inset-x-0 px-5 flex items-center justify-between bg-zinc-900 z-50 lg:hidden'>
         <Image
           src={mainLogo}
