@@ -17,7 +17,7 @@ function BottomCenterSnackbar({ isSnackbarOpen, setIsSnackbarOpen, message }: Pr
       key='bottomcenter'
       autoHideDuration={3000}
     >
-      <div className='w-full flex items-center space-x-1.5 text-white'>
+      <div className='w-full flex items-stretch space-x-1.5 text-white'>
         <CheckCircle className='!w-5 !h-5' />
         <p className='text-base font-semibold'>{message}</p>
       </div>

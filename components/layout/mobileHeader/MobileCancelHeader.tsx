@@ -10,7 +10,7 @@ function MobileCancelHeader({ title, buttonFunc }: Props) {
   const router = useRouter()
 
   return (
-    <header className='fixed h-14 top-0 inset-x-0 px-5 py-3.5 flex items-center justify-center bg-white'>
+    <header className='fixed h-14 top-0 inset-x-0 px-5 py-3.5 flex items-center justify-center bg-white z-50 lg:hidden'>
       <button
         onClick={() => router.back()}
         className='absolute left-5'

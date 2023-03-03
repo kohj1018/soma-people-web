@@ -21,8 +21,9 @@ import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
 import QnAPreview from '../components/common/QnAPreview'
 import { useBoardIdOfLastViewedStore, useMainPageScrollYStore } from '../stores/stores'
 import { useRouter } from 'next/router'
-import { SearchModal } from '../components/layout/mobileHeader/MobileBoardSearchHeader'
 import useUserInfo from '../hooks/useUserInfo'
+import SearchModal from '../components/common/SearchModal'
+import SEO from '../components/SEO'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -73,6 +74,8 @@ const Home: NextPage = () => {
 
   return (
     <MainContainer showFooterOnMobile={true}>
+      <SEO title='소마인 : 소프트웨어 마에스트로 커뮤니티' />
+
       <header className='fixed h-14 top-0 inset-x-0 px-5 flex items-center justify-between bg-zinc-900 z-50 lg:hidden'>
         <Image
           src={mainLogo}
@@ -90,6 +93,8 @@ const Home: NextPage = () => {
             </button>
 
             <SearchModal
+              boardId={0}
+              boardName='통합'
               isSearchMode={isSearchMode}
               setIsSearchMode={setIsSearchMode}
               searchTerm={searchTerm}
@@ -226,7 +231,7 @@ const Home: NextPage = () => {
             </section>
           </article>
 
-          <article className='pt-8 px-5 bg-white'>
+          <article className='pt-8 px-5 pb-7 bg-white'>
             <button
               onClick={() => moveToBoardPage(4)}
               className='w-full flex items-center justify-between'

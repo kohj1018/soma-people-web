@@ -14,7 +14,7 @@ function MobileBackHeader({ title, children }: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   return (
-    <header className='fixed h-14 top-0 inset-x-0 px-5 py-4 flex items-center justify-between bg-white z-50'>
+    <header className='fixed h-14 top-0 inset-x-0 px-5 py-4 flex items-center justify-between bg-white z-50 lg:hidden'>
       <button
         onClick={() => router.back()}
         className='flex items-center space-x-2'

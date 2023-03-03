@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Mode from '@mui/icons-material/Mode'
 import { useRouter } from 'next/router'
+import SEO from '../../components/SEO'
 const InfinitePostListSection = dynamic(() => import('../../components/common/InfinitePostListSection'),{loading: () => <LoadingCircular />, ssr: false})
 
 const Board: NextPage = () => {
@@ -42,8 +43,15 @@ const Board: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title='게시판' />
+
       {/* 검색 헤더 */}
-      <MobileBoardSearchHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <MobileBoardSearchHeader
+        boardId={boardIdOfLastViewed}
+        boardName={boardInfoList.find((boardInfo) => boardInfo.boardId === boardIdOfLastViewed)?.name ?? ''}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       {/* 게시판 탭 */}
       <MobileBoardTap

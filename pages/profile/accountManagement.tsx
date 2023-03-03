@@ -1,16 +1,15 @@
 import { NextPage } from 'next'
 import MainContainer from '../../components/layout/MainContainer'
 import MainArea from '../../components/layout/MainArea'
-import MobileBackHeader from '../../components/layout/mobileHeader/MobileBackHeader'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import { MuiDialog } from '../../components/common/MuiDialog'
 import { useState } from 'react'
-import { signOut } from 'next-auth/react'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import { useRouter } from 'next/router'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import useUserInfo from '../../hooks/useUserInfo'
 import { updateUserByOAuthId } from '../../utils/apis/usersApi'
+import MobileCenterTitleHeader from '../../components/layout/mobileHeader/MobileCenterTitleHeader'
 
 const AccountManagement: NextPage = () => {
   const router = useRouter()
@@ -51,8 +50,7 @@ const AccountManagement: NextPage = () => {
 
   return (
     <MainContainer>
-      <MobileBackHeader title='계정관리'>
-      </MobileBackHeader>
+      <MobileCenterTitleHeader title='계정관리' />
 
       <MainArea className='px-5 py-8'>
         <article className='mt-10 space-y-3'>
