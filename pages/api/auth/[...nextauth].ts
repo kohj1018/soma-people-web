@@ -61,22 +61,17 @@ export default NextAuth({
       }
       return session
     },
-    async redirect({ url, baseUrl }) {
-      console.log('url : ', url)
-      console.log("baseUrl : ", baseUrl)
+    async redirect({ url, baseUrl }) {  // Apple의 callBackUrl 버그 해결을 위해 추가 (Google 로그인 막히는 문제 해결)
+
       // Allows relative callback URLs
-      if (url.startsWith("/")) {
-        console.log("url.startsWith(\"/\") -> return : ", `${baseUrl}${url}`)
-        return `${baseUrl}${url}`
-      }
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+
       // // Allows callback URLs on the same origin
-      // else if (new URL(url).origin === baseUrl) {
-      //   console.log("new URL(url).origin === baseUrl -> return : ", url)
-      //   return url
-      // }
-      // console.log("return baseUrl : ", baseUrl)
+      // else if (new URL(url).origin === baseUrl) return url
+
       // return baseUrl
-      return url
+
+      return url  // 바로 url 넘겨줌으로써 Google 로그인도 허용
     },
   },
   pages: {

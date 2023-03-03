@@ -31,8 +31,7 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
 
   const goToSignIn = (providerId: LiteralUnion<BuiltInProviderType, string>) => {
     setIsLoading(true)
-    signIn(providerId, { callbackUrl: process.env.SIGNIN_CALLBACK_URL }).then((res) => console.log("signIn Response : ", res))
-    // signIn(providerId).then((res) => console.log("signIn response : ", res))
+    signIn(providerId, { callbackUrl: process.env.SIGNIN_CALLBACK_URL })
   }
 
   if (isLoading) return <LoadingCircular />
