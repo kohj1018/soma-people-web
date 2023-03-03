@@ -3,17 +3,17 @@ import GoogleProvider from 'next-auth/providers/google'
 import AppleProvider from 'next-auth/providers/apple'
 
 export default NextAuth({
-  cookies: {  // Apple의 callBackUrl 버그 해결을 위해 추가
-    callbackUrl: {
-      name: `__Secure-next-auth.callback-url`,
-      options: {
-        // httpOnly: false,
-        sameSite: "none",
-        // path: "/",
-        // secure: true,
-      },
-    },
-  },
+  // cookies: {  // Apple의 callBackUrl 버그 해결을 위해 추가
+  //   callbackUrl: {
+  //     name: `__Secure-next-auth.callback-url`,
+  //     options: {
+  //       httpOnly: false,
+  //       sameSite: "none",
+  //       path: "/",
+  //       secure: true,
+  //     },
+  //   },
+  // },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -60,7 +60,24 @@ export default NextAuth({
         session.refreshToken = token.refreshToken
       }
       return session
-    }
+    },
+    async redirect({ url, baseUrl }) {
+      console.log('url : ', url)
+      console.log("baseUrl : ", baseUrl)
+      // Allows relative callback URLs
+      if (url.startsWith("/")) {
+        console.log("url.startsWith(\"/\") -> return : ", `${baseUrl}${url}`)
+        return `${baseUrl}${url}`
+      }
+      // // Allows callback URLs on the same origin
+      // else if (new URL(url).origin === baseUrl) {
+      //   console.log("new URL(url).origin === baseUrl -> return : ", url)
+      //   return url
+      // }
+      // console.log("return baseUrl : ", baseUrl)
+      // return baseUrl
+      return url
+    },
   },
   pages: {
     signIn: '/auth/signIn'
