@@ -78,6 +78,7 @@ const Home: NextPage = () => {
           src={mainLogo}
           className='w-[6.8125rem] h-7'
           alt='소마인 로고'
+          priority
         />
         {!!userInfo?.isCertified &&
           <>
@@ -118,6 +119,7 @@ const Home: NextPage = () => {
           src={banner}
           className='w-full h-auto'
           alt='배너'
+          priority
         />
         <article className='py-6 flex items-center justify-center space-x-6 bg-white'>
           <button
@@ -128,6 +130,7 @@ const Home: NextPage = () => {
               src={noticeIcon}
               className='h-9'
               alt='소마공지 아이콘'
+              priority
             />
             <p className='text-sm font-medium text-slate-400'>소마공지</p>
           </button>
@@ -139,6 +142,7 @@ const Home: NextPage = () => {
               src={scheduleIcon}
               className='h-9'
               alt='소마일정 아이콘'
+              priority
             />
             <p className='text-sm font-medium text-slate-400'>소마일정</p>
           </button>
@@ -150,6 +154,7 @@ const Home: NextPage = () => {
               src={somaHomePageIcon}
               className='h-9'
               alt='소마홈피 아이콘'
+              priority
             />
             <p className='text-sm font-medium text-slate-400'>소마홈피</p>
           </button>
@@ -161,6 +166,7 @@ const Home: NextPage = () => {
               src={peopleIcon}
               className='h-9'
               alt='14기 준비 아이콘'
+              priority
             />
             <p className='text-sm font-medium text-slate-400'>14기 준비</p>
           </button>

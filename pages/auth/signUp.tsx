@@ -52,27 +52,31 @@ const SignUp = () => {
         || (userType === '멘토' && checkCharacter(cardinalNumStr, false, setMessage))
         || userType === '준비생' || userType === '사무국')
     ) {
-      try {
-        addUser({
-          name: name,
-          userType: userType,
-          cardinalNum: cardinalNumStr.length < 1 ? null : parseInt(cardinalNumStr),
-          isCertified: false,
-          oauthId: oauthId ?? '',
-          refreshToken: session?.refreshToken ?? '',
-          agreeTerms: true,
-        }).then(async (response: AxiosResponse<number>) => {
-          setUserId(response.data)
-          setOauthId(oauthId)
-          setBoardIdOfLastViewed(4) // 미인증 이용자는 준비생 게시판만 이용 가능
-          setMessage('가입을 환영합니다🎉')
-          router.replace('/')
-        })
-      } catch (error) {
-        setMessage('오류가 발생했습니다. 다시 시도해주세요')
-        setUserId(null)
-        setOauthId(null)
-        router.replace('/auth/signIn')
+      if (name.includes('관리자') || name.includes('운영자')) {
+        setMessage('해당 이름은 사용할 수 없습니다.')
+      } else {
+        try {
+          addUser({
+            name: name,
+            userType: userType,
+            cardinalNum: cardinalNumStr.length < 1 ? (userType === '준비생' ? THIS_YEAR_CARDINAL_NUM : 0) : parseInt(cardinalNumStr),
+            isCertified: false,
+            oauthId: oauthId ?? '',
+            refreshToken: session?.refreshToken ?? '',
+            agreeTerms: true,
+          }).then((response: AxiosResponse<number>) => {
+            setUserId(response.data)
+            setOauthId(oauthId)
+            setBoardIdOfLastViewed(4) // 미인증 이용자는 준비생 게시판만 이용 가능
+            setMessage('가입을 환영합니다🎉')
+            router.replace('/')
+          })
+        } catch (error) {
+          setMessage('오류가 발생했습니다. 다시 시도해주세요')
+          setUserId(null)
+          setOauthId(null)
+          router.replace('/auth/signIn')
+        }
       }
     }
   }
