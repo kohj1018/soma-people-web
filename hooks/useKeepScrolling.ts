@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 function useKeepScrolling(scrollY: number) {
   useEffect(() => {
     // 기본값이 0이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤 시킴
-    if (scrollY !== 0) window.scrollTo(0, scrollY)
+    if (scrollY !== 0) setTimeout(() => window.scrollTo(0, scrollY), 2)
   }, [])
 }
 
