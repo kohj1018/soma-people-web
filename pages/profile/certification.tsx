@@ -117,7 +117,7 @@ const Certification: NextPage = () => {
           </p>
         </div>
 
-        <div className='mt-6 w-full px-5 flex items-center justify-between space-x-4'>
+        <div className='mt-6 w-full px-5 flex items-center justify-between space-x-4 pb-7'>
           <button
             onClick={() => inputRef.current?.click()}
             className={'px-3 py-2 rounded' + (!!image ? ' bg-white border border-gray-700' : ' bg-slate-900 border-none')}
