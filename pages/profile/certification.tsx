@@ -93,12 +93,13 @@ const Certification: NextPage = () => {
       <MainArea>
         <article className='mt-8 px-5 space-y-2.5'>
           <p className='text-base font-semibold text-gray-900'>
-            아래 경로를 따라 들어가<br/>
-            예시 사진과 같이 가입유형이 보이게 캡처해주세요
+            아래 경로를 따라 들어가 예시 사진과 같이<br/>
+            가입유형이 보이게 캡처해주세요
           </p>
           <div className='px-3 py-1.5 bg-blue-50'>
             <p className='text-sm font-semibold text-blue-500'>
-              소마 홈페이지 로그인 {'>'} MyPage {'>'} 회원정보/My git<br/>
+              소마 홈페이지 로그인<br/>
+              {'>'} MyPage {'>'} 회원정보/My git<br/>
               {'>'} 회원정보 수정 {'>'} 기본정보 입력 탭
             </p>
           </div>
@@ -108,16 +109,16 @@ const Certification: NextPage = () => {
           <p className='inline px-1.5 py-1 rounded bg-gray-100 border border-gray-300 text-sm font-semibold text-gray-500'>예시 사진 안내</p>
           <Image
             src={somaCertification}
-            className='w-full h-auto'
+            className='w-full h-auto border border-gray-200'
             alt='소마인 인증방법 예시 사진'
           />
           <p className='text-xs font-semibold text-red-500'>
             ⓛ 이름, 가입 유형을 제외한 정보는 가려주세요.<br/>
-            ② 소마인 인증은 소마 구성원만 가능하며, 준비생은 불가합니다.
+            ② 인증은 소마 구성원만 가능하며, 준비생은 불가합니다.
           </p>
         </div>
 
-        <div className='mt-6 w-full px-5 flex items-center justify-between space-x-4 pb-7'>
+        <div className='mt-6 w-full px-5 flex items-center space-x-4 pb-7'>
           <button
             onClick={() => inputRef.current?.click()}
             className={'px-3 py-2 rounded' + (!!image ? ' bg-white border border-gray-700' : ' bg-slate-900 border-none')}
