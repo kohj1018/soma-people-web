@@ -13,7 +13,13 @@
   }
 
   html, body {
-    @apply p-0 m-0 font-pretendard
+    @apply p-0 m-0 font-pretendard;
+
+    /* 모바일 디바이스 글자 크기 깨짐 방지 */
+    -webkit-text-size-adjust : none;  /* 크롬, 사파리, 오페라 신버전 */
+    -ms-text-size-adjust : none;  /* IE */
+    -moz-text-size-adjust : none;  /* 파이어폭스 */
+    -o-text-size-adjust : none;  /* 오페라 구버전 */
   }
 
   a {

@@ -113,8 +113,8 @@ const Certification: NextPage = () => {
             alt='소마인 인증방법 예시 사진'
           />
           <p className='text-xs font-semibold text-red-500'>
-            ⓛ 이름, 가입 유형을 제외한 정보는 가려주세요.<br/>
-            ② 인증은 소마 구성원만 가능하며, 준비생은 불가합니다.
+            1) 이름, 가입 유형을 제외한 정보는 가려주세요.<br/>
+            2) 인증은 소마 구성원만 가능하며, 준비생은 불가합니다.
           </p>
         </div>
 
