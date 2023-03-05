@@ -15,6 +15,8 @@ import { useRouter } from 'next/router'
 import SEO from '../../components/SEO'
 import { useInfinitePostsScrollYStore } from '../../stores/scrollStore/scrollStores'
 import useKeepScrolling from '../../hooks/useKeepScrolling'
+import { REFERENCE_VALUE_TO_SWIPE } from '../../utils/constants/systemConstants'
+import { isNotEmptyArray } from '../../utils/functions/isNotEmptyArray'
 const InfinitePostListSection = dynamic(() => import('../../components/common/InfinitePostListSection'),{loading: () => <LoadingCircular />, ssr: false})
 
 const Board: NextPage = () => {
@@ -38,6 +40,46 @@ const Board: NextPage = () => {
 
   // 스크롤 위치 유지
   useKeepScrolling(infinitePostsScrollY)
+
+  // 스와이프 제스쳐 감지
+  useEffect(() => {
+    let touchstartX = 0
+    let touchendX = 0
+    let curBoardIdx = boardInfoList.findIndex(boardInfo => boardInfo.boardId === boardIdOfLastViewed)
+
+    function handleStartTouch(e: TouchEvent) {
+      touchstartX = e.changedTouches[0].screenX
+    }
+
+    function handleEndTouch(e: TouchEvent) {
+      touchendX = e.changedTouches[0].screenX
+
+      // Check Direction
+      if (touchendX - touchstartX < -REFERENCE_VALUE_TO_SWIPE) {  // 왼쪽으로 스와이프
+        if (curBoardIdx < boardInfoList.length - 1) {
+          curBoardIdx += 1
+          setBoardIdOfLastViewed(boardInfoList[curBoardIdx].boardId)
+        }
+      }
+      if (touchendX - touchstartX > REFERENCE_VALUE_TO_SWIPE) {   // 오른쪽으로 스와이프
+        if (curBoardIdx > 0) {
+          curBoardIdx -= 1
+          setBoardIdOfLastViewed(boardInfoList[curBoardIdx].boardId)
+        }
+      }
+    }
+
+    if (isNotEmptyArray(boardInfoList)) {
+
+      document.addEventListener('touchstart', handleStartTouch)
+      document.addEventListener('touchend', handleEndTouch)
+
+      return () => {
+        document.removeEventListener('touchstart', handleStartTouch)
+        document.removeEventListener('touchend', handleEndTouch)
+      }
+    }
+  }, [boardInfoList])
 
 
   return (
