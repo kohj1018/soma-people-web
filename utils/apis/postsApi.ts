@@ -30,7 +30,7 @@ export const searchPostInfoList = async (searchTerm: string, boardIdToSearch: nu
 }
 
 /** 유저가 작성한 게시글 모두 불러오기 */
-export const getPostInfoListByUser = async (userId: string): Promise<PostInfoType[]> => {
+export const getPostInfoListByUser = async (userId: number): Promise<PostInfoType[]> => {
   const res = await ec2.get<PostInfoType[]>(`/posts/writtenByUser/${userId}`)
   return res.data
 }

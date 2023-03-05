@@ -17,6 +17,7 @@ function MobileCenterTitleHeader({ title } : Props) {
         <KeyboardArrowLeft className='!w-6 !h-6 text-gray-700' />
       </button>
       <p className='text-base font-semibold text-gray-700'>{title}</p>
+      <div className='absolute bottom-0 inset-x-0 h-px bg-gray-100'></div>
     </header>
   )
 }

@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import MainContainer from '../../components/layout/MainContainer'
-import { useBoardIdOfLastViewedStore, useInfinitePostsScrollYStore, useSnackbarOpenStore } from '../../stores/stores'
+import { useBoardIdOfLastViewedStore, useSnackbarOpenStore } from '../../stores/stores'
 import MobileBoardSearchHeader from '../../components/layout/mobileHeader/MobileBoardSearchHeader'
 import { useEffect, useState } from 'react'
 import MobileBoardTap from '../../components/layout/mobileHeader/MobileBoardTap'
@@ -13,6 +13,8 @@ import Link from 'next/link'
 import Mode from '@mui/icons-material/Mode'
 import { useRouter } from 'next/router'
 import SEO from '../../components/SEO'
+import { useInfinitePostsScrollYStore } from '../../stores/scrollStore/scrollStores'
+import useKeepScrolling from '../../hooks/useKeepScrolling'
 const InfinitePostListSection = dynamic(() => import('../../components/common/InfinitePostListSection'),{loading: () => <LoadingCircular />, ssr: false})
 
 const Board: NextPage = () => {
@@ -35,10 +37,7 @@ const Board: NextPage = () => {
   }, [userInfo])
 
   // 스크롤 위치 유지
-  useEffect(() => {
-    // 기본값이 0이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤 시킴
-    if (infinitePostsScrollY !== 0) window.scrollTo(0, infinitePostsScrollY)
-  }, [])
+  useKeepScrolling(infinitePostsScrollY)
 
 
   return (

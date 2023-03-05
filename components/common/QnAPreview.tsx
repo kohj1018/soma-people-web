@@ -3,7 +3,7 @@ import UserTypeTag from '../tag/UserTypeTag'
 import { UserType } from '../../utils/types/userType'
 import { getElapsedTime } from '../../utils/functions/getElapsedTime'
 import dayjs from 'dayjs'
-import { useMainPageScrollYStore } from '../../stores/stores'
+import { useMainPageScrollYStore } from '../../stores/scrollStore/scrollStores'
 
 interface Props {
   postId: number

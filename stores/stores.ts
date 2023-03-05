@@ -1,11 +1,5 @@
-import {
-  BoardIdOfLastViewedState, BoardTapScrollXState,
-  InfinitePostsScrollYState,
-  MainPageScrollYState,
-  SnackbarOpenState,
-} from './storeTypes'
+import { BoardIdOfLastViewedState, SnackbarOpenState } from './storeTypes'
 import { create } from 'zustand'
-import { RefObject, useRef } from 'react'
 
 /** 스낵바 띄우는 Store */
 export const useSnackbarOpenStore = create<SnackbarOpenState>((set) => ({
@@ -24,29 +18,5 @@ export const useBoardIdOfLastViewedStore = create<BoardIdOfLastViewedState>((set
   boardIdOfLastViewed: 1,
   setBoardIdOfLastViewed: (boardIdOfLastViewed: number) => {
     set((state) => ({ ...state, boardIdOfLastViewed: boardIdOfLastViewed }))
-  }
-}))
-
-/** 게시글 무한 스크롤 Y값을 저장하는 Store */
-export const useInfinitePostsScrollYStore = create<InfinitePostsScrollYState>((set) => ({
-  infinitePostsScrollY: 0,
-  setInfinitePostsScrollY: (infinitePostsScrollY: number) => {
-    set((state) => ({ ...state, infinitePostsScrollY: infinitePostsScrollY }))
-  }
-}))
-
-/** 메인 페이지 스크롤 Y값을 저장하는 Store */
-export const useMainPageScrollYStore = create<MainPageScrollYState>((set) => ({
-  mainPageScrollY: 0,
-  setMainPageScrollY: (mainPageScrollY: number) => {
-    set((state) => ({ ...state, mainPageScrollY: mainPageScrollY }))
-  }
-}))
-
-/** 게시판 탭 스크롤 X값을 저장하는 Store */
-export const useBoardTapScrollXStore = create<BoardTapScrollXState>((set) => ({
-  boardTapScrollX: 0,
-  setBoardTapScrollX: (boardTapScrollX: number) => {
-    set((state) => ({ ...state, boardTapScrollX: boardTapScrollX }))
   }
 }))

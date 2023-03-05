@@ -1,6 +1,5 @@
 import { BoardInfoType } from '../../../utils/types/responseTypes'
 import { useEffect, useRef } from 'react'
-import { useBoardTapScrollXStore } from '../../../stores/stores'
 
 interface Props {
   boardInfoList: BoardInfoType[]

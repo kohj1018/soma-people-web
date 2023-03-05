@@ -31,7 +31,7 @@ const Profile: NextPage = () => {
   if (!userInfo) return <LoadingCircular />
 
   return (
-    <MainContainer>
+    <MainContainer showFooterOnMobile={true}>
       <header className='absolute top-0 inset-x-0 px-5 py-3.5 bg-zinc-900'>
         <h1 className='text-xl font-semibold text-white'>프로필</h1>
       </header>
@@ -52,7 +52,7 @@ const Profile: NextPage = () => {
             </header>
             <section className='mt-6 space-y-3'>
               <Link
-                href='/'
+                href={`/profile/record/posts`}
                 className='px-4 py-3 flex items-center justify-between rounded bg-gray-50'
               >
                 <div className='flex items-center space-x-2'>
@@ -65,12 +65,12 @@ const Profile: NextPage = () => {
                 <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
               </Link>
               <Link
-                href='/'
+                href='/profile/record/comments'
                 className='px-4 py-3 flex items-center justify-between rounded bg-gray-50'
               >
                 <div className='flex items-center space-x-2'>
                   <Mode className='!w-5 !h-5 text-gray-300' />
-                  <p className='text-base font-medium text-gray-700'>답변한 글</p>
+                  <p className='text-base font-medium text-gray-700'>작성한 댓글</p>
                   <div className='px-2 py-0.5 flex items-center justify-center rounded-full bg-gray-100'>
                     <p className='text-sm font-semibold text-blue-700'>{userInfo.numOfCommentsWritten}</p>
                   </div>
@@ -158,7 +158,7 @@ const Profile: NextPage = () => {
         </article>
 
         {/* 기타 목록 */}
-        <article className='mt-10 space-y-3'>
+        <article className='mt-10 pb-7 space-y-3'>
           <header className='text-sm font-medium text-gray-400'>기타</header>
           <section className='space-y-6'>
             <a

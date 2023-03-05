@@ -4,7 +4,7 @@ import { getElapsedTime } from '../../utils/functions/getElapsedTime'
 import dayjs from 'dayjs'
 import UserTypeTag from '../tag/UserTypeTag'
 import QuestionAnswer from '@mui/icons-material/QuestionAnswer'
-import { useInfinitePostsScrollYStore } from '../../stores/stores'
+import { useInfinitePostsScrollYStore } from '../../stores/scrollStore/scrollStores'
 
 interface Props {
   postInfo: PostInfoType
@@ -18,7 +18,7 @@ function PostPreview({ postInfo }: Props) {
       href={`/post/${postInfo.postId}`}
       onClick={() => setInfinitePostsScrollY(window.scrollY)}  // 클릭할 때 window.scrollY 저장
     >
-      <div className='py-4 space-y-3.5 bg-white border-b border-gray-100'>
+      <article className='py-4 space-y-3.5 bg-white border-b border-gray-100'>
         <article className='space-y-1.5 font-medium'>
           <header className='text-base text-gray-900 truncate'>{postInfo.title}</header>
           <p className='text-sm text-gray-500'>{postInfo.content}</p>
@@ -33,7 +33,7 @@ function PostPreview({ postInfo }: Props) {
             <p className='text-sm font-semibold text-gray-500'>{postInfo.commentsNum}</p>
           </div>
         </footer>
-      </div>
+      </article>
     </Link>
   )
 }

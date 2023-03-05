@@ -1,0 +1,1 @@
+export const REFERENCE_VALUE_TO_SWIPE: number = 150

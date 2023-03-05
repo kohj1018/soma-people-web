@@ -19,11 +19,14 @@ import Search from '@mui/icons-material/Search'
 import React, { useEffect, useState } from 'react'
 import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
 import QnAPreview from '../components/common/QnAPreview'
-import { useBoardIdOfLastViewedStore, useMainPageScrollYStore } from '../stores/stores'
+import { useBoardIdOfLastViewedStore } from '../stores/stores'
 import { useRouter } from 'next/router'
 import useUserInfo from '../hooks/useUserInfo'
 import SearchModal from '../components/common/SearchModal'
 import SEO from '../components/SEO'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import { useMainPageScrollYStore } from '../stores/scrollStore/scrollStores'
+import useKeepScrolling from '../hooks/useKeepScrolling'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -44,10 +47,7 @@ const Home: NextPage = () => {
   const [isOutLinkLoading, setIsOutLinkLoading] = useState<boolean>(false)
 
   // 스크롤 위치 유지
-  useEffect(() => {
-    // 기본값이 0이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤 시킴
-    if (mainPageScrollY !== 0) window.scrollTo(0, mainPageScrollY)
-  }, [])
+  useKeepScrolling(mainPageScrollY)
 
 
   // const cancelSearch = () => {
@@ -83,25 +83,30 @@ const Home: NextPage = () => {
           alt='소마인 로고'
           priority
         />
-        {!!userInfo?.isCertified &&
-          <>
-            <button
-              onClick={() => setIsSearchMode(true)}
-              className={'absolute right-5' + (isSearchMode ? ' hidden' : ' inline')}
-            >
-              <Search className='w-6 h-6 text-white' />
-            </button>
+        <div className='flex items-center justify-end space-x-3'>
+          {!!userInfo?.isCertified &&
+            <>
+              <button
+                onClick={() => setIsSearchMode(true)}
+                className={(isSearchMode ? ' hidden' : ' inline')}
+              >
+                <Search className='w-6 h-6 text-white' />
+              </button>
 
-            <SearchModal
-              boardId={0}
-              boardName='통합'
-              isSearchMode={isSearchMode}
-              setIsSearchMode={setIsSearchMode}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-            />
-          </>
-        }
+              <SearchModal
+                boardId={0}
+                boardName='통합'
+                isSearchMode={isSearchMode}
+                setIsSearchMode={setIsSearchMode}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              />
+            </>
+          }
+          <Link href='/profile'>
+            <AccountCircle className='!w-6 !h-6 text-white' />
+          </Link>
+        </div>
 
         {/* TODO: 일단 overflow-hidden으로 해놓긴 했는데 끊기는 느낌나서 추후 수정 필요 */}
         {/*<div className={'pl-4 pr-2 py-1.5 flex items-center justify-between space-x-1 bg-gray-100 rounded duration-500 overflow-hidden' + (isSearchMode ? ' visible grow' : ' invisible w-0')}>*/}
