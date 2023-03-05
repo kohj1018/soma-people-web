@@ -51,7 +51,7 @@ const Home: NextPage = () => {
 
   // 인증받지 않은 사람들은 준비생 게시판으로 포커싱
   useEffect(() => {
-    if (!!userInfo) {
+    if (!!userInfo && !userInfo.isCertified) {
       setBoardIdOfLastViewed(4)
     }
   }, [userInfo])

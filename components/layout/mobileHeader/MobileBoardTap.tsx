@@ -13,64 +13,25 @@ function MobileBoardTap({ boardInfoList, boardIdOfLastViewed, setBoardIdOfLastVi
   // const { boardTapScrollX, setBoardTapScrollX } = useBoardTapScrollXStore()
   const selectedTapRef = useRef<HTMLButtonElement | null>(null)
 
-  useEffect(() => {
-    if (!!selectedTapRef.current) {
-      selectedTapRef.current.scrollIntoView()
-    }
-  }, [boardIdOfLastViewed])
-
+  // // 가로 스크롤 유지
   // useEffect(() => {
-  //   if (boardTapScrollX !== 0 && boardTapRef.current) {
-  //     boardTapRef.current.scrollTo({ left: boardTapScrollX })
+  //   if (boardTapScrollX !== 0) {
+  //     setTimeout(() => {
+  //       if (boardTapRef.current) {
+  //         console.log('scrollX : ', boardTapScrollX)
+  //         boardTapRef.current.scrollTo(boardTapScrollX, 0)
+  //       }
+  //     }, 2)
   //   }
   // }, [boardTapRef])
 
-  // useEffect(() => {
-  //
-  //   if (boardTapScrollX !== 0 && !!boardTapRef.current) {
-  //     // console.log("boardTapScrollX.scrollLeft : ", boardTapScrollX.scrollLeft)
-  //     // boardTapRef.current?.scrollTo({ left: boardTapScrollX.scrollLeft })
-  //     // boardTapRef.current.scrollLeft = boardTapScrollX
-  //     // console.log("boardTapScrollX : ", boardTapScrollX)
-  //     // console.log("boardTapRef.current.scrollLeft : ", boardTapRef.current.scrollLeft)
-  //     // boardTapScrollX.scrollIntoView()
-  //     console.log("실행되나여")
-  //     boardTapRef.current.scrollLeft = boardTapScrollX
-  //     // boardTapRef.current.scrollTo(boardTapScrollX, 0)
-  //     // window.scrollTo(0, boardTapScrollX)
-  //   }
-  // }, [])
-  //
-  // useEffect(() => {
-  //   console.log("boardTapScrollX : ", boardTapScrollX)
-  // }, [boardTapScrollX])
-  //
-  // useEffect(() => {
-  //   // if (boardTapScrollX !== 0 && boardTapRef.current) {
-  //   //   console.log("저장하려는 scrollLeft : ", boardTapRef.current?.scrollLeft)
-  //   // }
-  //
-  //   // if (boardTapRef.current && selectedTapRef.current) {
-  //   //   setBoardTapScrollX(boardTapRef.current.scrollLeft)
-  //   //   selectedTapRef.current.scrollIntoView()
-  //   // }
-  //
-  //   // if (selectedTapRef.current) {
-  //   //   console.log("selectedTapRef.current : ", selectedTapRef.current)
-  //   //   selectedTapRef.current.scrollIntoView()
-  //   // }
-  //
-  //   if (!!boardTapRef.current) {
-  //     // console.log("selectedTapRef.current.scrollWidth : ", selectedTapRef.current?.scrollWidth)
-  //     // console.log("boardTapRef.current?.scrollLeft : ", boardTapRef.current?.scrollLeft)
-  //     // selectedTapRef.current?.scrollIntoView()
-  //     if (boardTapRef.current.scrollLeft !== 0) {
-  //       setBoardTapScrollX(boardTapRef.current.scrollLeft)
-  //     }
-  //   }
-  //
-  //   // console.log("store에 저장되어 있는 ScrollX : ", boardTapScrollX)
-  // }, [boardIdOfLastViewed])
+  // 선택한 탭으로 포커싱
+  useEffect(() => {
+    if (!!selectedTapRef.current) {
+      selectedTapRef.current.scrollIntoView()
+      // if (boardTapRef.current && boardTapRef.current.scrollLeft !== 0) setBoardTapScrollX(boardTapRef.current.scrollLeft)
+    }
+  }, [boardIdOfLastViewed])
 
   return (
     <nav
