@@ -49,14 +49,14 @@ const Home: NextPage = () => {
   // 스크롤 위치 유지
   useKeepScrolling(mainPageScrollY)
 
+  // 인증받지 않은 사람들은 준비생 게시판으로 포커싱
+  useEffect(() => {
+    if (!!userInfo) {
+      setBoardIdOfLastViewed(4)
+    }
+  }, [userInfo])
 
-  // const cancelSearch = () => {
-  //   if (searchTerm) {
-  //     setSearchTerm('')
-  //   } else {
-  //     setIsSearchMode(false)
-  //   }
-  // }
+
 
   // 게시판으로 이동하기 함수
   const moveToBoardPage = (boardId: number) => {
@@ -65,9 +65,10 @@ const Home: NextPage = () => {
     router.push('/board')
   }
 
+  // 외부 링크 이동하기 함수
   const moveToOutLink = (link: string) => {
     setIsOutLinkLoading(true)
-    window.location.href = link
+    router.push(link)
   }
 
   if (isLoading || isOutLinkLoading) return <LoadingCircular />
