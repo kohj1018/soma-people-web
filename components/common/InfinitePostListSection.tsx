@@ -45,7 +45,6 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
   useEffect(() => {
     let touchstartX = 0
     let touchendX = 0
-    let curBoardIdx = boardInfoList.findIndex(boardInfo => boardInfo.boardId === boardIdOfLastViewed)
 
     function handleStartTouch(e: TouchEvent) {
       touchstartX = e.changedTouches[0].screenX
@@ -56,15 +55,15 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
 
       // Check Direction
       if (touchendX - touchstartX < -REFERENCE_VALUE_TO_SWIPE) {  // 왼쪽으로 스와이프
+        const curBoardIdx = boardInfoList.findIndex(boardInfo => boardInfo.boardId === boardIdOfLastViewed)
         if (curBoardIdx < boardInfoList.length - 1) {
-          curBoardIdx += 1
-          setBoardIdOfLastViewed(boardInfoList[curBoardIdx].boardId)
+          setBoardIdOfLastViewed(boardInfoList[curBoardIdx + 1].boardId)
         }
       }
       if (touchendX - touchstartX > REFERENCE_VALUE_TO_SWIPE) {   // 오른쪽으로 스와이프
+        const curBoardIdx = boardInfoList.findIndex(boardInfo => boardInfo.boardId === boardIdOfLastViewed)
         if (curBoardIdx > 0) {
-          curBoardIdx -= 1
-          setBoardIdOfLastViewed(boardInfoList[curBoardIdx].boardId)
+          setBoardIdOfLastViewed(boardInfoList[curBoardIdx - 1].boardId)
         }
       }
     }
