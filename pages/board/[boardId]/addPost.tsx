@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import MainContainer from '../../../components/layout/MainContainer'
 import MobileCancelHeader from '../../../components/layout/mobileHeader/MobileCancelHeader'
 import MainArea from '../../../components/layout/MainArea'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CheckBox from '@mui/icons-material/CheckBox'
 import useUserInfo from '../../../hooks/useUserInfo'
 import { useSnackbarOpenStore } from '../../../stores/stores'
@@ -31,6 +31,8 @@ const AddPost: NextPage = () => {
     }
   })
 
+  const [activateButton, setActivateButton] = useState<boolean>(false)
+  useEffect(() => { if (!!title && !!content) setActivateButton(true); else setActivateButton(false) }, [title, content]) // 등록 버튼 활성화
   const handleSubmit = () => {
     if (!!userInfo) {
       if (!title) {
@@ -51,7 +53,7 @@ const AddPost: NextPage = () => {
 
   return (
     <MainContainer>
-      <MobileCancelHeader title='글 작성하기' buttonFunc={handleSubmit} />
+      <MobileCancelHeader title='글 작성하기' buttonFunc={handleSubmit} activateButton={activateButton} />
 
       <MainArea className='px-5'>
         <input

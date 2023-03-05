@@ -4,7 +4,7 @@ import { postCSContent, ReportType } from '../../../utils/airtableConfig'
 import useUserInfo from '../../../hooks/useUserInfo'
 import MainContainer from '../../../components/layout/MainContainer'
 import { TextField } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MainArea from '../../../components/layout/MainArea'
 import MobileCancelHeader from '../../../components/layout/mobileHeader/MobileCancelHeader'
 import { useSnackbarOpenStore } from '../../../stores/stores'
@@ -20,6 +20,8 @@ const Report: NextPage = () => {
   const { setMessage } = useSnackbarOpenStore()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const [activateButton, setActivateButton] = useState<boolean>(false)
+  useEffect(() => { if (!!content) setActivateButton(true); else setActivateButton(false) }, [content]) // 등록 버튼 활성화
   const submitCSContent = () => {
     if (!!userInfo) {
       if (content.length > 10) {
@@ -42,7 +44,7 @@ const Report: NextPage = () => {
 
   return (
     <MainContainer>
-      <MobileCancelHeader title='신고하기' buttonFunc={submitCSContent} />
+      <MobileCancelHeader title='신고하기' buttonFunc={submitCSContent} activateButton={activateButton} />
       
       <MainArea className='px-5 space-y-4 lg:py-8 lg:space-y-6'>
         <h2 className='mt-4 text-xl font-semibold text-black lg:text-3xl'>🚨 신고하기</h2>

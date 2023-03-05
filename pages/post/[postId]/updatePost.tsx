@@ -30,6 +30,9 @@ const UpdatePost: NextPage = () => {
   const [title, setTitle] = useState<string>('')
   const [content, setContent] = useState<string>('')
   const [isAnonymous, setIsAnonymous] = useState<boolean>(true)
+
+  const [activateButton, setActivateButton] = useState<boolean>(false)
+  useEffect(() => { if (!!title && !!content) setActivateButton(true); else setActivateButton(false) }, [title, content]) // 등록 버튼 활성화
   const { handlePostMutation } = usePostMutation(postInfo, userInfo?.userId, false, title, content, isAnonymous)  // 게시글 수정 함수
 
   // 글 작성한게 본인이 아니라면 Redirect
@@ -51,7 +54,7 @@ const UpdatePost: NextPage = () => {
 
   return (
     <MainContainer>
-      <MobileCancelHeader title='글 수정하기' buttonFunc={handlePostMutation} />
+      <MobileCancelHeader title='글 수정하기' buttonFunc={handlePostMutation} activateButton={activateButton} />
 
       <MainArea className='px-5'>
         <input

@@ -4,7 +4,7 @@ import MainContainer from '../../components/layout/MainContainer'
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { CsType, postCSContent } from '../../utils/airtableConfig'
 import { useSnackbarOpenStore } from '../../stores/stores'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useUserInfo from '../../hooks/useUserInfo'
 import MainArea from '../../components/layout/MainArea'
 import MobileCancelHeader from '../../components/layout/mobileHeader/MobileCancelHeader'
@@ -18,6 +18,8 @@ const CustomerService: NextPage = () => {
   const userInfo = useUserInfo()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const [activateButton, setActivateButton] = useState<boolean>(false)
+  useEffect(() => { if (content.length > 10) setActivateButton(true); else setActivateButton(false) }, [content]) // 등록 버튼 활성화
   const submitCSContent = () => {
     if (!!userInfo) {
       if (content.length < 11) {
@@ -41,7 +43,7 @@ const CustomerService: NextPage = () => {
 
   return (
     <MainContainer>
-      <MobileCancelHeader title='문의/건의하기' buttonFunc={submitCSContent} />
+      <MobileCancelHeader title='문의/건의하기' buttonFunc={submitCSContent} activateButton={activateButton} />
 
       <MainArea className='px-5 space-y-4 lg:space-y-6'>
         <FormControl className='!mt-8 !w-full'>
