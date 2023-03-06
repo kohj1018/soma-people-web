@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand'
 import { PersistOptions } from 'zustand/middleware'
+import { useUserHiddenPostIdListStore } from './stores'
 
 export type SignInInfoState = {
   userId: number | null
@@ -20,3 +21,12 @@ export type CertificationRequestPersist = (
   config: StateCreator<CertificationRequestState>,
   options: PersistOptions<CertificationRequestState>
 ) => StateCreator<CertificationRequestState>
+
+export type UserHiddenPostIdListState = {
+  hiddenPostIdList: number[]
+  setHiddenPostIdList: (hiddenPostIdList: number[]) => void
+}
+export type UserHiddenPostIdListPersist = (
+  config: StateCreator<UserHiddenPostIdListState>,
+  options: PersistOptions<UserHiddenPostIdListState>
+) => StateCreator<UserHiddenPostIdListState>

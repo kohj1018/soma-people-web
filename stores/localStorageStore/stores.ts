@@ -4,7 +4,7 @@ import {
   CertificationRequestPersist,
   CertificationRequestState,
   SignInInfoPersist,
-  SignInInfoState,
+  SignInInfoState, UserHiddenPostIdListPersist, UserHiddenPostIdListState,
 } from './storeTypes'
 
 /** 유저 아이디와 OAuth에서 받은 id를 저장하는 Store */
@@ -37,6 +37,21 @@ export const useCertificationRequestStore = create<CertificationRequestState>(
     }),
     {
       name: 'certificationRequest'
+    }
+  )
+)
+
+/** 유저가 숨기기한 게시글 Id를 저장하는 Store */
+export const useUserHiddenPostIdListStore = create<UserHiddenPostIdListState>(
+  (persist as UserHiddenPostIdListPersist)(
+    (set) => ({
+      hiddenPostIdList: [],
+      setHiddenPostIdList: (hiddenPostIdList: number[]) => {
+        set((state) => ({...state, hiddenPostIdList: hiddenPostIdList}))
+      }
+    }),
+    {
+      name: 'hiddenPostIdList'
     }
   )
 )

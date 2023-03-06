@@ -20,6 +20,7 @@ import CommentWritingArea from '../../../components/common/CommentWritingArea'
 import usePostMutation from '../../../hooks/usePostMutation'
 import { MuiDialog } from '../../../components/common/MuiDialog'
 import { useSnackbarOpenStore } from '../../../stores/stores'
+import { useUserHiddenPostIdListStore } from '../../../stores/localStorageStore/stores'
 const CommentListSection = dynamic(() => import('../../../components/common/CommentListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const PostDetail: NextPage = () => {
@@ -37,6 +38,7 @@ const PostDetail: NextPage = () => {
       refetchOnWindowFocus: false
     }
   )
+  const { hiddenPostIdList, setHiddenPostIdList } = useUserHiddenPostIdListStore()
   const [isDeletePostDialogOpen, setIsDeletePostDialogOpen] = useState<boolean>(false)
   const { handlePostMutation: deletePost } = usePostMutation(postInfo, userInfo?.userId, true)  // 게시글 삭제 함수
 
@@ -68,22 +70,38 @@ const PostDetail: NextPage = () => {
     }
   }
 
+  // 게시글 숨기기 함수
+  const hidePost = () => {
+    setHiddenPostIdList(hiddenPostIdList.concat(postId))
+    setMessage('게시글 숨기기를 완료했습니다.')
+    router.back()
+  }
+
   return (
     <MainContainer>
       <MobileBackHeader title={postInfo?.board.name ?? ''}>
         {postInfo?.user.userId !== userInfo?.userId &&
-          <MenuItem
-            onClick={() => router.push({
-              pathname: '/customerService/report',
-              query: {
-                reportTargetId: postId,
-                reportTargetType: '게시글',
-                reportTargetTitle: postInfo?.title
-              }
-            })}
-          >
-            신고하기
-          </MenuItem>
+          [
+            <MenuItem
+              key='신고'
+              onClick={() => router.push({
+                pathname: '/customerService/report',
+                query: {
+                  reportTargetId: postId,
+                  reportTargetType: '게시글',
+                  reportTargetTitle: postInfo?.title
+                }
+              })}
+            >
+              신고하기
+            </MenuItem>,
+            <MenuItem
+              key='숨기기'
+              onClick={() => hidePost()}
+            >
+              게시글 숨기기
+            </MenuItem>
+          ]
         }
         {postInfo?.user.userId === userInfo?.userId &&
           [

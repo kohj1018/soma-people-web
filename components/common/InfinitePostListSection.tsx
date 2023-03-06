@@ -12,6 +12,7 @@ import noPostsIcon from '../../public/icon/noPostsIcon.svg'
 import Image from 'next/image'
 import { REFERENCE_VALUE_TO_SWIPE } from '../../utils/constants/systemConstants'
 import { BoardInfoType } from '../../utils/types/responseTypes'
+import { useUserHiddenPostIdListStore } from '../../stores/localStorageStore/stores'
 
 interface Props {
   userId: number | null
@@ -33,6 +34,7 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
       cacheTime: Infinity
     }
   )
+  const hiddenPostIdList = useUserHiddenPostIdListStore(state => state.hiddenPostIdList)
 
   // useEffect(() => {  //TODO : 자유게시판은 글 수정/삭제했을 때 바로 반영이 되는데 나머지 게시판만 invalidateQueries가 안먹힘. 추후 수정해야할듯
   //   console.log("key : ", postKeys.list(boardIdOfLastViewed, userId ?? 1))
@@ -94,9 +96,12 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
         {isNotEmptyArray(postInfoList?.pages[0].postList) ? (
           postInfoList?.pages.map((page, index) => (
             <Fragment key={index}>
-              {page.postList.map((postInfo) =>
-                <PostPreview key={postInfo.postId} postInfo={postInfo} />
-              )}
+              {page.postList.map((postInfo) => {
+                if (!hiddenPostIdList.includes(postInfo.postId)) {
+                  return <PostPreview key={postInfo.postId} postInfo={postInfo} />
+                }
+                return <></>
+              })}
             </Fragment>
           ))
         ) : (
