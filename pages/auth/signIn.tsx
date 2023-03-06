@@ -72,7 +72,7 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
                     onClick={() => goToSignIn(provider.id)}
                   >
                     <Image src={appleLogo} className='w-10 h-10' alt='애플 로고' />
-                    <p className='font-roboto text-sm font-medium text-black'>Apple 계정으로 로그인</p>
+                    <p className='font-roboto text-sm font-medium text-black'>Apple로 로그인</p>
                   </button>
                 )
               default:
