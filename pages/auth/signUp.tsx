@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import MainContainer from '../../components/layout/MainContainer'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { UserType } from '../../utils/types/userType'
 import MuiSelectUserType from '../../components/common/MuiSelectUserType'
 import { useBoardIdOfLastViewedStore, useSnackbarOpenStore } from '../../stores/stores'
@@ -20,6 +20,13 @@ const SignUp = () => {
   const [cardinalNumStr, setCardinalNumStr] = useState<string>('')
   const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { setMessage } = useSnackbarOpenStore()
+
+  // 자동 이름 입력 (앱스토어 요청 사항)
+  useEffect(() => {
+    if (session?.user) {
+      setName(session.user.name ?? '')
+    }
+  }, [session])
 
   // 이름 입력 제한 함수
   const nameInputRestriction = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,18 +96,23 @@ const SignUp = () => {
           <h1 className='text-2xl font-semibold text-gray-900'>기본 정보를<br/>입력해 주세요 🤗</h1>
 
           <section className='space-y-5'>
-            <article className='w-full flex items-center justify-between space-x-4'>
-              <p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>
-              <input
-                type='text'
-                className='w-full px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
-                placeholder='실명을 입력해주세요.'
-                maxLength={20}
-                value={name}
-                onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
-                required
-              />
-            </article>
+            <div>
+              <article className='w-full flex items-center justify-between space-x-4'>
+                <p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>
+                <input
+                  type='text'
+                  className='w-full px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
+                  placeholder='실명을 입력해주세요.'
+                  maxLength={20}
+                  value={name}
+                  onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
+                  required
+                />
+              </article>
+              {session?.user.name && userType === null &&
+                <p className='mt-1 text-right text-sm font-medium text-blue-900'>실명을 입력해주세요.</p>
+              }
+            </div>
             <article className='w-full flex items-center justify-between space-x-4'>
               <p className='text-base font-medium text-gray-900'>유형</p>
               <MuiSelectUserType userType={userType} setUserType={setUserType} />
