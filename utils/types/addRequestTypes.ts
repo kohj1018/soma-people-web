@@ -4,7 +4,7 @@ export interface AddUserType {
   name: string
   userType: UserType
   cardinalNum: number | null
-  isCertified: boolean
+  email: string
   oauthId: string
   refreshToken: string
   agreeTerms: boolean

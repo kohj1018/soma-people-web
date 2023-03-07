@@ -60,7 +60,7 @@ const SignUp = () => {
             name: name,
             userType: userType,
             cardinalNum: cardinalNumStr.length < 1 ? (userType === '준비생' ? THIS_YEAR_CARDINAL_NUM : 0) : parseInt(cardinalNumStr),
-            isCertified: false,
+            email: session?.user.email ?? '',
             oauthId: oauthId ?? '',
             refreshToken: session?.refreshToken ?? '',
             agreeTerms: true,
