@@ -16,8 +16,8 @@ export default NextAuth({
   },
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
           prompt: "consent",
@@ -27,8 +27,8 @@ export default NextAuth({
       }
     }),
     AppleProvider({
-      clientId: process.env.APPLE_CLIENT_ID as string,
-      clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+      clientId: process.env.APPLE_CLIENT_ID,
+      clientSecret: process.env.APPLE_CLIENT_SECRET,
       authorization: {  // Apple의 callBackUrl 버그 해결을 위해 추가
         params: {
           scope: "name",
@@ -49,12 +49,16 @@ export default NextAuth({
       }
       if (user) {
         token.oauthId = user.id
+        token.email = user.email
+        token.name = user.name
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.oauthId = token.oauthId
+        session.user.email = token.email
+        session.user.name = token.name
       }
       if (token) {
         session.refreshToken = token.refreshToken

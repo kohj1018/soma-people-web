@@ -1,5 +1,8 @@
 import { BoardInfoType } from '../../../utils/types/responseTypes'
 import { useEffect, useRef } from 'react'
+import { useBoardTapScrollXStore } from '../../../stores/scrollStore/scrollStores'
+import { useBoardRefOfLastViewedStore } from '../../../stores/stores'
+import { useRouter } from 'next/router'
 
 interface Props {
   boardInfoList: BoardInfoType[]
@@ -8,30 +11,49 @@ interface Props {
 }
 
 function MobileBoardTap({ boardInfoList, boardIdOfLastViewed, setBoardIdOfLastViewed }: Props) {
+  // const router = useRouter()
   // TODO : 가로 스크롤 유지 나중에 다시 시도해보기
   // const boardTapRef = useRef<HTMLDivElement>(null)
   // const { boardTapScrollX, setBoardTapScrollX } = useBoardTapScrollXStore()
-  const selectedTapRef = useRef<HTMLButtonElement | null>(null)
+  const selectedTapRef = useRef<HTMLButtonElement>(null)
+  // const { boardRefOfLastViewed, setBoardRefOfLastViewed } = useBoardRefOfLastViewedStore()
 
   // // 가로 스크롤 유지
   // useEffect(() => {
-  //   if (boardTapScrollX !== 0) {
+  //   if (boardTapRef.current && boardTapScrollX !== 0) {
   //     setTimeout(() => {
-  //       if (boardTapRef.current) {
-  //         console.log('scrollX : ', boardTapScrollX)
-  //         boardTapRef.current.scrollTo(boardTapScrollX, 0)
-  //       }
+  //       console.log('scrollX : ', boardTapScrollX)
+  //       console.log('boardTapRef : ', boardTapRef)
+  //       boardTapRef.current?.scrollTo(boardTapScrollX, 0)
   //     }, 2)
   //   }
   // }, [boardTapRef])
 
+  // useEffect(() => {
+  //   console.log("들어옴 boardRefOfLastViewed.current : ", boardRefOfLastViewed?.current)
+  //   if (!!boardRefOfLastViewed?.current) {
+  //     boardRefOfLastViewed.current.scrollIntoView()
+  //   }
+  // }, [])
+
+
   // 선택한 탭으로 포커싱
   useEffect(() => {
-    if (!!selectedTapRef.current) {
+    console.log("selectedTapRef.current : ", selectedTapRef.current)
+    if (selectedTapRef.current) {
       selectedTapRef.current.scrollIntoView()
+      // console.log("selectedTapRef 저장 : ", selectedTapRef)
+      // setBoardRefOfLastViewed(selectedTapRef)
       // if (boardTapRef.current && boardTapRef.current.scrollLeft !== 0) setBoardTapScrollX(boardTapRef.current.scrollLeft)
     }
   }, [boardIdOfLastViewed])
+
+  // useEffect(() => {
+  //   if (boardTapRef.current) {
+  //     console.log("들어옴")
+  //     setBoardTapScrollX(boardTapRef.current.scrollLeft)
+  //   }
+  // }, [boardTapRef.current?.scrollLeft])
 
   return (
     <nav
