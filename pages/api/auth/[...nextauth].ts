@@ -31,7 +31,7 @@ export default NextAuth({
       clientSecret: process.env.APPLE_CLIENT_SECRET,
       authorization: {  // Apple의 callBackUrl 버그 해결을 위해 추가
         params: {
-          scope: "name%20email",
+          scope: "name email",
           response_mode: "form_post",
           response_type: "code",
         },
