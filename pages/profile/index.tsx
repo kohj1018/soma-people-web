@@ -170,7 +170,10 @@ const Profile: NextPage = () => {
             </a>
             <div className='w-full flex items-center justify-between'>
               <p className='text-base font-medium text-gray-900'>앱버전</p>
-              <p className='text-base font-semibold text-gray-600 lg:text-xl'><span className='text-sm font-semibold text-blue-500 lg:text-base'>beta </span>{VERSION}</p>
+              <p className='text-base font-semibold text-gray-600 lg:text-xl'>
+                {/*<span className='text-sm font-semibold text-blue-500 lg:text-base'>beta </span>*/}
+                {VERSION}
+              </p>
             </div>
           </section>
         </article>
