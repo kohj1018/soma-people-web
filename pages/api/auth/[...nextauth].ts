@@ -43,7 +43,7 @@ export default NextAuth({
     strategy: 'jwt'
   },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, profile, isNewUser }) {
       if (account) {
         token.refreshToken = account.refresh_token as string
       }
@@ -51,6 +51,8 @@ export default NextAuth({
         token.oauthId = user.id
         token.email = user.email
         token.name = user.name ?? 'hi'
+        token.profile = profile
+        token.isNewUser = isNewUser
       }
       return token
     },
@@ -62,6 +64,8 @@ export default NextAuth({
       }
       if (token) {
         session.refreshToken = token.refreshToken
+        session.profile = token.profile
+        session.isNewUser = token.isNewUser
       }
       return session
     },
