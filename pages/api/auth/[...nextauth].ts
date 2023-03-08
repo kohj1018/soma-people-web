@@ -39,7 +39,7 @@ export default NextAuth({
       profile(profile) {
         return {
           id: profile.sub,
-          name: profile.name,
+          name: profile.firstName,
           email: profile.email
         }
       },
