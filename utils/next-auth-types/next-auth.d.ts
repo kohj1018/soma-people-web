@@ -6,6 +6,7 @@ declare module "next-auth" {
     refreshToken: string
     profile: Profile | undefined
     isNewUser: boolean | undefined
+    token: JWT
     user: DefaultUser & {
       oauthId: string
     }

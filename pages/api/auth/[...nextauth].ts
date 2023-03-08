@@ -66,6 +66,7 @@ export default NextAuth({
         session.refreshToken = token.refreshToken
         session.profile = token.profile
         session.isNewUser = token.isNewUser
+        session.token = token
       }
       return session
     },
