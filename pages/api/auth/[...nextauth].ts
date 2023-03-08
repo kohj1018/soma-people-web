@@ -36,13 +36,6 @@ export default NextAuth({
           response_type: "code",
         },
       },
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name.firstName,
-          email: profile.email
-        }
-      },
     })
   ],
   secret: process.env.JWT_SECRET,
@@ -57,7 +50,7 @@ export default NextAuth({
       if (user) {
         token.oauthId = user.id
         token.email = user.email
-        token.name = user.name
+        token.name = user.name ?? 'hi'
       }
       return token
     },
