@@ -51,6 +51,7 @@ export default NextAuth({
         token.oauthId = user.id
         token.email = user.email
         token.name = user.name
+        token.account = account
       }
       return token
     },
@@ -62,6 +63,7 @@ export default NextAuth({
       }
       if (token) {
         session.refreshToken = token.refreshToken
+        session.account = token.account
       }
       return session
     },
