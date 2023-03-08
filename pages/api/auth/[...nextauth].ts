@@ -57,7 +57,7 @@ export default NextAuth({
       if (user) {
         token.oauthId = user.id
         token.email = user.email
-        token.name = user.name ?? 'hi'
+        token.name = user.name
       }
       return token
     },
