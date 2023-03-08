@@ -20,15 +20,19 @@ const MainFooter = ({ showFooterOnMobile }: Props) => {
         <header className='text-sm font-bold text-gray-50'>개인정보 및 서비스 약관</header>
         <section className='mt-4 flex flex-col space-y-2 text-xs font-medium text-gray-300'>
           <Link href='/customerService'>고객문의</Link>
-          <a
-            href='https://somapeople.notion.site/d81fc7603cc74e6a8b26341b18d83561'
+          <Link
+            // href='https://somapeople.notion.site/d81fc7603cc74e6a8b26341b18d83561'
+            href='/etc/privacyPolicy'
             className='font-bold text-white'
           >
             개인정보처리방침<span className='ml-1'><ArrowOutward className='!w-4 !h-4 text-blue-100' /></span>
-          </a>
-          <a href='https://somapeople.notion.site/d02962c43454426cbd5d1b2c965af90a'>
+          </Link>
+          <Link
+            // href='https://somapeople.notion.site/d02962c43454426cbd5d1b2c965af90a'
+            href='/etc/termsOfUse'
+          >
             서비스 이용약관
-          </a>
+          </Link>
         </section>
       </article>
 

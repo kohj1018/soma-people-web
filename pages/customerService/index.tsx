@@ -45,7 +45,7 @@ const CustomerService: NextPage = () => {
     <MainContainer>
       <MobileCancelHeader title='문의/건의하기' buttonFunc={submitCSContent} activateButton={activateButton} />
 
-      <MainArea className='px-5 space-y-4 lg:space-y-6'>
+      <MainArea className='px-5 pb-7 space-y-4 lg:space-y-6'>
         <FormControl className='!mt-8 !w-full'>
           <InputLabel>문의 유형</InputLabel>
           <Select
@@ -61,7 +61,7 @@ const CustomerService: NextPage = () => {
         <TextField
           className='w-full'
           multiline
-          rows={20}
+          rows={17}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder='문의/건의 내용을 입력해주세요.'

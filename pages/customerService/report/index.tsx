@@ -46,7 +46,7 @@ const Report: NextPage = () => {
     <MainContainer>
       <MobileCancelHeader title='신고하기' buttonFunc={submitCSContent} activateButton={activateButton} />
       
-      <MainArea className='px-5 space-y-4 lg:py-8 lg:space-y-6'>
+      <MainArea className='px-5 pb-7 space-y-4 lg:py-8 lg:space-y-6'>
         <h2 className='mt-4 text-xl font-semibold text-black lg:text-3xl'>🚨 신고하기</h2>
         <div className='p-2 border border-gray-400 bg-white rounded text-base font-medium text-gray-800 lg:p-3 lg:text-lg'>
           <p>{`<신고 ${reportTargetType}>`}</p>
@@ -56,7 +56,7 @@ const Report: NextPage = () => {
         <TextField
           className='w-full'
           multiline
-          rows={20}
+          rows={17}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder='신고 사유를 자세히 입력해주세요.'

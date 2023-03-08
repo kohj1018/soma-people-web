@@ -133,20 +133,22 @@ const Profile: NextPage = () => {
               <p className='text-base font-medium text-gray-900'>문의/건의하기</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
             </Link>
-            <a
-              href='https://somapeople.notion.site/d02962c43454426cbd5d1b2c965af90a'
+            <Link
+              // href='https://somapeople.notion.site/d02962c43454426cbd5d1b2c965af90a'
+              href='/etc/termsOfUse'
               className='w-full flex items-center justify-between'
             >
               <p className='text-base font-medium text-gray-900'>서비스이용약관</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
-            </a>
-            <a
-              href='https://somapeople.notion.site/d81fc7603cc74e6a8b26341b18d83561'
+            </Link>
+            <Link
+              // href='https://somapeople.notion.site/d81fc7603cc74e6a8b26341b18d83561'
+              href='/etc/privacyPolicy'
               className='w-full flex items-center justify-between'
             >
               <p className='text-base font-medium text-gray-900'>개인정보처리방침</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
-            </a>
+            </Link>
             <Link
               href='/profile/accountManagement'
               className='w-full flex items-center justify-between'
@@ -161,13 +163,14 @@ const Profile: NextPage = () => {
         <article className='mt-10 pb-7 space-y-3'>
           <header className='text-sm font-medium text-gray-400'>기타</header>
           <section className='space-y-6'>
-            <a
-              href='https://somapeople.notion.site/c296bd79d0b543ce8b977a55eb303ef5'
+            <Link
+              // href='https://somapeople.notion.site/c296bd79d0b543ce8b977a55eb303ef5'
+              href='/etc/notice'
               className='w-full flex items-center justify-between'
             >
               <p className='text-base font-medium text-gray-900'>공지사항</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
-            </a>
+            </Link>
             <div className='w-full flex items-center justify-between'>
               <p className='text-base font-medium text-gray-900'>앱버전</p>
               <p className='text-base font-semibold text-gray-600 lg:text-xl'>
