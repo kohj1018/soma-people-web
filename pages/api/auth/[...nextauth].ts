@@ -39,7 +39,7 @@ export default NextAuth({
       profile(profile) {
         return {
           id: profile.sub,
-          name: profile.firstName,
+          name: profile.name.firstName,
           email: profile.email
         }
       },
@@ -57,7 +57,7 @@ export default NextAuth({
       if (user) {
         token.oauthId = user.id
         token.email = user.email
-        token.name = user.name
+        token.name = user.name ?? 'hi'
       }
       return token
     },
