@@ -36,14 +36,14 @@ const Profile: NextPage = () => {
         <h1 className='text-xl font-semibold text-white'>프로필</h1>
       </header>
 
-      <MainArea className='relative px-5 pb-8'>
+      <MainArea className='relative pb-8'>
         <Image
           src={profilePageBackGround}
-          className='absolute top-14 inset-x-0 h-auto z-0 lg:hidden'
+          className='w-full h-auto'
           alt='배경 이미지'
         />
 
-        <section className='relative mt-8 space-y-4 z-10'>
+        <section className='absolute top-20 inset-x-5 space-y-4 z-10'>
           {/* 프로필 정보 */}
           <article className='p-7 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'>
             <header className='flex items-center space-x-2'>
@@ -123,7 +123,7 @@ const Profile: NextPage = () => {
         </section>
 
         {/* 서비스 목록 */}
-        <article className='mt-10 space-y-3'>
+        <article className='mt-[11.375rem] mx-5 space-y-3'>
           <header className='text-sm font-medium text-gray-400'>서비스</header>
           <section className='space-y-6'>
             <Link
@@ -160,7 +160,7 @@ const Profile: NextPage = () => {
         </article>
 
         {/* 기타 목록 */}
-        <article className='mt-10 pb-7 space-y-3'>
+        <article className='mt-10 mx-5 pb-7 space-y-3'>
           <header className='text-sm font-medium text-gray-400'>기타</header>
           <section className='space-y-6'>
             <Link
