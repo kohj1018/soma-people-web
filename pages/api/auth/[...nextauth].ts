@@ -3,17 +3,17 @@ import GoogleProvider from 'next-auth/providers/google'
 import AppleProvider from 'next-auth/providers/apple'
 
 export default NextAuth({
-  cookies: {  // Apple의 callBackUrl 버그 해결을 위해 추가
-    callbackUrl: {
-      name: `__Secure-next-auth.callback-url`,
-      options: {
-        httpOnly: true,
-        sameSite: "None",
-        path: "/",
-        secure: true,
-      },
-    },
-  },
+  // cookies: {  // Apple의 callBackUrl 버그 해결을 위해 추가
+  //   callbackUrl: {
+  //     name: `__Secure-next-auth.callback-url`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "None",
+  //       path: "/",
+  //       secure: true,
+  //     },
+  //   },
+  // },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -29,7 +29,7 @@ export default NextAuth({
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID,
       clientSecret: process.env.APPLE_CLIENT_SECRET,
-      authorization: {  // Apple의 callBackUrl 버그 해결을 위해 추가
+      authorization: {
         params: {
           scope: "name email",
           response_mode: "form_post",
@@ -43,16 +43,14 @@ export default NextAuth({
     strategy: 'jwt'
   },
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, account }) {
       if (account) {
         token.refreshToken = account.refresh_token as string
       }
       if (user) {
         token.oauthId = user.id
         token.email = user.email
-        token.name = user.name ?? 'hi'
-        token.profile = profile
-        token.isNewUser = isNewUser
+        token.name = user.name
       }
       return token
     },
@@ -64,9 +62,6 @@ export default NextAuth({
       }
       if (token) {
         session.refreshToken = token.refreshToken
-        session.profile = token.profile
-        session.isNewUser = token.isNewUser
-        session.token = token
       }
       return session
     },

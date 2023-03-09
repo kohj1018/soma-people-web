@@ -21,12 +21,12 @@ const SignUp = () => {
   const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { setMessage } = useSnackbarOpenStore()
 
-  // 자동 이름 입력 (앱스토어 요청 사항)
-  useEffect(() => {
-    if (session?.user) {
-      setName(session.user.name ?? '')
-    }
-  }, [session])
+  // // 자동 이름 입력 (앱스토어 요청 사항)
+  // useEffect(() => {
+  //   if (session?.user) {
+  //     setName(session.user.name ?? '')
+  //   }
+  // }, [session])
 
   // 이름 입력 제한 함수
   const nameInputRestriction = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,29 +98,29 @@ const SignUp = () => {
           <section className='space-y-5'>
             <div>
               <article className='w-full flex items-center justify-between space-x-4'>
-                <p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>
+                <p className='w-[2.625rem] text-base font-medium text-gray-900 whitespace-nowrap'>닉네임</p>
                 <input
                   type='text'
                   className='w-full px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
-                  placeholder='실명을 입력해주세요.'
+                  placeholder='사용할 닉네임을 입력해주세요.'
                   maxLength={20}
                   value={name}
                   onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
                   required
                 />
               </article>
-              {session?.user.name && userType === null &&
-                <p className='mt-1 text-right text-sm font-medium text-blue-900'>실명을 입력해주세요.</p>
-              }
+              {/*{session?.user.name && userType === null &&*/}
+              {/*  <p className='mt-1 text-right text-sm font-medium text-blue-900'>실명을 입력해주세요.</p>*/}
+              {/*}*/}
             </div>
             <article className='w-full flex items-center justify-between space-x-4'>
-              <p className='text-base font-medium text-gray-900'>유형</p>
+              <p className='w-[2.625rem] text-base font-medium text-gray-900'>유형</p>
               <MuiSelectUserType userType={userType} setUserType={setUserType} />
             </article>
             {(userType === '연수생' || userType === '멘토') &&
               <>
                 <article className='w-full flex items-center justify-between space-x-4'>
-                  <p className='text-base font-medium text-gray-900 whitespace-nowrap'>기수</p>
+                  <p className='w-[2.625rem] text-base font-medium text-gray-900 whitespace-nowrap'>기수</p>
                   <input
                     type='number'
                     className='w-full px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
