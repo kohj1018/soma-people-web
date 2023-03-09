@@ -31,7 +31,8 @@ const SignUp = () => {
   // 이름 입력 제한 함수
   const nameInputRestriction = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < e.target.maxLength + 1) {
-      if (!(/[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g).test(e.target.value)) {  // 한글만 입력되게 제한
+      // if (!(/[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g).test(e.target.value)) {  // 한글만 입력되게 제한
+      if (!(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi).test(e.target.value)) {  // 특수문자 제한
         setName(e.target.value)
       }
     }
