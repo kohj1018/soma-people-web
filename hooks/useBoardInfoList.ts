@@ -26,10 +26,6 @@ function useBoardInfoList(userInfo: UserInfoType | null): BoardInfoType[] { //TO
         setReturnBoardInfoList(boardInfoList.filter((boardInfo) => boardInfo.boardId === 4))
       } else {
         switch (userInfo.userType) {
-          case '준비생':
-            setBoardIdOfLastViewed(4)
-            setReturnBoardInfoList(boardInfoList.filter((boardInfo) => boardInfo.boardId === 4))
-            break
           case '연수생':
             setReturnBoardInfoList([
               boardInfoList[0],
@@ -53,7 +49,9 @@ function useBoardInfoList(userInfo: UserInfoType | null): BoardInfoType[] { //TO
           case '사무국':
             setReturnBoardInfoList(boardInfoList)
             break
-          default:
+          default:  // 준비생
+            setBoardIdOfLastViewed(4)
+            setReturnBoardInfoList(boardInfoList.filter((boardInfo) => boardInfo.boardId === 4))
             break
         }
       }
