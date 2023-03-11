@@ -10,6 +10,7 @@ import { useSnackbarOpenStore } from '../../../stores/stores'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addPost } from '../../../utils/apis/postsApi'
 import { postKeys } from '../../../utils/constants/reactQueryKeyConstants'
+import { AddPostType } from '../../../utils/types/addRequestTypes'
 
 const AddPost: NextPage = () => {
   const router = useRouter()
@@ -21,15 +22,32 @@ const AddPost: NextPage = () => {
   const [content, setContent] = useState<string>('')
   const [isAnonymous, setIsAnonymous] = useState<boolean>(true)
   const { setMessage } = useSnackbarOpenStore()
-  const { mutate: postMutate, isSuccess } = useMutation(addPost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(postKeys.list(boardId, userInfo!.userId))
-        .then(() => {
-          setMessage('게시글이 등록되었습니다.')
-          router.back()
-        })
-    }
-  })
+  const { mutate: postMutate, isSuccess } = useMutation(
+    async (addPostRequest: AddPostType) => {
+      try {
+        addPost(addPostRequest)
+          .then(() => {
+            queryClient.invalidateQueries(postKeys.list(boardId, userInfo!.userId))
+              .then(() => {
+                setMessage('게시글이 등록되었습니다.')
+                router.back()
+              })
+          })
+      }
+      catch (error) {
+        setMessage('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+      }
+    },
+    // {  //TODO: 이 부분 추가하면 isSuccess를 활용한 disabled가 안먹힘 (포스팅할 때 써먹기)
+    //   onSuccess: () => {
+    //     queryClient.invalidateQueries(postKeys.list(boardId, userInfo!.userId))
+    //       .then(() => {
+    //         setMessage('게시글이 등록되었습니다.')
+    //         router.back()
+    //       })
+    //   }
+    // }
+  )
 
   const [activateButton, setActivateButton] = useState<boolean>(false)
   useEffect(() => { if (!!title && !!content) setActivateButton(true); else setActivateButton(false) }, [title, content]) // 등록 버튼 활성화

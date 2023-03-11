@@ -22,7 +22,7 @@ function MobileCancelHeader({ title, buttonFunc, activateButton, isSuccess = fal
       <p className='text-base font-semibold text-gray-700'>{title}</p>
       <button
         onClick={buttonFunc}
-        className={'absolute right-5 px-3 py-1 rounded text-sm font-semibold' + (activateButton ? ' bg-blue-500 text-white' : ' bg-gray-200 text-gray-400')}
+        className={'absolute right-5 px-3 py-1 rounded text-sm font-semibold' + ((activateButton && !isSuccess) ? ' bg-blue-500 text-white' : ' bg-gray-200 text-gray-400')}  // 버튼 활성화되고 버튼을 누르기 전일때만 파란색
         disabled={isSuccess}
       >
         등록

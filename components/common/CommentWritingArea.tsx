@@ -7,6 +7,7 @@ import { addComment } from '../../utils/apis/commentsApi'
 import { postKeys } from '../../utils/constants/reactQueryKeyConstants'
 import { CommentInfoType, UserInfoType } from '../../utils/types/responseTypes'
 import useCommentMutation from '../../hooks/useCommentMutation'
+import { AddCommentType } from '../../utils/types/addRequestTypes'
 
 interface Props {
   postId: number
@@ -20,20 +21,28 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [commentContent, setCommentContent] = useState<string>('')
   const [isCommentAnonymous, setIsCommentAnonymous] = useState<boolean>(true)
+  const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const { setMessage } = useSnackbarOpenStore()
 
-  const { mutate: commentSaveMutate, isSuccess } = useMutation(addComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(postKeys.detail(postId))
-        .then(() => {
-          if (!!textareaRef.current) {  // 댓글 입력창 초기화
-            setCommentContent('')
-            textareaRef.current.style.height = 'auto'
-          }
-          setMessage('댓글이 등록되었습니다.')
-        })
+  const { mutate: commentSaveMutate, isSuccess } = useMutation(
+    async (addCommentRequest: AddCommentType) => {
+      try {
+        addComment(addCommentRequest)
+          .then(() => {
+            queryClient.invalidateQueries(postKeys.detail(postId))
+              .then(() => {
+                if (!!textareaRef.current) {  // 댓글 입력창 초기화
+                  setCommentContent('')
+                  textareaRef.current.style.height = 'auto'
+                }
+                setMessage('댓글이 등록되었습니다.')
+              })
+          })
+      } catch (error) {
+        setMessage('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+      }
     }
-  })
+  )
 
   const { handleCommentMutation } = useCommentMutation(commentInfoToUpdate, userInfo.userId, false, commentContent, isCommentAnonymous)
 
@@ -54,6 +63,17 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
       textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
     }
   }, [commentContent])
+
+  // 댓글 작성 시 버튼 일시적 disable 처리 TODO: 현재는 첫번째 댓글 작성만 disable 하는데 성공. 추후 수정 필요
+  useEffect(() => {
+    if (isSuccess) {
+      setIsDisabled(true)
+      setTimeout( // 1초 뒤에 disable 해제
+        () => setIsDisabled(false),
+        1000
+      )
+    }
+  }, [isSuccess])
 
 
   // 댓글 작성 함수
@@ -82,7 +102,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
       <button
         onClick={() => setIsCommentAnonymous(!isCommentAnonymous)}
         className='flex items-center space-x-0.5'
-        disabled={isSuccess}
+        disabled={isDisabled}
       >
         <p className='text-sm font-semibold text-gray-400 whitespace-nowrap'>익명</p>
         <CheckBox className={'!w-4 !h-4' + (isCommentAnonymous ? ' text-gray-700' : ' text-gray-300')} />
@@ -95,12 +115,12 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
         maxLength={1000}
         value={commentContent}
         onChange={(e) => { if (e.target.value.length < e.target.maxLength + 1) setCommentContent(e.target.value)} }
-        disabled={isSuccess}
+        disabled={isDisabled}
         required
       />
       <button
         onClick={(e) => handleSubmit(e)}
-        disabled={isSuccess}
+        disabled={isDisabled}
       >
         <Send className='!w-6 !h-6 text-blue-500' />
       </button>
