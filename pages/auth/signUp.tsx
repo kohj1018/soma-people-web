@@ -10,6 +10,8 @@ import { checkCharacter } from '../../utils/functions/checkCharacter'
 import { addUser } from '../../utils/apis/usersApi'
 import { AxiosResponse } from 'axios'
 import { THIS_YEAR_CARDINAL_NUM } from '../../utils/config'
+import { useMutation } from '@tanstack/react-query'
+import { AddUserType } from '../../utils/types/addRequestTypes'
 
 const SignUp = () => {
   const router = useRouter()
@@ -20,6 +22,35 @@ const SignUp = () => {
   const [cardinalNumStr, setCardinalNumStr] = useState<string>('')
   const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { setMessage } = useSnackbarOpenStore()
+
+  const { mutate: addUserMutate, isSuccess } = useMutation(async () => {
+    try {
+      if (userType && oauthId) {
+        addUser({
+          name: name,
+          userType: userType,
+          cardinalNum: cardinalNumStr.length < 1 ? (userType === '준비생' ? THIS_YEAR_CARDINAL_NUM : 0) : parseInt(cardinalNumStr),
+          email: session?.user.email ?? '',
+          oauthId: oauthId,
+          refreshToken: session?.refreshToken ?? '',
+          agreeTerms: true,
+        }).then((response: AxiosResponse<number>) => {
+          setUserId(response.data)
+          setOauthId(oauthId)
+          setBoardIdOfLastViewed(4) // 미인증 이용자는 준비생 게시판만 이용 가능
+          setMessage('가입을 환영합니다🎉')
+          router.replace('/')
+        })
+      } else {
+        throw new Error('가입 필수 정보 미기입!')
+      }
+    } catch (error) {
+      setMessage('오류가 발생했습니다. 다시 시도해주세요')
+      setUserId(null)
+      setOauthId(null)
+      router.replace('/auth/signIn')
+    }
+  })
 
   // // 자동 이름 입력 (앱스토어 요청 사항)
   // useEffect(() => {
@@ -63,28 +94,7 @@ const SignUp = () => {
       if (name.includes('관리자') || name.includes('운영자')) {
         setMessage('해당 이름은 사용할 수 없습니다.')
       } else {
-        try {
-          addUser({
-            name: name,
-            userType: userType,
-            cardinalNum: cardinalNumStr.length < 1 ? (userType === '준비생' ? THIS_YEAR_CARDINAL_NUM : 0) : parseInt(cardinalNumStr),
-            email: session?.user.email ?? '',
-            oauthId: oauthId ?? '',
-            refreshToken: session?.refreshToken ?? '',
-            agreeTerms: true,
-          }).then((response: AxiosResponse<number>) => {
-            setUserId(response.data)
-            setOauthId(oauthId)
-            setBoardIdOfLastViewed(4) // 미인증 이용자는 준비생 게시판만 이용 가능
-            setMessage('가입을 환영합니다🎉')
-            router.replace('/')
-          })
-        } catch (error) {
-          setMessage('오류가 발생했습니다. 다시 시도해주세요')
-          setUserId(null)
-          setOauthId(null)
-          router.replace('/auth/signIn')
-        }
+        addUserMutate() // 가입 로직 실행
       }
     }
   }
@@ -151,7 +161,8 @@ const SignUp = () => {
         {!!name && ((userType === '연수생' && !!cardinalNumStr) || (userType === '멘토' && !!cardinalNumStr) || userType === '준비생' || userType === '사무국') &&
           <button
             onClick={(e) => handleSignUp(e)}
-            className='w-full py-4 rounded bg-slate-900 text-base font-semibold text-white'
+            className={'w-full py-4 rounded text-base font-semibold text-white' + (isSuccess ? ' bg-gray-300' : ' bg-slate-900')}
+            disabled={isSuccess}  // 여러번 가입 안되도록 누르면 비활성화
           >
             가입하기
           </button>
