@@ -153,11 +153,15 @@ const PostDetail: NextPage = () => {
               <p className='pl-4 text-sm font-semibold text-gray-500'>첫 번째 댓글을 달아주세요 :)</p>
             }
           </div>
-          <CommentListSection postId={postId} userInfo={userInfo} setCommentInfoToUpdate={setCommentInfoToUpdate} />
+          {!!userInfo &&
+            <CommentListSection postId={postId} userInfo={userInfo} setCommentInfoToUpdate={setCommentInfoToUpdate} />
+          }
         </article>
 
         {/* 댓글 작성 영역 */}
-        <CommentWritingArea postId={postId} userInfo={userInfo} commentInfoToUpdate={commentInfoToUpdate} setCommentInfoToUpdate={setCommentInfoToUpdate} />
+        {!!userInfo &&
+          <CommentWritingArea postId={postId} userInfo={userInfo} commentInfoToUpdate={commentInfoToUpdate} setCommentInfoToUpdate={setCommentInfoToUpdate} />
+        }
       </MainArea>
 
       {/* 게시글 삭제 확인 다이얼로그 */}

@@ -28,7 +28,7 @@ function usePostMutation(
   ({ postId, updatePostRequest }: MutationProps) => updatePost(postId, updatePostRequest),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(postKeys.all)
+        queryClient.invalidateQueries(postKeys.list(postInfoBeforeUpdate!.board.boardId, userId!))
         if (isDelete) {
           setMessage('게시글이 삭제되었습니다.')
           router.replace('/board')

@@ -61,7 +61,9 @@ const Board: NextPage = () => {
 
       <MainArea>
         {/* 게시글 무한 스크롤 영역 */}
-        <InfinitePostListSection userId={userInfo?.userId ?? null} boardInfoList={boardInfoList} />
+        {!!userInfo &&
+          <InfinitePostListSection userId={userInfo.userId} boardInfoList={boardInfoList} />
+        }
 
         {/* 글쓰기 버튼 */}
         <Link

@@ -1,8 +1,8 @@
 import { MainPagePostListInfoType, PostInfoType } from '../types/responseTypes'
 import { ec2 } from './apiConfig'
-import { INFINITE_SCROLL_LOAD_SIZE } from '../config'
 import { AddPostType } from '../types/addRequestTypes'
 import { UpdatePostType } from '../types/updateRequestTypes'
+import { INFINITE_SCROLL_LOAD_SIZE } from '../constants/systemConstants'
 
 /** 게시글 ID로 게시글 정보 불러오기 */
 export const getPostInfoByPostId = async (postId: number): Promise<PostInfoType> => {

@@ -11,8 +11,6 @@ function MobileBoardTap({ boardInfoList, boardIdOfLastViewed, setBoardIdOfLastVi
   const [selectedTapRef, setSelectedTapRef] = useState<HTMLButtonElement | null>(null)
 
   useEffect(() => {
-    console.log("boardIdOfLastViewed : ", boardIdOfLastViewed)
-    console.log("selectedTapRef.current : ", selectedTapRef)
     if (selectedTapRef) {
       selectedTapRef.scrollIntoView()
     }

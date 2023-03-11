@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 
 interface Props {
   postId: number
-  userInfo: UserInfoType | null
+  userInfo: UserInfoType
   setCommentInfoToUpdate: (commentInfoToEdit: CommentInfoType | null) => void
 }
 
@@ -17,9 +17,9 @@ function CommentListSection({ postId, userInfo, setCommentInfoToUpdate }: Props)
 
   const { data: commentsInfoList } = useQuery<CommentInfoType[]>(
     postKeys.comments(postId),
-    () => getAllCommentInfoByPostId(postId, userInfo?.userId ?? 0),
+    () => getAllCommentInfoByPostId(postId, userInfo.userId),
     {
-      enabled: !!userInfo?.userId && !!postId,
+      enabled: !!userInfo.userId && !!postId,
       staleTime: 30000,
       cacheTime: Infinity
     }

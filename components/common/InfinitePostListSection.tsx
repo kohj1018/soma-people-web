@@ -1,7 +1,6 @@
 import { useInView } from 'react-intersection-observer'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { postKeys } from '../../utils/constants/reactQueryKeyConstants'
-import { ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID } from '../../utils/config'
 import { getPostInfoListInfinitely } from '../../utils/apis/postsApi'
 import { useBoardIdOfLastViewedStore } from '../../stores/stores'
 import { Fragment, useEffect, useRef } from 'react'
@@ -10,12 +9,16 @@ import LoadingCircular from '../layout/LoadingCircular'
 import { isNotEmptyArray } from '../../utils/functions/isNotEmptyArray'
 import noPostsIcon from '../../public/icon/noPostsIcon.svg'
 import Image from 'next/image'
-import { REFERENCE_VALUE_TO_SWIPE } from '../../utils/constants/systemConstants'
+import {
+  ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID,
+  INFINITE_SCROLL_LOAD_SIZE,
+  REFERENCE_VALUE_TO_SWIPE,
+} from '../../utils/constants/systemConstants'
 import { BoardInfoType } from '../../utils/types/responseTypes'
 import { useUserHiddenPostIdListStore } from '../../stores/localStorageStore/stores'
 
 interface Props {
-  userId: number | null
+  userId: number
   boardInfoList: BoardInfoType[]
 }
 
@@ -23,25 +26,16 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
   const infinitePostListSectionRef = useRef<HTMLDivElement>(null)
   const { boardIdOfLastViewed, setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { ref, inView } = useInView()
-  const { data: postInfoList, fetchNextPage, isFetchingNextPage, isRefetching } = useInfiniteQuery(
-    postKeys.list(boardIdOfLastViewed, userId ?? 1),
-    ({ pageParam = ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID }) => getPostInfoListInfinitely(boardIdOfLastViewed, pageParam, userId ?? 1),
+  const { data: postInfoList, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    postKeys.list(boardIdOfLastViewed, userId),
+    ({ pageParam = ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID }) => getPostInfoListInfinitely(boardIdOfLastViewed, pageParam, userId),
     {
-      enabled: !!userId,
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextLastPostId : undefined,
-      staleTime: 30000,
-      cacheTime: Infinity
+      staleTime: 30000
     }
   )
   const hiddenPostIdList = useUserHiddenPostIdListStore(state => state.hiddenPostIdList)
-
-  // useEffect(() => {  //TODO : 자유게시판은 글 수정/삭제했을 때 바로 반영이 되는데 나머지 게시판만 invalidateQueries가 안먹힘. 추후 수정해야할듯
-  //   console.log("key : ", postKeys.list(boardIdOfLastViewed, userId ?? 1))
-  //   console.log("isRefetching : ", isRefetching)
-  //   console.log("postInfoList : ", postInfoList)
-  //   console.log("--------------------------------------------------")
-  // }, [isRefetching])
 
   // 스와이프 제스쳐 감지
   useEffect(() => {
@@ -85,7 +79,11 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
 
   // 바닥에 닿으면 새로 불러오기
   useEffect(() => {
-    if (!!userId && inView) fetchNextPage()
+    if (!!userId && inView) {
+      if (!!postInfoList && postInfoList.pages.length > INFINITE_SCROLL_LOAD_SIZE - 1) {  // 처음 글이 없을 때 invalidateQueries 안먹히는거 해결하는 부분
+        fetchNextPage()
+      }
+    }
   }, [inView])
 
   return (

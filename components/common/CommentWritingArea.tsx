@@ -10,7 +10,7 @@ import useCommentMutation from '../../hooks/useCommentMutation'
 
 interface Props {
   postId: number
-  userInfo: UserInfoType | null
+  userInfo: UserInfoType
   commentInfoToUpdate: CommentInfoType | null
   setCommentInfoToUpdate: (commentInfoToEdit: CommentInfoType | null) => void
 }
@@ -35,7 +35,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
     }
   })
 
-  const { handleCommentMutation } = useCommentMutation(commentInfoToUpdate, userInfo?.userId, false, commentContent, isCommentAnonymous)
+  const { handleCommentMutation } = useCommentMutation(commentInfoToUpdate, userInfo.userId, false, commentContent, isCommentAnonymous)
 
   // 댓글 수정 요청 시 수정 이전 값 채워 넣기
   useEffect(() => {

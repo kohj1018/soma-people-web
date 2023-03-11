@@ -23,7 +23,7 @@ const AddPost: NextPage = () => {
   const { setMessage } = useSnackbarOpenStore()
   const postMutation = useMutation(addPost, {
     onSuccess: () => {
-      queryClient.invalidateQueries(postKeys.list(boardId, userInfo?.userId ?? 0))
+      queryClient.invalidateQueries(postKeys.list(boardId, userInfo!.userId))
         .then(() => {
           setMessage('게시글이 등록되었습니다.')
           router.back()
