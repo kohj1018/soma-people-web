@@ -123,7 +123,7 @@ const Profile: NextPage = () => {
         </section>
 
         {/* 서비스 목록 */}
-        <article className='mt-[11.375rem] mx-5 space-y-3'>
+        <article className={'mx-5 space-y-3' + (userInfo.isCertified ? ' mt-[11.375rem]' : ' mt-[14.375rem]')}>
           <header className='text-sm font-medium text-gray-400'>서비스</header>
           <section className='space-y-6'>
             <Link
