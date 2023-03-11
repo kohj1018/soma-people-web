@@ -9,27 +9,42 @@ import { useSignInInfoStore } from '../stores/localStorageStore/stores'
 
 function useUserInfo(): UserInfoType | null {
   const router = useRouter()
-  const userId = useSignInInfoStore(state => state.userId)
+  const { userId, setUserId, oauthId, setOauthId } = useSignInInfoStore()
   const [returnUserId, setReturnUserId] = useState<number | null>(null) //TODO: hydration 문제 해결위해 추가했는데 문제 생기면 추후 수정
   const { setMessage } = useSnackbarOpenStore()
 
-  const { data: userInfo } = useQuery(
+  const { data: userInfo } = useQuery(  //TODO: 여기 try catch문 한번 손봐야함
     userKeys.detail(returnUserId ?? 0),
-    () => getUserInfoByUserId(returnUserId ?? 0),
+    () => {
+      try {
+        return getUserInfoByUserId(returnUserId ?? 0)
+          .catch(() => {
+            setUserId(null)
+            setOauthId(null)
+            window.location.replace('/auth/signIn')
+          })
+      } catch (err) {
+        setUserId(null)
+        setOauthId(null)
+        window.location.replace('/auth/signIn')
+      }
+    },
     {
       enabled: !!returnUserId,
       staleTime: 600000,
       cacheTime: Infinity,
       refetchOnWindowFocus: false,
-      onError: (error) => {
-        setMessage('에러가 발생했습니다. 로그아웃 후 다시 이용해주세요.')
+      onError: (err) => {
+        setUserId(null)
+        setOauthId(null)
+        window.location.replace('/auth/signIn')
       }
     }
   )
 
   // 로그인 안한 경우 Redirect
   useEffect(() => {
-    if (!userId) {
+    if (!userId || !oauthId) {
       setMessage('로그인 후 이용해주세요!')
       router.replace('/auth/signIn')
     } else {
