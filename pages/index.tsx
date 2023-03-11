@@ -27,6 +27,8 @@ import SEO from '../components/SEO'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { useMainPageScrollYStore } from '../stores/scrollStore/scrollStores'
 import useKeepScrolling from '../hooks/useKeepScrolling'
+import memoIcon from '../public/icon/memoIcon.svg'
+import { isNotEmptyArray } from '../utils/functions/isNotEmptyArray'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -196,17 +198,21 @@ const Home: NextPage = () => {
             </button>
 
             <section className='px-5 flex items-center space-x-4 overflow-x-scroll whitespace-nowrap hide-scrollbar'>
-              {mainPagePostSummaryData?.qnaPostList.map((post) =>
-                <QnAPreview
-                  key={post.postId}
-                  postId={post.postId}
-                  title={post.title}
-                  userType={post.user.userType}
-                  cardinalNum={post.user.cardinalNum}
-                  isAnonymous={post.isAnonymous}
-                  commentsNum={post.commentsNum}
-                  createdAt={post.createdAt}
-                />
+              {isNotEmptyArray(mainPagePostSummaryData?.qnaPostList) ? (
+                mainPagePostSummaryData?.qnaPostList.map((post) =>
+                  <QnAPreview
+                    key={post.postId}
+                    postId={post.postId}
+                    title={post.title}
+                    userType={post.user.userType}
+                    cardinalNum={post.user.cardinalNum}
+                    isAnonymous={post.isAnonymous}
+                    commentsNum={post.commentsNum}
+                    createdAt={post.createdAt}
+                  />
+                )
+              ) : (
+                <EmptyPostsNotice />
               )}
             </section>
           </article>
@@ -220,19 +226,23 @@ const Home: NextPage = () => {
               <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
             </button>
             <section className='py-2.5'>
-              {mainPagePostSummaryData?.freePostList.map((post) =>
-                <Link
-                  key={post.postId}
-                  href={`/post/${post.postId}`}
-                  className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
-                  onClick={() => setMainPageScrollY(window.scrollY)}
-                >
-                  <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
-                  <div className='flex items-center space-x-1.5'>
-                    <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
-                    <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
-                  </div>
-                </Link>
+              {isNotEmptyArray(mainPagePostSummaryData?.freePostList) ? (
+                mainPagePostSummaryData?.freePostList.map((post) =>
+                  <Link
+                    key={post.postId}
+                    href={`/post/${post.postId}`}
+                    className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
+                    onClick={() => setMainPageScrollY(window.scrollY)}
+                  >
+                    <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
+                    <div className='flex items-center space-x-1.5'>
+                      <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
+                      <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
+                    </div>
+                  </Link>
+                )
+              ) : (
+                <EmptyPostsNotice />
               )}
             </section>
           </article>
@@ -246,19 +256,23 @@ const Home: NextPage = () => {
               <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
             </button>
             <section className='py-2.5'>
-              {mainPagePostSummaryData?.applicantPostList.map((post) =>
-                <Link
-                  key={post.postId}
-                  href={`/post/${post.postId}`}
-                  className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
-                  onClick={() => setMainPageScrollY(window.scrollY)}
-                >
-                  <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
-                  <div className='flex items-center space-x-1.5'>
-                    <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
-                    <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
-                  </div>
-                </Link>
+              {isNotEmptyArray(mainPagePostSummaryData?.applicantPostList) ? (
+                mainPagePostSummaryData?.applicantPostList.map((post) =>
+                  <Link
+                    key={post.postId}
+                    href={`/post/${post.postId}`}
+                    className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
+                    onClick={() => setMainPageScrollY(window.scrollY)}
+                  >
+                    <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
+                    <div className='flex items-center space-x-1.5'>
+                      <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
+                      <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
+                    </div>
+                  </Link>
+                )
+              ) : (
+                <EmptyPostsNotice />
               )}
             </section>
           </article>
@@ -269,3 +283,18 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+function EmptyPostsNotice() {
+  return (
+    <div className='w-full py-5 flex items-center justify-center rounded bg-gray-50'>
+      <div className='flex flex-col items-center space-y-2'>
+        <Image
+          src={memoIcon}
+          className='!w-9 !h-9'
+          alt='작성된 글 없음 안내 아이콘'
+        />
+        <p className='text-sm font-semibold text-blue-400'>아직 작성된 글이 없어요</p>
+      </div>
+    </div>
+  )
+}
