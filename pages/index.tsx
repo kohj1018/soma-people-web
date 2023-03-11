@@ -135,8 +135,8 @@ const Home: NextPage = () => {
           priority
         />
         <article className='py-6 flex items-center justify-center space-x-6 bg-white'>
-          <button
-            onClick={() => moveToOutLink('https://www.swmaestro.org/sw/bbs/B0000002/list.do?menuNo=200019')}
+          <a
+            href='https://www.swmaestro.org/sw/bbs/B0000002/list.do?menuNo=200019'
             className='flex flex-col items-center space-y-1'
           >
             <Image
@@ -146,9 +146,9 @@ const Home: NextPage = () => {
               priority
             />
             <p className='text-sm font-medium text-slate-400'>소마공지</p>
-          </button>
-          <button
-            onClick={() => moveToOutLink('https://www.swmaestro.org/sw/main/contents.do?menuNo=200033')}
+          </a>
+          <a
+            href='https://www.swmaestro.org/sw/main/contents.do?menuNo=200033'
             className='flex flex-col items-center space-y-1'
           >
             <Image
@@ -158,9 +158,9 @@ const Home: NextPage = () => {
               priority
             />
             <p className='text-sm font-medium text-slate-400'>소마일정</p>
-          </button>
-          <button
-            onClick={() => moveToOutLink('https://www.swmaestro.org/sw/main/main.do')}
+          </a>
+          <a
+            href='https://www.swmaestro.org/sw/main/main.do'
             className='flex flex-col items-center space-y-1'
           >
             <Image
@@ -170,7 +170,7 @@ const Home: NextPage = () => {
               priority
             />
             <p className='text-sm font-medium text-slate-400'>소마홈피</p>
-          </button>
+          </a>
           <button
             onClick={() => moveToBoardPage(4)}
             className='flex flex-col items-center space-y-1'
