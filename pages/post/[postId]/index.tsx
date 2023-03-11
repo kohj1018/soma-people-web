@@ -28,7 +28,7 @@ const PostDetail: NextPage = () => {
   const userInfo = useUserInfo()
   const postId: number = parseInt(router.query.postId as string)
   const { setMessage } = useSnackbarOpenStore()
-  const { data: postInfo, isLoading } = useQuery<PostInfoType>(
+  const { data: postInfo } = useQuery<PostInfoType>(
     postKeys.detail(postId),
     () => getPostInfoByPostId(postId),
     {
@@ -56,12 +56,12 @@ const PostDetail: NextPage = () => {
 
   // 조회수 증가
   useEffect(() => {
-    if (!!userInfo?.userId && isLoading && !!postInfo) {
-      // @ts-ignore
-      if (userInfo.userId !== postInfo.user.userId)
-      increaseView(postId , userInfo.userId)
+    if (!!userInfo?.userId && !!postInfo?.user.userId) {
+      if (userInfo.userId !== postInfo.user.userId) {
+        increaseView(postInfo.postId, userInfo.userId)
+      }
     }
-  }, [userInfo, isLoading])
+  }, [userInfo, postInfo])
 
   // 프로필 확인 페이지로 이동 함수
   const viewOtherUserProfile = () => {
