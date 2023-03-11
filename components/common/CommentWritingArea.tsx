@@ -22,7 +22,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
   const [isCommentAnonymous, setIsCommentAnonymous] = useState<boolean>(true)
   const { setMessage } = useSnackbarOpenStore()
 
-  const commentSaveMutation = useMutation(addComment, {
+  const { mutate: commentSaveMutate, isSuccess } = useMutation(addComment, {
     onSuccess: () => {
       queryClient.invalidateQueries(postKeys.detail(postId))
         .then(() => {
@@ -67,7 +67,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
         setCommentInfoToUpdate(null)  // 수정한 댓글 정보 초기화
         setCommentContent('') // 댓글 입력창 초기화
       } else {  // 댓글 등록
-        commentSaveMutation.mutate({
+        commentSaveMutate({
           postId: postId,
           userId: userInfo.userId,
           content: commentContent,
@@ -82,6 +82,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
       <button
         onClick={() => setIsCommentAnonymous(!isCommentAnonymous)}
         className='flex items-center space-x-0.5'
+        disabled={isSuccess}
       >
         <p className='text-sm font-semibold text-gray-400 whitespace-nowrap'>익명</p>
         <CheckBox className={'!w-4 !h-4' + (isCommentAnonymous ? ' text-gray-700' : ' text-gray-300')} />
@@ -94,9 +95,13 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
         maxLength={1000}
         value={commentContent}
         onChange={(e) => { if (e.target.value.length < e.target.maxLength + 1) setCommentContent(e.target.value)} }
+        disabled={isSuccess}
         required
       />
-      <button onClick={(e) => handleSubmit(e)}>
+      <button
+        onClick={(e) => handleSubmit(e)}
+        disabled={isSuccess}
+      >
         <Send className='!w-6 !h-6 text-blue-500' />
       </button>
     </article>

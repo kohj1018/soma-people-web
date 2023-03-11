@@ -21,7 +21,7 @@ const AddPost: NextPage = () => {
   const [content, setContent] = useState<string>('')
   const [isAnonymous, setIsAnonymous] = useState<boolean>(true)
   const { setMessage } = useSnackbarOpenStore()
-  const postMutation = useMutation(addPost, {
+  const { mutate: postMutate, isSuccess } = useMutation(addPost, {
     onSuccess: () => {
       queryClient.invalidateQueries(postKeys.list(boardId, userInfo!.userId))
         .then(() => {
@@ -40,12 +40,12 @@ const AddPost: NextPage = () => {
       } else if (!content) {
         setMessage('본문 내용을 입력해주세요.')
       } else {
-        postMutation.mutate({
-          boardId,
+        postMutate({
+          boardId: boardId,
           userId: userInfo.userId,
-          title,
-          content,
-          isAnonymous,
+          title: title,
+          content: content,
+          isAnonymous: isAnonymous
         })
       }
     }
@@ -53,7 +53,7 @@ const AddPost: NextPage = () => {
 
   return (
     <MainContainer>
-      <MobileCancelHeader title='글 작성하기' buttonFunc={handleSubmit} activateButton={activateButton} />
+      <MobileCancelHeader title='글 작성하기' buttonFunc={handleSubmit} activateButton={activateButton} isSuccess={isSuccess} />
 
       <MainArea className='px-5'>
         <input
