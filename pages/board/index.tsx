@@ -23,6 +23,7 @@ const Board: NextPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const userInfo = useUserInfo()
   const boardInfoList = useBoardInfoList(userInfo)
+  const [boardName, setBoardName] = useState<string>('')
   const infinitePostsScrollY = useInfinitePostsScrollYStore(state => state.infinitePostsScrollY) // 스크롤 위치 저장
   const { setMessage } = useSnackbarOpenStore()
 
@@ -39,15 +40,25 @@ const Board: NextPage = () => {
   // 스크롤 위치 유지
   useKeepScrolling(infinitePostsScrollY)
 
+  // boardName 구하기
+  useEffect(() => {
+    const selectedBoard = boardInfoList.find((boardInfo) => boardInfo.boardId === boardIdOfLastViewed)
+    if (!!selectedBoard) {
+      setBoardName(selectedBoard.name)
+    }
+  }, [boardIdOfLastViewed])
+
 
   return (
     <MainContainer>
-      <SEO title={`${boardInfoList.find((boardInfo) => boardInfo.boardId === boardIdOfLastViewed)?.name} : 게시판`} />
+      {!!boardName &&
+        <SEO title={`${boardName} : 게시판`} />
+      }
 
       {/* 검색 헤더 */}
       <MobileBoardSearchHeader
         boardId={boardIdOfLastViewed}
-        boardName={boardInfoList.find((boardInfo) => boardInfo.boardId === boardIdOfLastViewed)?.name ?? ''}
+        boardName={boardName}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
@@ -66,20 +77,22 @@ const Board: NextPage = () => {
         }
 
         {/* 글쓰기 버튼 */}
-        <Link
-          href={{
-            pathname: `/board/${boardIdOfLastViewed}/addPost`,
-            query: {
-              boardId: boardIdOfLastViewed,
-              boardName: boardInfoList.find((boardInfo) => boardInfo.boardId === boardIdOfLastViewed)?.name
-            }
-          }}
-          className='fixed bottom-6 right-6'
-        >
-          <div className='px-3 py-3 flex items-center justify-center rounded-full bg-blue-500 drop-shadow-FAB'>
-            <Mode className='w-6 h-6 text-white' />
-          </div>
-        </Link>
+        {!!boardName &&
+          <Link
+            href={{
+              pathname: `/board/${boardIdOfLastViewed}/addPost`,
+              query: {
+                boardId: boardIdOfLastViewed,
+                boardName: boardName
+              }
+            }}
+            className='fixed bottom-6 right-6'
+          >
+            <div className='px-3 py-3 flex items-center justify-center rounded-full bg-blue-500 drop-shadow-FAB'>
+              <Mode className='w-6 h-6 text-white' />
+            </div>
+          </Link>
+        }
       </MainArea>
     </MainContainer>
   )
