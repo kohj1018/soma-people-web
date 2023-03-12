@@ -46,7 +46,7 @@ function useBoardInfoList(userInfo: UserInfoType | null): BoardInfoType[] { //TO
               boardInfoList[3]
             ])
             break
-          case '사무국':
+          case '사무국' || '관리자':
             setReturnBoardInfoList(boardInfoList)
             break
           default:  // 준비생
