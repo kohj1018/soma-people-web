@@ -10,6 +10,8 @@ const GoogleAnalytics = () => {
 
   // 👇 send page views when users gets to the landing page
   useEffect(() => {
+    if (process.env.ENV_STATE !== 'production') return  // production 상태가 아니면 통계 포함 X
+
     if (!TRACKING_ID || router.isPreview) return
 
     gtag("config", TRACKING_ID, {
@@ -25,6 +27,8 @@ const GoogleAnalytics = () => {
   // 👇 send page views on route change
   useEffect(() => {
     const handleRouteChange = (url: string) => {
+      if (process.env.ENV_STATE !== 'production') return  // production 상태가 아니면 통계 포함 X
+
       if (!TRACKING_ID || router.isPreview) return
       // manually send page views
       gtag("event", "page_view", {
