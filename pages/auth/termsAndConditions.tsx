@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import { getUserIdByOauthId } from '../../utils/apis/usersApi'
 import LoadingCircular from '../../components/layout/LoadingCircular'
@@ -10,6 +10,7 @@ import Check from '@mui/icons-material/Check'
 import Link from 'next/link'
 import { PRIVACY_POLICY, TERMS_OF_USE } from '../../utils/constants/termsAndPolicy'
 import SEO from '../../components/SEO'
+import Head from 'next/head'
 
 const TermsAndConditions: NextPage = () => {
   const router = useRouter()
@@ -44,6 +45,10 @@ const TermsAndConditions: NextPage = () => {
   return (
     <div className='relative min-h-screen pt-10 px-5 lg:pt-28'>
       <SEO title='약관동의' />
+
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+      </Head>
 
       <article className='space-y-1 lg:mt-8 lg:space-y-2'>
         <h2 className='text-xl font-semibold text-black lg:text-3xl'>약관동의</h2>

@@ -2,7 +2,7 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
 import { ClientSafeProvider, getProviders, LiteralUnion, signIn } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LoadingCircular from '../../components/layout/LoadingCircular'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import { useRouter } from 'next/router'
@@ -12,6 +12,7 @@ import mainLogo from '../../public/mainLogo.svg'
 import googleLogo from '../../public/icon/signInIcon/googleLogo.svg'
 import appleLogo from '../../public/icon/signInIcon/appleLogo.svg'
 import SEO from '../../components/SEO'
+import Head from 'next/head'
 
 interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
@@ -40,6 +41,10 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
   return (
     <div className='w-full h-screen relative overflow-hidden'>
       <SEO title='소마인 로그인' />
+
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+      </Head>
 
       <Image
         src={signInBackGround}
