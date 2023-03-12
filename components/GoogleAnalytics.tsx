@@ -10,7 +10,7 @@ const GoogleAnalytics = () => {
 
   // 👇 send page views when users gets to the landing page
   useEffect(() => {
-    if (process.env.ENV_STATE !== 'production') return  // production 상태가 아니면 통계 포함 X
+    // if (process.env.ENV_STATE !== 'production') return  // production 상태가 아니면 통계 포함 X
 
     if (!TRACKING_ID || router.isPreview) return
 
@@ -27,7 +27,7 @@ const GoogleAnalytics = () => {
   // 👇 send page views on route change
   useEffect(() => {
     const handleRouteChange = (url: string) => {
-      if (process.env.ENV_STATE !== 'production') return  // production 상태가 아니면 통계 포함 X
+      // if (process.env.ENV_STATE !== 'production') return  // production 상태가 아니면 통계 포함 X
 
       if (!TRACKING_ID || router.isPreview) return
       // manually send page views
@@ -46,7 +46,7 @@ const GoogleAnalytics = () => {
     }
   }, [router.events, router.isPreview])
 
-  if (process.env.ENV_STATE !== 'production') return null  // production 상태가 아니면 통계 포함 X
+  // if (process.env.ENV_STATE !== 'production') return null  // production 상태가 아니면 통계 포함 X
 
   // 👇 prevent rendering scripts if there is no TRACKING_ID or if it's preview mode.
   if (!TRACKING_ID || router.isPreview) return null
