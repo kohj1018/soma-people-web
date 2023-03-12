@@ -9,6 +9,7 @@ import LoadingCircular from '../../components/layout/LoadingCircular'
 import Check from '@mui/icons-material/Check'
 import Link from 'next/link'
 import { PRIVACY_POLICY, TERMS_OF_USE } from '../../utils/constants/termsAndPolicy'
+import SEO from '../../components/SEO'
 
 const TermsAndConditions: NextPage = () => {
   const router = useRouter()
@@ -42,6 +43,8 @@ const TermsAndConditions: NextPage = () => {
 
   return (
     <div className='relative min-h-screen pt-10 px-5 lg:pt-28'>
+      <SEO title='약관동의' />
+
       <article className='space-y-1 lg:mt-8 lg:space-y-2'>
         <h2 className='text-xl font-semibold text-black lg:text-3xl'>약관동의</h2>
         <h3 className='text-sm font-semibold text-gray-400 lg:text-lg'>소마인 서비스 이용을 위해 약관 동의가 필요합니다.</h3>

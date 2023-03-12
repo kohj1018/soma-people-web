@@ -11,6 +11,7 @@ import MainArea from '../../../components/layout/MainArea'
 import CheckBox from '@mui/icons-material/CheckBox'
 import MainContainer from '../../../components/layout/MainContainer'
 import usePostMutation from '../../../hooks/usePostMutation'
+import SEO from '../../../components/SEO'
 
 const UpdatePost: NextPage = () => {
   const router = useRouter()
@@ -54,6 +55,8 @@ const UpdatePost: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title={`${postInfo?.title} : 게시글 수정`} />
+
       <MobileCancelHeader title='글 수정하기' buttonFunc={handlePostMutation} activateButton={activateButton} />
 
       <MainArea className='px-5'>

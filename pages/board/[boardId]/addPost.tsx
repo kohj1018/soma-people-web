@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addPost } from '../../../utils/apis/postsApi'
 import { postKeys } from '../../../utils/constants/reactQueryKeyConstants'
 import { AddPostType } from '../../../utils/types/addRequestTypes'
+import SEO from '../../../components/SEO'
 
 const AddPost: NextPage = () => {
   const router = useRouter()
@@ -71,6 +72,8 @@ const AddPost: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title='글 작성하기' />
+
       <MobileCancelHeader title='글 작성하기' buttonFunc={handleSubmit} activateButton={activateButton} isSuccess={isSuccess} />
 
       <MainArea className='px-5'>

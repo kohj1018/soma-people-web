@@ -9,6 +9,7 @@ import useUserInfo from '../../hooks/useUserInfo'
 import MainArea from '../../components/layout/MainArea'
 import MobileCancelHeader from '../../components/layout/mobileHeader/MobileCancelHeader'
 import LoadingCircular from '../../components/layout/LoadingCircular'
+import SEO from '../../components/SEO'
 
 const CustomerService: NextPage = () => {
   const router = useRouter()
@@ -43,6 +44,8 @@ const CustomerService: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title='문의/건의하기' />
+
       <MobileCancelHeader title='문의/건의하기' buttonFunc={submitCSContent} activateButton={activateButton} />
 
       <MainArea className='px-5 pb-7 space-y-4 lg:space-y-6'>

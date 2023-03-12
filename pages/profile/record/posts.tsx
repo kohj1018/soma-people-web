@@ -6,6 +6,7 @@ import { usePostsWrittenByUserScrollYStore } from '../../../stores/scrollStore/s
 import useKeepScrolling from '../../../hooks/useKeepScrolling'
 import dynamic from 'next/dynamic'
 import LoadingCircular from '../../../components/layout/LoadingCircular'
+import SEO from '../../../components/SEO'
 const WrittenByUserPostListSection = dynamic(() => import('../../../components/common/WrittenByUserPostListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const PostsRecord = () => {
@@ -17,6 +18,8 @@ const PostsRecord = () => {
 
   return (
     <MainContainer>
+      <SEO title='작성한 글 조회' />
+
       <MobileCenterTitleHeader title='작성한 글' />
 
       <MainArea className='px-5'>

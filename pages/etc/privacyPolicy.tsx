@@ -5,12 +5,15 @@ import Clear from '@mui/icons-material/Clear'
 import MainArea from '../../components/layout/MainArea'
 import { PRIVACY_POLICY } from '../../utils/constants/termsAndPolicy'
 import React from 'react'
+import SEO from '../../components/SEO'
 
 const PrivacyPolicy: NextPage = () => {
   const router = useRouter()
 
   return (
     <MainContainer>
+      <SEO title='개인정보처리방침' />
+
       <header className='fixed h-14 top-0 inset-x-0 px-5 py-3.5 flex items-center justify-center bg-white z-50 lg:hidden'>
         <button
           onClick={() => router.back()}

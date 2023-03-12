@@ -15,6 +15,7 @@ import Image from 'next/image'
 import UserTypeTag from '../../components/tag/UserTypeTag'
 import VerifiedUser from '@mui/icons-material/VerifiedUser'
 import { addBlockUserLog, deleteBlockUserLog, getAllBlockUserInfo } from '../../utils/apis/blockUserLogsApi'
+import SEO from '../../components/SEO'
 
 const OtherUserProfile: NextPage = () => {
   const router = useRouter()
@@ -89,6 +90,8 @@ const OtherUserProfile: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title={`${otherUserInfo?.name} : 유저 정보 조회`} />
+      
       <MobileBackHeader title={isBlock ? '(차단한 유저)' : ''}>
         <MenuItem
           onClick={() => router.push({

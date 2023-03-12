@@ -15,6 +15,7 @@ import { useCertificationRequestStore } from '../../stores/localStorageStore/sto
 import { useRouter } from 'next/router'
 import { MuiDialog } from '../../components/common/MuiDialog'
 import { useState } from 'react'
+import SEO from '../../components/SEO'
 
 const Profile: NextPage = () => {
   const router = useRouter()
@@ -32,6 +33,8 @@ const Profile: NextPage = () => {
 
   return (
     <MainContainer showFooterOnMobile={true}>
+      <SEO title='마이페이지' />
+
       <header className='absolute top-0 inset-x-0 px-5 py-3.5 bg-zinc-900'>
         <h1 className='text-xl font-semibold text-white'>프로필</h1>
       </header>

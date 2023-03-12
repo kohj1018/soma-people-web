@@ -21,6 +21,7 @@ import usePostMutation from '../../../hooks/usePostMutation'
 import { MuiDialog } from '../../../components/common/MuiDialog'
 import { useSnackbarOpenStore } from '../../../stores/stores'
 import { useUserHiddenPostIdListStore } from '../../../stores/localStorageStore/stores'
+import SEO from '../../../components/SEO'
 const CommentListSection = dynamic(() => import('../../../components/common/CommentListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const PostDetail: NextPage = () => {
@@ -79,6 +80,8 @@ const PostDetail: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title={`${postInfo?.title} : 게시글`} />
+      
       <MobileBackHeader title={postInfo?.board.name ?? ''}>
         {postInfo?.user.userId !== userInfo?.userId &&
           [

@@ -9,6 +9,7 @@ import MainArea from '../../../components/layout/MainArea'
 import MobileCancelHeader from '../../../components/layout/mobileHeader/MobileCancelHeader'
 import { useSnackbarOpenStore } from '../../../stores/stores'
 import LoadingCircular from '../../../components/layout/LoadingCircular'
+import SEO from '../../../components/SEO'
 
 const Report: NextPage = () => {
   const router = useRouter()
@@ -44,6 +45,8 @@ const Report: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title='신고하기' />
+
       <MobileCancelHeader title='신고하기' buttonFunc={submitCSContent} activateButton={activateButton} />
       
       <MainArea className='px-5 pb-7 space-y-4 lg:py-8 lg:space-y-6'>

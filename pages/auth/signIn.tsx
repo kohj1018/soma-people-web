@@ -11,6 +11,7 @@ import signInBackGround from '../../public/signInBackGround.svg'
 import mainLogo from '../../public/mainLogo.svg'
 import googleLogo from '../../public/icon/signInIcon/googleLogo.svg'
 import appleLogo from '../../public/icon/signInIcon/appleLogo.svg'
+import SEO from '../../components/SEO'
 
 interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
@@ -38,6 +39,8 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
 
   return (
     <div className='w-full h-screen relative overflow-hidden'>
+      <SEO title='소마인 로그인' />
+
       <Image
         src={signInBackGround}
         className='w-full h-auto'

@@ -12,6 +12,7 @@ import { AxiosResponse } from 'axios'
 import { THIS_YEAR_CARDINAL_NUM } from '../../utils/config'
 import { useMutation } from '@tanstack/react-query'
 import { AddUserType } from '../../utils/types/addRequestTypes'
+import SEO from '../../components/SEO'
 
 const SignUp = () => {
   const router = useRouter()
@@ -102,6 +103,8 @@ const SignUp = () => {
 
   return (
     <MainContainer>
+      <SEO title='소마인 회원가입' />
+
       <main className='w-screen h-screen px-5 py-10 flex flex-col justify-between'>
         <div className='space-y-5'>
           <h1 className='text-2xl font-semibold text-gray-900'>기본 정보를<br/>입력해 주세요 🤗</h1>

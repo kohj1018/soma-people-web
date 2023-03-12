@@ -6,6 +6,7 @@ import { useCommentsWrittenByUserScrollYStore } from '../../../stores/scrollStor
 import useKeepScrolling from '../../../hooks/useKeepScrolling'
 import dynamic from 'next/dynamic'
 import LoadingCircular from '../../../components/layout/LoadingCircular'
+import SEO from '../../../components/SEO'
 const WrittenByUserCommentListSection = dynamic(() => import('../../../components/common/WrittenByUserCommentListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const CommentsRecord = () => {
@@ -17,6 +18,8 @@ const CommentsRecord = () => {
 
   return (
     <MainContainer>
+      <SEO title='작성한 댓글조회' />
+
       <MobileCenterTitleHeader title='작성한 댓글' />
 
       <MainArea className='px-5'>

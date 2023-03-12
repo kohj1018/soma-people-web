@@ -10,6 +10,7 @@ import { useSnackbarOpenStore } from '../../stores/stores'
 import useUserInfo from '../../hooks/useUserInfo'
 import { updateUserByOAuthId } from '../../utils/apis/usersApi'
 import MobileCenterTitleHeader from '../../components/layout/mobileHeader/MobileCenterTitleHeader'
+import SEO from '../../components/SEO'
 
 const AccountManagement: NextPage = () => {
   const router = useRouter()
@@ -50,6 +51,8 @@ const AccountManagement: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title='계정관리' />
+
       <MobileCenterTitleHeader title='계정관리' />
 
       <MainArea className='px-5 py-8'>

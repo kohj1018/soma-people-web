@@ -4,12 +4,15 @@ import { useRouter } from 'next/router'
 import Clear from '@mui/icons-material/Clear'
 import MainArea from '../../components/layout/MainArea'
 import { TERMS_OF_USE } from '../../utils/constants/termsAndPolicy'
+import SEO from '../../components/SEO'
 
 const TermsOfUse: NextPage = () => {
   const router = useRouter()
 
   return (
     <MainContainer>
+      <SEO title='서비스이용약관' />
+
       <header className='fixed h-14 top-0 inset-x-0 px-5 py-3.5 flex items-center justify-center bg-white z-50 lg:hidden'>
         <button
           onClick={() => router.back()}

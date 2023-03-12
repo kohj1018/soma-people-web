@@ -12,6 +12,7 @@ import { useSnackbarOpenStore } from '../../stores/stores'
 import { useCertificationRequestStore } from '../../stores/localStorageStore/stores'
 import dayjs from 'dayjs'
 import LoadingCircular from '../../components/layout/LoadingCircular'
+import SEO from '../../components/SEO'
 
 const Certification: NextPage = () => {
   const router = useRouter()
@@ -88,6 +89,8 @@ const Certification: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title='소마인 인증요청' />
+
       <MobileCancelHeader title='소마인 인증하기' buttonFunc={handleSubmit} activateButton={activateButton} />
 
       <MainArea>

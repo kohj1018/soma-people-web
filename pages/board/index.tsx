@@ -42,7 +42,7 @@ const Board: NextPage = () => {
 
   return (
     <MainContainer>
-      <SEO title='게시판' />
+      <SEO title={`${boardInfoList.find((boardInfo) => boardInfo.boardId === boardIdOfLastViewed)?.name} : 게시판`} />
 
       {/* 검색 헤더 */}
       <MobileBoardSearchHeader

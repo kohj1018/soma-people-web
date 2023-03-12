@@ -3,12 +3,15 @@ import { useRouter } from 'next/router'
 import MainContainer from '../../components/layout/MainContainer'
 import Clear from '@mui/icons-material/Clear'
 import MainArea from '../../components/layout/MainArea'
+import SEO from '../../components/SEO'
 
 const Notice: NextPage = () => {
   const router = useRouter()
 
   return (
     <MainContainer>
+      <SEO title='공지사항' />
+
       <header className='fixed h-14 top-0 inset-x-0 px-5 py-3.5 flex items-center justify-center bg-white z-50 lg:hidden'>
         <button
           onClick={() => router.back()}
