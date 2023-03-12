@@ -21,7 +21,7 @@ function PostPreview({ postInfo }: Props) {
       <article className='py-4 space-y-3.5 bg-white border-b border-gray-100'>
         <article className='space-y-1.5 font-medium'>
           <header className='text-base text-gray-900 truncate'>{postInfo.title}</header>
-          <p className='text-sm text-gray-500'>{postInfo.content}</p>
+          <p className='text-sm text-gray-500 truncate'>{postInfo.content}</p>
         </article>
         <footer className='w-full flex items-center justify-between'>
           <article className='flex items-center space-x-1.5'>
