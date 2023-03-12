@@ -46,6 +46,8 @@ const GoogleAnalytics = () => {
     }
   }, [router.events, router.isPreview])
 
+  if (process.env.ENV_STATE !== 'production') return null  // production 상태가 아니면 통계 포함 X
+
   // 👇 prevent rendering scripts if there is no TRACKING_ID or if it's preview mode.
   if (!TRACKING_ID || router.isPreview) return null
 
