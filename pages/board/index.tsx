@@ -42,11 +42,13 @@ const Board: NextPage = () => {
 
   // boardName 구하기
   useEffect(() => {
-    const selectedBoard = boardInfoList.find((boardInfo) => boardInfo.boardId === boardIdOfLastViewed)
-    if (!!selectedBoard) {
-      setBoardName(selectedBoard.name)
+    if (!!boardInfoList) {
+      const selectedBoard = boardInfoList.find((boardInfo) => boardInfo.boardId === boardIdOfLastViewed)
+      if (!!selectedBoard) {
+        setBoardName(selectedBoard.name)
+      }
     }
-  }, [boardIdOfLastViewed])
+  }, [boardInfoList, boardIdOfLastViewed])
 
 
   return (
