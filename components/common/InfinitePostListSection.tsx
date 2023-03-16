@@ -80,7 +80,7 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
   // 바닥에 닿으면 새로 불러오기
   useEffect(() => {
     if (!!userId && inView) {
-      if (!!postInfoList && postInfoList.pages.length > INFINITE_SCROLL_LOAD_SIZE - 1) {  // 처음 글이 없을 때 invalidateQueries 안먹히는거 해결하는 부분
+      if (!!postInfoList && postInfoList.pages[postInfoList.pages.length - 1].postList.length > INFINITE_SCROLL_LOAD_SIZE - 1) {  // 처음 글이 없을 때 invalidateQueries 안먹히는거 해결하는 부분
         fetchNextPage()
       }
     }
