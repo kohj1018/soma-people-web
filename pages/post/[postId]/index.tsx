@@ -133,7 +133,7 @@ const PostDetail: NextPage = () => {
                 </button>
                 <h1 className='text-lg font-medium text-gray-900'>{postInfo.title}</h1>
               </article>
-              <p className='mt-5 text-base font-normal text-gray-700'>{postInfo.content}</p>
+              <p className='mt-5 text-base font-normal text-gray-700 whitespace-pre-wrap'>{postInfo.content}</p>
               <footer className='mt-8 w-full flex items-center justify-between'>
                 <div className='flex items-center space-x-1.5'>
                   <RemoveRedEye className='!w-4 !h-4 text-gray-200' />

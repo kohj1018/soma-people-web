@@ -74,7 +74,7 @@ function Comment({ router, commentInfo, userInfo, setCommentInfoToUpdate }: Prop
           }
         </Menu>
       </header>
-      <main className='text-base font-normal text-gray-700'>{commentInfo.content}</main>
+      <main className='text-base font-normal text-gray-700 whitespace-pre-wrap'>{commentInfo.content}</main>
       <footer className='text-sm font-semibold text-gray-400'>{getElapsedTime(dayjs(commentInfo.createdAt))}</footer>
 
       {/* 댓글 삭제 확인 다이얼로그 */}
