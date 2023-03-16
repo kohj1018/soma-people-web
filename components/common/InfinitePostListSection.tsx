@@ -16,6 +16,7 @@ import {
 } from '../../utils/constants/systemConstants'
 import { BoardInfoType } from '../../utils/types/responseTypes'
 import { useUserHiddenPostIdListStore } from '../../stores/localStorageStore/stores'
+import PullToRefresh from 'react-simple-pull-to-refresh';
 
 interface Props {
   userId: number
@@ -26,7 +27,7 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
   const infinitePostListSectionRef = useRef<HTMLDivElement>(null)
   const { boardIdOfLastViewed, setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { ref, inView } = useInView()
-  const { data: postInfoList, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  const { data: postInfoList, fetchNextPage, isFetchingNextPage, refetch } = useInfiniteQuery(
     postKeys.list(boardIdOfLastViewed, userId),
     ({ pageParam = ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID }) => getPostInfoListInfinitely(boardIdOfLastViewed, pageParam, userId),
     {
@@ -93,16 +94,20 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
         className='mt-[3.125rem] px-5 py-4 min-h-[80vh]'  //TODO: 일단 임시로 min-h-[80vh] 하긴 했는데 더 좋은 방법 있으면 바꾸기 (글이 없을 때 영역 차지를 안해서 스와이프가 안되고 있음)
       >
         {isNotEmptyArray(postInfoList?.pages[0].postList) ? (
-          postInfoList?.pages.map((page, index) => (
-            <Fragment key={index}>
-              {page.postList.map((postInfo) => {
-                if (!hiddenPostIdList.includes(postInfo.postId)) {
-                  return <PostPreview key={postInfo.postId} postInfo={postInfo} />
-                }
-                return <></>
-              })}
-            </Fragment>
-          ))
+          <PullToRefresh onRefresh={() => refetch()}>
+            <>
+              {postInfoList?.pages.map((page, index) => (
+                <Fragment key={index}>
+                  {page.postList.map((postInfo) => {
+                    if (!hiddenPostIdList.includes(postInfo.postId)) {
+                      return <PostPreview key={postInfo.postId} postInfo={postInfo} />
+                    }
+                    return <></>
+                  })}
+                </Fragment>
+              ))}
+            </>
+          </PullToRefresh>
         ) : (
           <div className='moveToCenter flex flex-col items-center space-y-5'>
             <Image
