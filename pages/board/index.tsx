@@ -27,14 +27,34 @@ const Board: NextPage = () => {
   const infinitePostsScrollY = useInfinitePostsScrollYStore(state => state.infinitePostsScrollY) // 스크롤 위치 저장
   const { setMessage } = useSnackbarOpenStore()
 
-  // 소마인 인증 안했는데 준비생 게시판 외 게시판 보는 경우 Redirect
+  // Redirect 처리
   useEffect(() => {
-    if (boardIdOfLastViewed !== 4) {
-      if (!!userInfo && !userInfo.isCertified) {
-        setMessage('해당 게시판은 프로필 탭에서 소마인 인증을 받은 후 이용할 수 있습니다.')
-        router.back()
+    if (!!userInfo) {
+
+      // 소마인 인증 안했는데 준비생 게시판 외 게시판 보는 경우
+      if (boardIdOfLastViewed !== 4) {
+        if (!userInfo.isCertified) {
+          setMessage('해당 게시판은 프로필 탭에서 소마인 인증을 받은 후 이용할 수 있습니다.')
+          router.back()
+        }
       }
+
+      // 기수가 다른 경우
+      if (boardIdOfLastViewed.toString().length === 3) {  // 수료생 or 연수생 게시판인 경우
+        if (userInfo.userType !== '연수생'
+          || userInfo.cardinalNum?.toString() !== boardIdOfLastViewed.toString().slice(-2)) // 기수가 해당 게시판 기수와 같지 않다면
+        {
+          setMessage(`해당 게시판은 ${boardIdOfLastViewed.toString().slice(-2)}기만 이용할 수 있습니다.`)
+          router.back()
+        }
+      }
+
     }
+
+  }, [userInfo])
+
+  useEffect(() => {
+
   }, [userInfo])
 
   // 스크롤 위치 유지

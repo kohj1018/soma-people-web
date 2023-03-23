@@ -28,21 +28,21 @@ function useBoardInfoList(userInfo: UserInfoType | null): BoardInfoType[] { //TO
         switch (userInfo.userType) {
           case '연수생':
             setReturnBoardInfoList([
+              boardInfoList.find((boardInfo) =>
+                boardInfo.boardId === parseInt('1' + userInfo.cardinalNum)) as BoardInfoType,
               boardInfoList[0],
               boardInfoList[1],
               boardInfoList[2],
-              boardInfoList.find((boardInfo) =>
-                boardInfo.boardId === parseInt('1' + userInfo.cardinalNum)) as BoardInfoType,
               boardInfoList[3]
             ])
             break
           case '멘토':
             setReturnBoardInfoList([
+              boardInfoList.find((boardInfo) =>
+                boardInfo.boardId === 100) as BoardInfoType,
               boardInfoList[0],
               boardInfoList[1],
               boardInfoList[2],
-              boardInfoList.find((boardInfo) =>
-                boardInfo.boardId === 100) as BoardInfoType,
               boardInfoList[3]
             ])
             break
