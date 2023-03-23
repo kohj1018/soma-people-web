@@ -9,7 +9,7 @@ import { useBoardIdOfLastViewedStore, useSnackbarOpenStore } from '../../stores/
 import { checkCharacter } from '../../utils/functions/checkCharacter'
 import { addUser } from '../../utils/apis/usersApi'
 import { AxiosResponse } from 'axios'
-import { THIS_YEAR_CARDINAL_NUM } from '../../utils/config'
+import { PREP_STUDENT_CARDINAL_NUM, THIS_YEAR_CARDINAL_NUM } from '../../utils/config'
 import { useMutation } from '@tanstack/react-query'
 import { AddUserType } from '../../utils/types/addRequestTypes'
 import SEO from '../../components/SEO'
@@ -30,7 +30,7 @@ const SignUp = () => {
         addUser({
           name: name,
           userType: userType,
-          cardinalNum: cardinalNumStr.length < 1 ? (userType === '준비생' ? THIS_YEAR_CARDINAL_NUM : 0) : parseInt(cardinalNumStr),
+          cardinalNum: cardinalNumStr.length < 1 ? (userType === '준비생' ? PREP_STUDENT_CARDINAL_NUM : 0) : parseInt(cardinalNumStr),
           email: session?.user.email ?? '',
           oauthId: oauthId,
           refreshToken: session?.refreshToken ?? '',
