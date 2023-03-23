@@ -172,16 +172,16 @@ const Home: NextPage = () => {
             <p className='text-sm font-medium text-slate-400'>소마홈피</p>
           </a>
           <button
-            onClick={() => moveToBoardPage(4)}
+            onClick={() => moveToBoardPage(114)}
             className='flex flex-col items-center space-y-1'
           >
             <Image
               src={peopleIcon}
               className='h-9'
-              alt='14기 준비 아이콘'
+              alt='14기 연수생 아이콘'
               priority
             />
-            <p className='text-sm font-medium text-slate-400'>14기 준비</p>
+            <p className='text-sm font-medium text-slate-400'>14기 연수생</p>
           </button>
         </article>
 
