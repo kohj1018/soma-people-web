@@ -1,4 +1,10 @@
-import { BoardIdOfLastViewedState, BoardRefOfLastViewedState, SnackbarOpenState } from './storeTypes'
+import {
+  BoardIdOfLastViewedState,
+  BoardRefOfLastViewedState,
+  IsFirstLoadState,
+  IsMobileState,
+  SnackbarOpenState,
+} from './storeTypes'
 import { create } from 'zustand'
 import { RefObject } from 'react'
 
@@ -27,5 +33,21 @@ export const useBoardRefOfLastViewedStore = create<BoardRefOfLastViewedState>((s
   boardRefOfLastViewed: null,
   setBoardRefOfLastViewed: (boardRefOfLastViewed: RefObject<HTMLButtonElement>) => {
     set((state) => ({ ...state, boardRefOfLastViewed: boardRefOfLastViewed }))
+  }
+}))
+
+/** 현재 기기가 스마트폰인지 여부를 관리하는 Store */
+export const useIsMobileStore = create<IsMobileState>((set) => ({
+  isMobile: false,
+  setIsMobile: (isMobile: boolean) => {
+    set((state) => ({ ...state, isMobile: isMobile }))
+  }
+}))
+
+/** 앱을 실행하고 첫번째 로딩인지 체크하는 Store */
+export const useIsFirstLoadStore = create<IsFirstLoadState>((set) => ({
+  isFirstLoad: true,
+  setIsFirstLoad: (isFirstLoad: boolean) => {
+    set((state) => ({ ...state, isFirstLoad: isFirstLoad }))
   }
 }))

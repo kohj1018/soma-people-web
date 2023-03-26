@@ -19,7 +19,7 @@ import Search from '@mui/icons-material/Search'
 import React, { useEffect, useState } from 'react'
 import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
 import QnAPreview from '../components/common/QnAPreview'
-import { useBoardIdOfLastViewedStore } from '../stores/stores'
+import { useBoardIdOfLastViewedStore, useIsFirstLoadStore } from '../stores/stores'
 import { useRouter } from 'next/router'
 import useUserInfo from '../hooks/useUserInfo'
 import SearchModal from '../components/common/SearchModal'
@@ -29,6 +29,7 @@ import { useMainPageScrollYStore } from '../stores/scrollStore/scrollStores'
 import useKeepScrolling from '../hooks/useKeepScrolling'
 import memoIcon from '../public/icon/memoIcon.svg'
 import { isNotEmptyArray } from '../utils/functions/isNotEmptyArray'
+import { afterLoadingIsComplete } from '../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -37,13 +38,20 @@ const Home: NextPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { mainPageScrollY, setMainPageScrollY } = useMainPageScrollYStore()
+  const { isFirstLoad, setIsFirstLoad } = useIsFirstLoadStore()
   const { data: mainPagePostSummaryData, isLoading } = useQuery(
     postKeys.mainPageSummary(userInfo?.userId ?? 0),
     () => getPostFromEachBoard(userInfo?.userId ?? 0),
     {
       enabled: !!userInfo?.userId,
       staleTime: 60000,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      onSuccess: () => {
+        if (!!userInfo && isFirstLoad) {  // 앱 실행 후, 첫 번째 로딩에만 아래 함수를 실행
+          afterLoadingIsComplete(userInfo.userId)
+          setIsFirstLoad(false) // 위 함수가 다시 실행되지 않도록 false로 변경
+        }
+      }
     }
   )
   const [isOutLinkLoading, setIsOutLinkLoading] = useState<boolean>(false)

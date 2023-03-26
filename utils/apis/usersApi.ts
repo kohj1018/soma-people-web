@@ -20,3 +20,6 @@ export const addUser = (addUserRequest: AddUserType) => ec2.post('/users', addUs
 
 /** 유저 정보 수정하기 (oauthId 로만 가능) */
 export const updateUserByOAuthId = (oauthId: string, updateUserRequest: UpdateUserType) => ec2.put(`/users/${oauthId}`, updateUserRequest)
+
+/** firebaseToken 등록/수정 */
+export const registerFirebaseToken = (userId: number, firebaseToken: string) => ec2.put(`/users/firebaseToken/${userId}`, firebaseToken)

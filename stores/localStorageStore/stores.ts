@@ -2,10 +2,11 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import {
   CertificationRequestPersist,
-  CertificationRequestState,
+  CertificationRequestState, FirebaseTokenPersist, FirebaseTokenState,
   SignInInfoPersist,
   SignInInfoState, UserHiddenPostIdListPersist, UserHiddenPostIdListState,
 } from './storeTypes'
+import dayjs from 'dayjs'
 
 /** 유저 아이디와 OAuth에서 받은 id를 저장하는 Store */
 export const useSignInInfoStore = create<SignInInfoState>(
@@ -52,6 +53,25 @@ export const useUserHiddenPostIdListStore = create<UserHiddenPostIdListState>(
     }),
     {
       name: 'hiddenPostIdList'
+    }
+  )
+)
+
+/** firebaseToken 관리하는 Store */
+export const useFirebaseTokenStore = create<FirebaseTokenState>(
+  (persist as FirebaseTokenPersist)(
+    (set) => ({
+      firebaseToken: null,
+      setFirebaseToken: (firebaseToken: string) => {
+        set((state) => ({...state, firebaseToken: firebaseToken, updatedAt: dayjs().format('YYYY-MM-DD')}))
+      },
+      updatedAt: null,
+      setUpdatedAt: (updatedAt: string) => {
+        set((state) => ({...state, updatedAt: dayjs().format('YYYY-MM-DD')}))
+      }
+    }),
+    {
+      name: 'firebaseToken'
     }
   )
 )

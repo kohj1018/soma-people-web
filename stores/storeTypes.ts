@@ -17,3 +17,13 @@ export type BoardRefOfLastViewedState = {
   boardRefOfLastViewed: RefObject<HTMLButtonElement> | null
   setBoardRefOfLastViewed: (boardRefOfLastViewed: RefObject<HTMLButtonElement>) => void
 }
+
+export type IsMobileState = {
+  isMobile: boolean
+  setIsMobile: (isMobile: boolean) => void
+}
+
+export type IsFirstLoadState = {
+  isFirstLoad: boolean
+  setIsFirstLoad: (isFirstLoad: boolean) => void
+}
