@@ -13,6 +13,7 @@ import googleLogo from '../../public/icon/signInIcon/googleLogo.svg'
 import appleLogo from '../../public/icon/signInIcon/appleLogo.svg'
 import SEO from '../../components/SEO'
 import Head from 'next/head'
+import { afterLoadingIsComplete } from '../../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
 
 interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
@@ -30,6 +31,10 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
       router.replace('/')
     }
   }, [userId, oauthId])
+
+  useEffect(() => {
+    afterLoadingIsComplete(null)
+  }, [])
 
   const goToSignIn = (providerId: LiteralUnion<BuiltInProviderType, string>) => {
     setIsLoading(true)
