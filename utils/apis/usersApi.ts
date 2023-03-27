@@ -1,6 +1,6 @@
 import { UserInfoType } from '../types/responseTypes'
 import { ec2 } from './apiConfig'
-import { UpdateUserType } from '../types/updateRequestTypes'
+import { UpdateFirebaseToken, UpdateUserType } from '../types/updateRequestTypes'
 import { AddUserType } from '../types/addRequestTypes'
 
 /** userId로 유저 정보 불러오기 */
@@ -22,4 +22,4 @@ export const addUser = (addUserRequest: AddUserType) => ec2.post('/users', addUs
 export const updateUserByOAuthId = (oauthId: string, updateUserRequest: UpdateUserType) => ec2.put(`/users/${oauthId}`, updateUserRequest)
 
 /** firebaseToken 등록/수정 */
-export const registerFirebaseToken = (userId: number, firebaseToken: string) => ec2.put(`/users/firebaseToken/${userId}`, firebaseToken)
+export const registerFirebaseToken = (userId: number, firebaseToken: UpdateFirebaseToken) => ec2.put(`/users/firebaseToken/${userId}`, firebaseToken)

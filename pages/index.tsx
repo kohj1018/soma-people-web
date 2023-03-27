@@ -30,6 +30,7 @@ import useKeepScrolling from '../hooks/useKeepScrolling'
 import memoIcon from '../public/icon/memoIcon.svg'
 import { isNotEmptyArray } from '../utils/functions/isNotEmptyArray'
 import { afterLoadingIsComplete } from '../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
+import { isMobile } from '../utils/functions/isMobile'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -47,7 +48,7 @@ const Home: NextPage = () => {
       staleTime: 60000,
       refetchOnWindowFocus: false,
       onSuccess: () => {
-        if (!!userInfo && isFirstLoad) {  // 앱 실행 후, 첫 번째 로딩에만 아래 함수를 실행
+        if (isMobile() && !!userInfo && isFirstLoad) {  // 앱 실행 후, 첫 번째 로딩에만 아래 함수를 실행
           afterLoadingIsComplete(userInfo.userId)
           setIsFirstLoad(false) // 위 함수가 다시 실행되지 않도록 false로 변경
         }
@@ -86,6 +87,14 @@ const Home: NextPage = () => {
   return (
     <MainContainer showFooterOnMobile={true}>
       <SEO title='소마인 : 소프트웨어 마에스트로 커뮤니티' />
+
+      {/*<button // TODO: 해결 위해 테스트중. (firebaseToken 등록 위해)*/}
+      {/*  className='bg-black text-white rounded-lg p-4'*/}
+      {/*  // @ts-ignore*/}
+      {/*  onClick={() => window.registerFirebaseToken(2, '수정.')}*/}
+      {/*>*/}
+      {/*  firebaseToken 등록*/}
+      {/*</button>*/}
 
       <header className='fixed h-14 top-0 inset-x-0 px-5 flex items-center justify-between bg-zinc-900 z-50 lg:hidden'>
         <Image

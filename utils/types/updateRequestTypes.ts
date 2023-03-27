@@ -16,3 +16,7 @@ export interface UpdateCommentType {
   isAnonymous: boolean
   isDelete: boolean
 }
+
+export interface UpdateFirebaseToken {
+  firebaseToken: string
+}

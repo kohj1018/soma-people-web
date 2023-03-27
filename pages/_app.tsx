@@ -47,7 +47,7 @@ export default function App({ Component, pageProps }: AppProps) {
       if (!!userId && !!firebaseToken) {
         const today: string = dayjs().format('YYYY-MM-DD')
         if (updatedAt === null || (!!updatedAt && dayjs(updatedAt).isAfter(today, 'month'))) { // 등록한 적 없거나, 마지막 수정 날짜보다 한 달 이상 됐을 때 업데이트
-          registerFirebaseToken(userId, firebaseToken)
+          registerFirebaseToken(userId, { firebaseToken: firebaseToken })
             .then(() => {
               setFirebaseToken(firebaseToken)
               setUpdatedAt(today)
