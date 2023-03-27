@@ -48,7 +48,8 @@ export default function App({ Component, pageProps }: AppProps) {
     }
 
     // @ts-ignore
-    window.registerFirebaseToken = (firebaseInfo: FirebaseTokenInfo) => {  // firebaseToken 등록함수
+    window.registerFirebaseToken = (firebaseInfoJSON: string) => {  // firebaseToken 등록함수
+      const firebaseInfo: FirebaseTokenInfo = JSON.parse(firebaseInfoJSON)
       if (!!firebaseInfo.userId && !!firebaseInfo.firebaseToken) {
         const today: string = dayjs().format('YYYY-MM-DD')
         if (updatedAt === null || (!!updatedAt && dayjs(updatedAt).isAfter(today, 'month'))) { // 등록한 적 없거나, 마지막 수정 날짜보다 한 달 이상 됐을 때 업데이트
