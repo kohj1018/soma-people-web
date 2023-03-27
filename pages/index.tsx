@@ -77,10 +77,10 @@ const Home: NextPage = () => {
   }
 
   // 외부 링크 이동하기 함수
-  const moveToOutLink = (link: string) => {
-    setIsOutLinkLoading(true)
-    router.push(link)
-  }
+  // const moveToOutLink = (link: string) => {
+  //   setIsOutLinkLoading(true)
+  //   router.push(link)
+  // }
 
   if (isLoading || isOutLinkLoading) return <LoadingCircular />
 
