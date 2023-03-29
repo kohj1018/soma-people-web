@@ -35,11 +35,11 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
   }, [userId, oauthId])
 
   useEffect(() => {
-    if (isMobileWebView() && isFirstLoad) {
+    if (isFirstLoad) {
       afterLoadingIsComplete(-1, navigator.userAgent)
       setIsFirstLoad(false)
     }
-  }, [])
+  }, [isFirstLoad])
 
   const goToSignIn = (providerId: LiteralUnion<BuiltInProviderType, string>) => {
     setIsLoading(true)

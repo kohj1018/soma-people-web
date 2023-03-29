@@ -48,7 +48,7 @@ const Home: NextPage = () => {
       staleTime: 60000,
       refetchOnWindowFocus: false,
       onSuccess: () => {
-        if (isMobileWebView() && !!userInfo && isFirstLoad) {  // 앱 실행 후, 첫 번째 로딩에만 아래 함수를 실행
+        if (!!userInfo && isFirstLoad) {  // 앱 실행 후, 첫 번째 로딩에만 아래 함수를 실행
           afterLoadingIsComplete(userInfo.userId, navigator.userAgent)
           setIsFirstLoad(false) // 위 함수가 다시 실행되지 않도록 false로 변경
         }
