@@ -30,7 +30,6 @@ import useKeepScrolling from '../hooks/useKeepScrolling'
 import memoIcon from '../public/icon/memoIcon.svg'
 import { isNotEmptyArray } from '../utils/functions/isNotEmptyArray'
 import { afterLoadingIsComplete } from '../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
-import { isMobileWebView } from '../utils/functions/isMobileWebView'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -55,7 +54,6 @@ const Home: NextPage = () => {
       }
     }
   )
-  const [isOutLinkLoading, setIsOutLinkLoading] = useState<boolean>(false)
 
   // 스크롤 위치 유지
   useKeepScrolling(mainPageScrollY)
@@ -76,25 +74,11 @@ const Home: NextPage = () => {
     router.push('/board')
   }
 
-  // 외부 링크 이동하기 함수
-  // const moveToOutLink = (link: string) => {
-  //   setIsOutLinkLoading(true)
-  //   router.push(link)
-  // }
-
-  if (isLoading || isOutLinkLoading) return <LoadingCircular />
+  if (isLoading) return <LoadingCircular />
 
   return (
     <MainContainer showFooterOnMobile={true}>
       <SEO title='소마인 : 소프트웨어 마에스트로 커뮤니티' />
-
-      {/*<button // TODO: 해결 위해 테스트중. (firebaseToken 등록 위해)*/}
-      {/*  className='bg-black text-white rounded-lg p-4'*/}
-      {/*  // @ts-ignore*/}
-      {/*  onClick={() => window.registerFirebaseToken(2, '수정.')}*/}
-      {/*>*/}
-      {/*  firebaseToken 등록*/}
-      {/*</button>*/}
 
       <header className='fixed h-14 top-0 inset-x-0 px-5 flex items-center justify-between bg-zinc-900 z-50 lg:hidden'>
         <Image

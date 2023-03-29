@@ -14,7 +14,6 @@ import appleLogo from '../../public/icon/signInIcon/appleLogo.svg'
 import SEO from '../../components/SEO'
 import Head from 'next/head'
 import { afterLoadingIsComplete } from '../../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
-import { isMobileWebView } from '../../utils/functions/isMobileWebView'
 
 interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
@@ -39,7 +38,7 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
       afterLoadingIsComplete(-1, navigator.userAgent)
       setIsFirstLoad(false)
     }
-  }, [isFirstLoad])
+  }, [])
 
   const goToSignIn = (providerId: LiteralUnion<BuiltInProviderType, string>) => {
     setIsLoading(true)
