@@ -53,12 +53,17 @@ export default function App({ Component, pageProps }: AppProps) {
       // if (!!firebaseInfo.userId && !!firebaseInfo.firebaseToken) {
       //   const today: string = dayjs().format('YYYY-MM-DD')
         // if (updatedAt === null || (!!updatedAt && dayjs(updatedAt).isAfter(today, 'month'))) { // 등록한 적 없거나, 마지막 수정 날짜보다 한 달 이상 됐을 때 업데이트
+      console.log("firebaseToken 함수 들어옴")
+      console.log('userId : ', userId)
+      console.log('firebaseToken : ', firebaseToken)
       if (firebaseToken) {
         registerFirebaseToken(userId, { firebaseToken: firebaseToken })
           .then(() => {
+            console.log("보내기 성공")
             setFirebaseToken(firebaseToken)
             // setUpdatedAt(today)
           })
+          .catch((err) => console.log("실패 : ", err))
       }
         // }
       // }

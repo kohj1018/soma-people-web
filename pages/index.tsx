@@ -30,7 +30,7 @@ import useKeepScrolling from '../hooks/useKeepScrolling'
 import memoIcon from '../public/icon/memoIcon.svg'
 import { isNotEmptyArray } from '../utils/functions/isNotEmptyArray'
 import { afterLoadingIsComplete } from '../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
-import { isMobile } from '../utils/functions/isMobile'
+import { isMobileWebView } from '../utils/functions/isMobileWebView'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
       staleTime: 60000,
       refetchOnWindowFocus: false,
       onSuccess: () => {
-        if (isMobile() && !!userInfo && isFirstLoad) {  // 앱 실행 후, 첫 번째 로딩에만 아래 함수를 실행
+        if (isMobileWebView() && !!userInfo && isFirstLoad) {  // 앱 실행 후, 첫 번째 로딩에만 아래 함수를 실행
           afterLoadingIsComplete(userInfo.userId, navigator.userAgent)
           setIsFirstLoad(false) // 위 함수가 다시 실행되지 않도록 false로 변경
         }

@@ -14,7 +14,7 @@ import appleLogo from '../../public/icon/signInIcon/appleLogo.svg'
 import SEO from '../../components/SEO'
 import Head from 'next/head'
 import { afterLoadingIsComplete } from '../../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
-import { isMobile } from '../../utils/functions/isMobile'
+import { isMobileWebView } from '../../utils/functions/isMobileWebView'
 
 interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
@@ -35,7 +35,7 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
   }, [userId, oauthId])
 
   useEffect(() => {
-    if (isMobile() && isFirstLoad) {
+    if (isMobileWebView() && isFirstLoad) {
       afterLoadingIsComplete(-1, navigator.userAgent)
       setIsFirstLoad(false)
     }
