@@ -49,21 +49,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
     // @ts-ignore
     window.registerFirebaseToken = (userId: number, firebaseToken: string | null) => {  // firebaseToken 등록함수
-      console.log("함수 들어옴")
       if (!!userId && !!firebaseToken) {
-        console.log('userId : ', userId)
-        console.log('firebaseToken : ', firebaseToken)
         const today: string = dayjs().format('YYYY-MM-DD')
         if (updatedAt === null || dayjs(updatedAt).isBefore(today, 'month')) { // 등록한 적 없거나, 마지막 수정 날짜보다 한 달 이상 됐을 때 업데이트
-          console.log("업데이트 날짜 체크 후 보내기 시도")
           registerFirebaseToken(userId, { firebaseToken: firebaseToken })
             .then(() => {
-              console.log("보내기 성공")
               setFirebaseToken(firebaseToken)
               setUpdatedAt(today)
-              console.log("갱신된 업데이트 날짜 : ", today)
             })
-            .catch((err) => console.log("실패 : ", err))
         }
       }
     }
