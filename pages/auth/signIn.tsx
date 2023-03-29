@@ -4,7 +4,7 @@ import { BuiltInProviderType } from 'next-auth/providers'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import React, { useEffect, useState } from 'react'
 import LoadingCircular from '../../components/layout/LoadingCircular'
-import { useSnackbarOpenStore } from '../../stores/stores'
+import { useIsFirstLoadStore, useSnackbarOpenStore } from '../../stores/stores'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import signInBackGround from '../../public/signInBackGround.svg'
@@ -24,6 +24,7 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
   const router = useRouter()
   const { userId, oauthId } = useSignInInfoStore()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { isFirstLoad, setIsFirstLoad } = useIsFirstLoadStore()
   const { setMessage } = useSnackbarOpenStore()
 
   useEffect(() => {
@@ -34,8 +35,9 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
   }, [userId, oauthId])
 
   useEffect(() => {
-    if (isMobile()) {
-      afterLoadingIsComplete(null)
+    if (isMobile() && isFirstLoad) {
+      afterLoadingIsComplete(-1, navigator.userAgent)
+      setIsFirstLoad(false)
     }
   }, [])
 
