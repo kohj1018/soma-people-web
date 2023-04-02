@@ -33,7 +33,7 @@
 
 @layer components {
   .paddingHeader {
-    @apply pt-14 lg:pt-[3.8125rem]
+    @apply pt-14 lg:pt-14
   }
 
   /*.paddingBottom {*/

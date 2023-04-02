@@ -111,21 +111,6 @@ const Home: NextPage = () => {
             <AccountCircle className='!w-6 !h-6 text-white' />
           </Link>
         </div>
-
-        {/* TODO: 일단 overflow-hidden으로 해놓긴 했는데 끊기는 느낌나서 추후 수정 필요 */}
-        {/*<div className={'pl-4 pr-2 py-1.5 flex items-center justify-between space-x-1 bg-gray-100 rounded duration-500 overflow-hidden' + (isSearchMode ? ' visible grow' : ' invisible w-0')}>*/}
-        {/*  <input*/}
-        {/*    type='text'*/}
-        {/*    className='grow bg-gray-100 text-sm font-medium text-gray-700 placeholder:text-gray-400 focus:outline-none'*/}
-        {/*    placeholder='검색어를 입력해주세요'*/}
-        {/*    value={searchTerm}*/}
-        {/*    onChange={(e) => setSearchTerm(e.target.value)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가*/}
-        {/*    required*/}
-        {/*  />*/}
-        {/*  <button onClick={cancelSearch}>*/}
-        {/*    <DisabledByDefault className='w-6 h-6 text-gray-300' />*/}
-        {/*  </button>*/}
-        {/*</div>*/}
       </header>
 
       <MainArea className='min-h-screen bg-gray-50'>
