@@ -279,10 +279,10 @@ function EmptyPostsNotice() {
       <div className='flex flex-col items-center space-y-2'>
         <Image
           src={memoIcon}
-          className='!w-9 !h-9'
+          className='!w-9 !h-9 lg:!w-12 lg:!h-12'
           alt='작성된 글 없음 안내 아이콘'
         />
-        <p className='text-sm font-semibold text-blue-400'>아직 작성된 글이 없어요</p>
+        <p className='text-sm font-semibold text-blue-400 lg:text-base'>아직 작성된 글이 없어요</p>
       </div>
     </div>
   )
