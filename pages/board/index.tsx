@@ -25,7 +25,8 @@ import mentorIcon from '../../public/icon/boardIcon/mentorIcon.png'
 import prepStudentIcon from '../../public/icon/boardIcon/prepStudentIcon.png'
 import traineeIcon from '../../public/icon/boardIcon/traineeIcon.png'
 import { THIS_YEAR_CARDINAL_NUM } from '../../utils/config'
-const InfinitePostListSection = dynamic(() => import('../../components/common/InfinitePostListSection'),{loading: () => <LoadingCircular />, ssr: false})
+import { BoardInfoType } from '../../utils/types/responseTypes'
+const InfinitePostListSection = dynamic(() => import('../../components/common/InfiniteTraineePostListSection'),{loading: () => <LoadingCircular />, ssr: false})
 
 const Board: NextPage = () => {
   const userInfo = useUserInfo()
@@ -63,8 +64,7 @@ const Board: NextPage = () => {
               return (
                 <BoardMenu
                   key={boardInfo.boardId}
-                  link='/'
-                  boardName={boardInfo.name}
+                  boardInfo={boardInfo}
                   boardNameColor='text-white'
                   bgColor='bg-black'
                   icon={userOnlyBoardIcon}
@@ -87,8 +87,7 @@ const Board: NextPage = () => {
                       return (
                         <BoardMenu
                           key={boardInfo.boardId}
-                          link='/'
-                          boardName={boardInfo.name}
+                          boardInfo={boardInfo}
                           icon={freeBoardIcon}
                           iconBgColor='bg-slate-100'
                         />
@@ -97,8 +96,7 @@ const Board: NextPage = () => {
                       return (
                         <BoardMenu
                           key={boardInfo.boardId}
-                          link='/'
-                          boardName={boardInfo.name}
+                          boardInfo={boardInfo}
                           icon={freeBoardIcon}
                           iconBgColor='bg-blue-100'
                         />
@@ -107,8 +105,7 @@ const Board: NextPage = () => {
                       return (
                         <BoardMenu
                           key={boardInfo.boardId}
-                          link='/'
-                          boardName={boardInfo.name}
+                          boardInfo={boardInfo}
                           icon={employmentIcon}
                           iconBgColor='bg-orange-100'
                         />
@@ -125,8 +122,7 @@ const Board: NextPage = () => {
           <article className='space-y-4'>
             <header className='text-sm font-semibold text-gray-500'>미인증자 게시판</header>
             <BoardMenu
-              link='/'
-              boardName={userAccessibleBoardInfo.unCertified[0]?.name}
+              boardInfo={{boardId: 4, name: userAccessibleBoardInfo.unCertified[0]?.name}}
               icon={prepStudentIcon}
               iconBgColor='bg-emerald-50'
             />
@@ -213,7 +209,7 @@ const Board: NextPage = () => {
   //     <MainArea>
   //       {/* 게시글 무한 스크롤 영역 */}
   //       {!!userInfo &&
-  //         <InfinitePostListSection userId={userInfo.userId} boardInfoList={boardInfoList} />
+  //         <InfiniteTraineePostListSection userId={userInfo.userId} boardInfoList={boardInfoList} />
   //       }
   //
   //       {/* 글쓰기 버튼 */}
@@ -241,18 +237,22 @@ const Board: NextPage = () => {
 export default Board
 
 interface BoardMenuProps {
-  link: string
-  boardName: string
+  boardInfo: BoardInfoType
   boardNameColor?: string
   bgColor?: string
   icon: StaticImageData
   iconBgColor: string
   haveShadow?: boolean
 }
-function BoardMenu({ link, boardName, boardNameColor = 'text-gray-600', bgColor = 'bg-white', icon, iconBgColor, haveShadow = false }: BoardMenuProps) {
+function BoardMenu({ boardInfo, boardNameColor = 'text-gray-600', bgColor = 'bg-white', icon, iconBgColor, haveShadow = false }: BoardMenuProps) {
   return (
     <Link
-      href={link}
+      href={{
+        pathname: `/board/${boardInfo.boardId}`,
+        query: {
+          boardName: boardInfo.name
+        }
+      }}
       className={'w-full px-4 py-2.5 flex items-center justify-between rounded-lg ' + bgColor + (haveShadow ? ' shadow-profileCard' : '')}
     >
       <div className='flex items-center space-x-4'>
@@ -263,7 +263,7 @@ function BoardMenu({ link, boardName, boardNameColor = 'text-gray-600', bgColor 
             alt='게시판 아이콘'
           />
         </div>
-        <p className={'text-lg font-medium ' + boardNameColor}>{boardName}</p>
+        <p className={'text-lg font-medium ' + boardNameColor}>{boardInfo.name}</p>
       </div>
       <KeyboardArrowRight className='!w-6 !h-6 text-zinc-600' />
     </Link>

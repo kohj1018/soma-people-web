@@ -1,12 +1,10 @@
 import {
   BoardIdOfLastViewedState,
-  BoardRefOfLastViewedState,
   IsFirstLoadState,
-  IsMobileState,
-  SnackbarOpenState,
+  SnackbarOpenState, TraineeBoardIdOfLastViewedState,
 } from './storeTypes'
 import { create } from 'zustand'
-import { RefObject } from 'react'
+import { THIS_YEAR_CARDINAL_NUM } from '../utils/config'
 
 /** 스낵바 띄우는 Store */
 export const useSnackbarOpenStore = create<SnackbarOpenState>((set) => ({
@@ -28,26 +26,18 @@ export const useBoardIdOfLastViewedStore = create<BoardIdOfLastViewedState>((set
   }
 }))
 
-/** 마지막으로 보고 있던 게시판 Ref 관리하는 Store */
-export const useBoardRefOfLastViewedStore = create<BoardRefOfLastViewedState>((set) => ({
-  boardRefOfLastViewed: null,
-  setBoardRefOfLastViewed: (boardRefOfLastViewed: RefObject<HTMLButtonElement>) => {
-    set((state) => ({ ...state, boardRefOfLastViewed: boardRefOfLastViewed }))
-  }
-}))
-
-/** 현재 기기가 스마트폰인지 여부를 관리하는 Store */
-export const useIsMobileStore = create<IsMobileState>((set) => ({
-  isMobile: false,
-  setIsMobile: (isMobile: boolean) => {
-    set((state) => ({ ...state, isMobile: isMobile }))
-  }
-}))
-
 /** 앱을 실행하고 첫번째 로딩인지 체크하는 Store */
 export const useIsFirstLoadStore = create<IsFirstLoadState>((set) => ({
   isFirstLoad: true,
   setIsFirstLoad: (isFirstLoad: boolean) => {
     set((state) => ({ ...state, isFirstLoad: isFirstLoad }))
+  }
+}))
+
+/** 연수생 게시판들 조작 관리하는 Store */
+export const useTraineeBoardIdOfLastViewedStore = create<TraineeBoardIdOfLastViewedState>((set) => ({
+  traineeBoardIdOfLastViewed: parseInt('1' + THIS_YEAR_CARDINAL_NUM),
+  setTraineeBoardIdOfLastViewed: (traineeBoardIdOfLastViewed: number) => {
+    set((state) => ({ ...state, traineeBoardIdOfLastViewed: traineeBoardIdOfLastViewed }))
   }
 }))

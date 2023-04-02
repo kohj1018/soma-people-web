@@ -10,7 +10,6 @@ import { useRouter } from 'next/router'
 import { registerFirebaseToken } from '../utils/apis/usersApi'
 import { useFirebaseTokenStore } from '../stores/localStorageStore/stores'
 import dayjs from 'dayjs'
-import { useIsMobileStore } from '../stores/stores'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +27,6 @@ type FirebaseTokenInfo = {
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const { setFirebaseToken, updatedAt, setUpdatedAt } = useFirebaseTokenStore()
-  const { setIsMobile } = useIsMobileStore()
 
   // Flutter Bridge Function 세팅
   useEffect(() => {
@@ -58,15 +56,6 @@ export default function App({ Component, pageProps }: AppProps) {
               setUpdatedAt(today)
             })
         }
-      }
-    }
-
-    // @ts-ignore
-    window.checkMobile = (isMobile: boolean) => { // 모바일 여부 확인 함수
-      if (isMobile) {
-        setIsMobile(true)
-      } else {
-        setIsMobile(false)
       }
     }
   }, [])

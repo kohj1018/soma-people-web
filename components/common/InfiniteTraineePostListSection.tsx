@@ -2,7 +2,7 @@ import { useInView } from 'react-intersection-observer'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { postKeys } from '../../utils/constants/reactQueryKeyConstants'
 import { getPostInfoListInfinitely } from '../../utils/apis/postsApi'
-import { useBoardIdOfLastViewedStore } from '../../stores/stores'
+import { useTraineeBoardIdOfLastViewedStore } from '../../stores/stores'
 import { Fragment, useEffect, useRef } from 'react'
 import PostPreview from './PostPreview'
 import LoadingCircular from '../layout/LoadingCircular'
@@ -14,22 +14,22 @@ import {
   INFINITE_SCROLL_LOAD_SIZE,
   REFERENCE_VALUE_TO_SWIPE,
 } from '../../utils/constants/systemConstants'
-import { BoardInfoType } from '../../utils/types/responseTypes'
 import { useUserHiddenPostIdListStore } from '../../stores/localStorageStore/stores'
 import PullToRefresh from 'react-simple-pull-to-refresh';
+import { traineeBoardInfoList } from '../../utils/config'
 
 interface Props {
   userId: number
-  boardInfoList: BoardInfoType[]
+  isCertified: boolean
 }
 
-function InfinitePostListSection({ userId, boardInfoList }: Props) {
+function InfiniteTraineePostListSection({ userId, isCertified }: Props) {
   const infinitePostListSectionRef = useRef<HTMLDivElement>(null)
-  const { boardIdOfLastViewed, setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
+  const { traineeBoardIdOfLastViewed, setTraineeBoardIdOfLastViewed } = useTraineeBoardIdOfLastViewedStore()
   const { ref, inView } = useInView()
   const { data: postInfoList, fetchNextPage, isFetchingNextPage, refetch } = useInfiniteQuery(
-    postKeys.list(boardIdOfLastViewed, userId),
-    ({ pageParam = ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID }) => getPostInfoListInfinitely(boardIdOfLastViewed, pageParam, userId),
+    postKeys.list(traineeBoardIdOfLastViewed, userId),
+    ({ pageParam = ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID }) => getPostInfoListInfinitely(traineeBoardIdOfLastViewed, pageParam, userId),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextLastPostId : undefined,
@@ -42,7 +42,7 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
   useEffect(() => {
     let touchstartX = 0
     let touchendX = 0
-    let curBoardIdx = boardInfoList.findIndex(boardInfo => boardInfo.boardId === boardIdOfLastViewed)
+    let curBoardIdx = traineeBoardInfoList.findIndex(boardInfo => boardInfo.boardId === traineeBoardIdOfLastViewed)
 
     function handleStartTouch(e: TouchEvent) {
       touchstartX = e.changedTouches[0].screenX
@@ -53,20 +53,20 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
 
       // Check Direction
       if (touchendX - touchstartX < -REFERENCE_VALUE_TO_SWIPE) {  // 왼쪽으로 스와이프
-        if (curBoardIdx < boardInfoList.length - 1) {
+        if (curBoardIdx < traineeBoardInfoList.length - 1) {
           curBoardIdx += 1
-          setBoardIdOfLastViewed(boardInfoList[curBoardIdx].boardId)
+          setTraineeBoardIdOfLastViewed(traineeBoardInfoList[curBoardIdx].boardId)
         }
       }
       if (touchendX - touchstartX > REFERENCE_VALUE_TO_SWIPE) {   // 오른쪽으로 스와이프
         if (curBoardIdx > 0) {
           curBoardIdx -= 1
-          setBoardIdOfLastViewed(boardInfoList[curBoardIdx].boardId)
+          setTraineeBoardIdOfLastViewed(traineeBoardInfoList[curBoardIdx].boardId)
         }
       }
     }
 
-    if (isNotEmptyArray(boardInfoList) && infinitePostListSectionRef.current) {
+    if (infinitePostListSectionRef.current) {
       infinitePostListSectionRef.current.addEventListener('touchstart', handleStartTouch)
       infinitePostListSectionRef.current.addEventListener('touchend', handleEndTouch)
 
@@ -75,7 +75,7 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
         infinitePostListSectionRef.current?.removeEventListener('touchend', handleEndTouch)
       }
     }
-  }, [boardInfoList, infinitePostListSectionRef])
+  }, [infinitePostListSectionRef])
 
 
   // 바닥에 닿으면 새로 불러오기
@@ -91,7 +91,7 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
     <>
       <section
         ref={infinitePostListSectionRef}
-        className='mt-[3.125rem] px-5 py-4 min-h-[80vh]'  //TODO: 일단 임시로 min-h-[80vh] 하긴 했는데 더 좋은 방법 있으면 바꾸기 (글이 없을 때 영역 차지를 안해서 스와이프가 안되고 있음)
+        className='mt-0 px-5 min-h-[80vh] lg:px-0 lg:mt-4'  //TODO: 일단 임시로 min-h-[80vh] 하긴 했는데 더 좋은 방법 있으면 바꾸기 (글이 없을 때 영역 차지를 안해서 스와이프가 안되고 있음)
       >
         {isNotEmptyArray(postInfoList?.pages[0].postList) ? (
           <PullToRefresh onRefresh={() => refetch()}>
@@ -126,4 +126,4 @@ function InfinitePostListSection({ userId, boardInfoList }: Props) {
   )
 }
 
-export default InfinitePostListSection
+export default InfiniteTraineePostListSection

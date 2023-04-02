@@ -9,6 +9,7 @@ interface UserAccessibleBoard {
   userOnly: BoardInfoType[]
   certificatedUserAll: BoardInfoType[]
   unCertified: BoardInfoType[]
+  listVerForPcHeader: BoardInfoType[]
 }
 
 function useUserAccessibleBoardInfo(userInfo: UserInfoType | null): UserAccessibleBoard { //TODO: 추후 최적화 할 수 있는 부분 찾아보기 (현재 계속 랜더링 됨)
@@ -24,7 +25,8 @@ function useUserAccessibleBoardInfo(userInfo: UserInfoType | null): UserAccessib
   const [returnUserAccessibleBoard, setReturnUserAccessibleBoard] = useState<UserAccessibleBoard>({
     userOnly: [],
     certificatedUserAll: [],
-    unCertified: []
+    unCertified: [],
+    listVerForPcHeader: []
   })
 
   // 해당 유저에게 보여지는 게시판의 종류를 처리하는 부분
@@ -34,7 +36,8 @@ function useUserAccessibleBoardInfo(userInfo: UserInfoType | null): UserAccessib
         setReturnUserAccessibleBoard({
           userOnly: [],
           certificatedUserAll: [],
-          unCertified: boardInfoList.filter((boardInfo) => boardInfo.boardId === 4)
+          unCertified: boardInfoList.filter((boardInfo) => boardInfo.boardId === 4),
+          listVerForPcHeader: boardInfoList.filter((boardInfo) => boardInfo.boardId === 4)
         })
       } else {
         switch (userInfo.userType) {
@@ -47,7 +50,15 @@ function useUserAccessibleBoardInfo(userInfo: UserInfoType | null): UserAccessib
                 boardInfoList[1],
                 boardInfoList[2]
               ],
-              unCertified: [boardInfoList[3]]
+              unCertified: [boardInfoList[3]],
+              listVerForPcHeader: [
+                boardInfoList.find((boardInfo) =>
+                  boardInfo.boardId === parseInt('1' + userInfo.cardinalNum)) as BoardInfoType,
+                boardInfoList[0],
+                boardInfoList[1],
+                boardInfoList[2],
+                boardInfoList[3]
+              ]
             })
             break
           case '멘토':
@@ -59,7 +70,15 @@ function useUserAccessibleBoardInfo(userInfo: UserInfoType | null): UserAccessib
                 boardInfoList[1],
                 boardInfoList[2]
               ],
-              unCertified: [boardInfoList[3]]
+              unCertified: [boardInfoList[3]],
+              listVerForPcHeader: [
+                boardInfoList.find((boardInfo) =>
+                  boardInfo.boardId === 100) as BoardInfoType,
+                boardInfoList[0],
+                boardInfoList[1],
+                boardInfoList[2],
+                boardInfoList[3]
+              ]
             })
             break
           case '관리자':
@@ -70,7 +89,13 @@ function useUserAccessibleBoardInfo(userInfo: UserInfoType | null): UserAccessib
                 boardInfoList[1],
                 boardInfoList[2]
               ],
-              unCertified: [boardInfoList[3]]
+              unCertified: [boardInfoList[3]],
+              listVerForPcHeader: boardInfoList.filter((boardInfo) => boardInfo.boardId.toString().length === 3).reverse().concat([
+                boardInfoList[0],
+                boardInfoList[1],
+                boardInfoList[2],
+                boardInfoList[3]
+              ])
             })
             break
           case '사무국':
@@ -81,14 +106,21 @@ function useUserAccessibleBoardInfo(userInfo: UserInfoType | null): UserAccessib
                 boardInfoList[1],
                 boardInfoList[2]
               ],
-              unCertified: [boardInfoList[3]]
+              unCertified: [boardInfoList[3]],
+              listVerForPcHeader: boardInfoList.filter((boardInfo) => boardInfo.boardId.toString().length === 3).reverse().concat([
+                boardInfoList[0],
+                boardInfoList[1],
+                boardInfoList[2],
+                boardInfoList[3]
+              ])
             })
             break
           default:  // 준비생
             setReturnUserAccessibleBoard({
               userOnly: [],
               certificatedUserAll: [],
-              unCertified: boardInfoList.filter((boardInfo) => boardInfo.boardId === 4)
+              unCertified: boardInfoList.filter((boardInfo) => boardInfo.boardId === 4),
+              listVerForPcHeader: boardInfoList.filter((boardInfo) => boardInfo.boardId === 4)
             })
             break
         }

@@ -34,7 +34,7 @@ function UserTypeTag({ userType, cardinalNum, isAnonymous }: Props) {
   return (
     <span className='px-1.5 py-1 inline-flex items-center space-x-0.5 rounded bg-gray-100'>
       <UserTypeIcon userType={userType} cardinalNum={cardinalNum} />
-      <p className='text-xs font-semibold text-gray-600'>{processedUserType}</p>
+      <p className='text-xs font-semibold text-gray-600 lg:text-sm'>{processedUserType}</p>
     </span>
   )
 }
@@ -49,16 +49,16 @@ function UserTypeIcon({ userType, cardinalNum }: UserTypeIconProps) {
   switch (userType) {
     case '연수생':
       if (cardinalNum === THIS_YEAR_CARDINAL_NUM) {
-        return <LocalFireDepartment className='w-4 h-4 text-blue-500' />
+        return <LocalFireDepartment className='!w-4 !h-4 text-blue-500 lg:!w-5 lg:!h-5' />
       } else {
-        return <School className='w-4 h-4 text-blue-500' />
+        return <School className='!w-4 !h-4 text-blue-500 lg:!w-5 lg:!h-5' />
       }
     case '준비생':
-      return <LocalLibrary className='w-4 h-4 text-blue-500' />
+      return <LocalLibrary className='!w-4 !h-4 text-blue-500 lg:!w-5 lg:!h-5' />
     case '멘토':
-      return <LocalPolice className='w-4 h-4 text-blue-500' />
+      return <LocalPolice className='!w-4 !h-4 text-blue-500 lg:!w-5 lg:!h-5' />
     case '사무국':
-      return <AccountBalance className='w-4 h-4 text-blue-500' />
+      return <AccountBalance className='!w-4 !h-4 text-blue-500 lg:!w-5 lg:!h-5' />
     default:
       return <></>
   }
