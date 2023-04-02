@@ -4,6 +4,7 @@ import MainArea from '../components/layout/MainArea'
 import Image from 'next/image'
 import mainLogo from '../public/mainLogo.svg'
 import banner from '../public/banner/banner.svg'
+import pcBanner from '../public/banner/pcBanner.svg'
 import noticeIcon from '../public/icon/noticeIcon.svg'
 import scheduleIcon from '../public/icon/scheduleIcon.svg'
 import somaHomePageIcon from '../public/icon/somaHomePageIcon.svg'
@@ -17,8 +18,7 @@ import LoadingCircular from '../components/layout/LoadingCircular'
 import QuestionAnswer from '@mui/icons-material/QuestionAnswer'
 import Search from '@mui/icons-material/Search'
 import React, { useEffect, useState } from 'react'
-import DisabledByDefault from '@mui/icons-material/DisabledByDefault'
-import QnAPreview from '../components/common/QnAPreview'
+import RecentPostPreview from '../components/common/RecentPostPreview'
 import { useBoardIdOfLastViewedStore, useIsFirstLoadStore } from '../stores/stores'
 import { useRouter } from 'next/router'
 import useUserInfo from '../hooks/useUserInfo'
@@ -30,6 +30,7 @@ import useKeepScrolling from '../hooks/useKeepScrolling'
 import memoIcon from '../public/icon/memoIcon.svg'
 import { isNotEmptyArray } from '../utils/functions/isNotEmptyArray'
 import { afterLoadingIsComplete } from '../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
+import { isMobile } from '../utils/functions/isMobile'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -113,157 +114,159 @@ const Home: NextPage = () => {
         </div>
       </header>
 
-      <MainArea className='min-h-screen bg-gray-50'>
+      <main className='paddingHeader min-h-screen bg-gray-50 lg:bg-white'>
         <Image
-          src={banner}
+          src={isMobile() || window.innerWidth < 1024 ? banner : pcBanner}
           className='w-full h-auto'
           alt='배너'
           priority
         />
-        <article className='py-6 flex items-center justify-center space-x-6 bg-white'>
-          <a
-            href='https://www.swmaestro.org/sw/bbs/B0000002/list.do?menuNo=200019'
-            className='flex flex-col items-center space-y-1'
-          >
-            <Image
-              src={noticeIcon}
-              className='h-9'
-              alt='소마공지 아이콘'
-              priority
-            />
-            <p className='text-sm font-medium text-slate-400'>소마공지</p>
-          </a>
-          <a
-            href='https://www.swmaestro.org/sw/main/contents.do?menuNo=200033'
-            className='flex flex-col items-center space-y-1'
-          >
-            <Image
-              src={scheduleIcon}
-              className='h-9'
-              alt='소마일정 아이콘'
-              priority
-            />
-            <p className='text-sm font-medium text-slate-400'>소마일정</p>
-          </a>
-          <a
-            href='https://www.swmaestro.org/sw/main/main.do'
-            className='flex flex-col items-center space-y-1'
-          >
-            <Image
-              src={somaHomePageIcon}
-              className='h-9'
-              alt='소마홈피 아이콘'
-              priority
-            />
-            <p className='text-sm font-medium text-slate-400'>소마홈피</p>
-          </a>
-          <button
-            onClick={() => moveToBoardPage(114)}
-            className='flex flex-col items-center space-y-1'
-          >
-            <Image
-              src={peopleIcon}
-              className='h-9'
-              alt='14기 연수생 아이콘'
-              priority
-            />
-            <p className='text-sm font-medium text-slate-400'>14기 연수생</p>
-          </button>
-        </article>
 
-        {/* 게시판 미리보기 */}
-        <section className='mt-2 space-y-2'>
-          {/* Q&A 게시판 미리보기 */}
-          <article className='py-8 space-y-6 bg-white'>
-            <button
-              onClick={() => moveToBoardPage(2)}
-              className='w-full px-5 flex items-center justify-between'
+        <div className='lg:mainWidthLimit'>
+          {/* 바로가기 버튼 모음 */}
+          <article className='py-6 flex items-center justify-center space-x-6 bg-white lg:hidden'>
+            <a
+              href='https://www.swmaestro.org/sw/bbs/B0000002/list.do?menuNo=200019'
+              className='flex flex-col items-center space-y-1'
             >
-              <p className='text-lg font-semibold text-gray-900'>최근에 올라온 Q&A 💬</p>
-              <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
+              <Image
+                src={noticeIcon}
+                className='h-9'
+                alt='소마공지 아이콘'
+                priority
+              />
+              <p className='text-sm font-medium text-slate-400'>소마공지</p>
+            </a>
+            <a
+              href='https://www.swmaestro.org/sw/main/contents.do?menuNo=200033'
+              className='flex flex-col items-center space-y-1'
+            >
+              <Image
+                src={scheduleIcon}
+                className='h-9'
+                alt='소마일정 아이콘'
+                priority
+              />
+              <p className='text-sm font-medium text-slate-400'>소마일정</p>
+            </a>
+            <a
+              href='https://www.swmaestro.org/sw/main/main.do'
+              className='flex flex-col items-center space-y-1'
+            >
+              <Image
+                src={somaHomePageIcon}
+                className='h-9'
+                alt='소마홈피 아이콘'
+                priority
+              />
+              <p className='text-sm font-medium text-slate-400'>소마홈피</p>
+            </a>
+            <button
+              onClick={() => moveToBoardPage(114)}
+              className='flex flex-col items-center space-y-1'
+            >
+              <Image
+                src={peopleIcon}
+                className='h-9'
+                alt='14기 연수생 아이콘'
+                priority
+              />
+              <p className='text-sm font-medium text-slate-400'>14기 연수생</p>
             </button>
-
-            <section className='px-5 flex items-center space-x-4 overflow-x-scroll whitespace-nowrap hide-scrollbar'>
-              {isNotEmptyArray(mainPagePostSummaryData?.qnaPostList) ? (
-                mainPagePostSummaryData?.qnaPostList.map((post) =>
-                  <QnAPreview
-                    key={post.postId}
-                    postId={post.postId}
-                    title={post.title}
-                    userType={post.user.userType}
-                    cardinalNum={post.user.cardinalNum}
-                    isAnonymous={post.isAnonymous}
-                    commentsNum={post.commentsNum}
-                    createdAt={post.createdAt}
-                  />
-                )
-              ) : (
-                <EmptyPostsNotice />
-              )}
-            </section>
           </article>
 
-          <article className='pt-8 px-5 bg-white'>
-            <button
-              onClick={() => moveToBoardPage(1)}
-              className='w-full flex items-center justify-between'
-            >
-              <p className='text-lg font-semibold text-gray-900'>자유게시판 🧑‍💻</p>
-              <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
-            </button>
-            <section className='py-2.5'>
-              {isNotEmptyArray(mainPagePostSummaryData?.freePostList) ? (
-                mainPagePostSummaryData?.freePostList.map((post) =>
-                  <Link
-                    key={post.postId}
-                    href={`/post/${post.postId}`}
-                    className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
-                    onClick={() => setMainPageScrollY(window.scrollY)}
-                  >
-                    <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
-                    <div className='flex items-center space-x-1.5'>
-                      <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
-                      <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
-                    </div>
-                  </Link>
-                )
-              ) : (
-                <EmptyPostsNotice />
-              )}
-            </section>
-          </article>
+          {/* 게시판 미리보기 */}
+          <section className='mt-2 space-y-2 lg:mt-12 lg:space-y-12'>
 
-          <article className='pt-8 px-5 pb-7 bg-white'>
-            <button
-              onClick={() => moveToBoardPage(4)}
-              className='w-full flex items-center justify-between'
-            >
-              <p className='text-lg font-semibold text-gray-900'>14기 준비생들을 도와주세요! 🙇‍♀️</p>
-              <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
-            </button>
-            <section className='py-2.5'>
-              {isNotEmptyArray(mainPagePostSummaryData?.applicantPostList) ? (
-                mainPagePostSummaryData?.applicantPostList.map((post) =>
-                  <Link
-                    key={post.postId}
-                    href={`/post/${post.postId}`}
-                    className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none'
-                    onClick={() => setMainPageScrollY(window.scrollY)}
-                  >
-                    <p className='grow text-sm font-medium text-gray-700 truncate'>{post.title}</p>
-                    <div className='flex items-center space-x-1.5'>
-                      <QuestionAnswer className='!w-4 !h-4 text-gray-200' />
-                      <p className='text-sm font-semibold text-gray-500'>{post.commentsNum}</p>
-                    </div>
-                  </Link>
-                )
-              ) : (
-                <EmptyPostsNotice />
-              )}
-            </section>
-          </article>
-        </section>
-      </MainArea>
+            {/* 최근에 올라온 글 TODO: API 새로 뚫어서 최신글들 연결해야 함 */}
+            <article className='py-8 space-y-6 bg-white lg:py-0 lg:space-y-8'>
+
+              <p className='px-5 text-lg font-semibold text-gray-900 lg:px-0 lg:text-xl'>최근에 올라온 글 💬</p>
+
+              <section className='px-5 flex items-center space-x-4 overflow-x-scroll whitespace-nowrap hide-scrollbar lg:px-0'>
+                {isNotEmptyArray(mainPagePostSummaryData?.qnaPostList) ? (
+                  mainPagePostSummaryData?.qnaPostList.map((post) =>
+                    <RecentPostPreview
+                      key={post.postId}
+                      postId={post.postId}
+                      title={post.title}
+                      userType={post.user.userType}
+                      cardinalNum={post.user.cardinalNum}
+                      isAnonymous={post.isAnonymous}
+                      commentsNum={post.commentsNum}
+                      createdAt={post.createdAt}
+                    />
+                  )
+                ) : (
+                  <EmptyPostsNotice />
+                )}
+              </section>
+            </article>
+
+            {/* 자유게시판 미리보기 */}
+            <article className='pt-8 pb-2.5 px-5 space-y-2.5 bg-white lg:p-0 lg:space-y-3'>
+              <button
+                onClick={() => moveToBoardPage(1)}
+                className='w-full flex items-center justify-between'
+              >
+                <p className='text-lg font-semibold text-gray-900 lg:text-xl'>자유게시판 🧑‍💻</p>
+                <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
+              </button>
+              <section>
+                {isNotEmptyArray(mainPagePostSummaryData?.freePostList) ? (
+                  mainPagePostSummaryData?.freePostList.map((post) =>
+                    <Link
+                      key={post.postId}
+                      href={`/post/${post.postId}`}
+                      className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none lg:py-5'
+                      onClick={() => setMainPageScrollY(window.scrollY)}
+                    >
+                      <p className='grow text-sm font-medium text-gray-700 truncate lg:text-base'>{post.title}</p>
+                      <div className='flex items-center space-x-1.5'>
+                        <QuestionAnswer className='!w-4 !h-4 text-gray-200 lg:!w-5 lg:!h-5' />
+                        <p className='text-sm font-semibold text-gray-500 lg:text-base'>{post.commentsNum}</p>
+                      </div>
+                    </Link>
+                  )
+                ) : (
+                  <EmptyPostsNotice />
+                )}
+              </section>
+            </article>
+
+            {/* 준비생 게시판 미리보기 */}
+            <article className='pt-8 px-5 pb-[2.376rem] space-y-2.5 bg-white lg:p-0 lg:pb-[7.5rem] lg:space-y-3'>
+              <button
+                onClick={() => moveToBoardPage(4)}
+                className='w-full flex items-center justify-between'
+              >
+                <p className='text-lg font-semibold text-gray-900 lg:text-xl'>15기 준비생들을 도와주세요! 🙇‍♀️</p>
+                <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
+              </button>
+              <section>
+                {isNotEmptyArray(mainPagePostSummaryData?.applicantPostList) ? (
+                  mainPagePostSummaryData?.applicantPostList.map((post) =>
+                    <Link
+                      key={post.postId}
+                      href={`/post/${post.postId}`}
+                      className='py-3.5 flex items-center justify-between border-b border-gray-100 last:border-none lg:py-5'
+                      onClick={() => setMainPageScrollY(window.scrollY)}
+                    >
+                      <p className='grow text-sm font-medium text-gray-700 truncate lg:text-base'>{post.title}</p>
+                      <div className='flex items-center space-x-1.5'>
+                        <QuestionAnswer className='!w-4 !h-4 text-gray-200  lg:!w-5 lg:!h-5' />
+                        <p className='text-sm font-semibold text-gray-500 lg:text-base'>{post.commentsNum}</p>
+                      </div>
+                    </Link>
+                  )
+                ) : (
+                  <EmptyPostsNotice />
+                )}
+              </section>
+            </article>
+          </section>
+        </div>
+      </main>
     </MainContainer>
   )
 }
