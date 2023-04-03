@@ -1,4 +1,4 @@
-import { NextPage } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import MainContainer from '../../../components/layout/MainContainer'
 import MobileBackHeader from '../../../components/layout/mobileHeader/MobileBackHeader'
@@ -12,7 +12,7 @@ import UserTypeTag from '../../../components/tag/UserTypeTag'
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye'
 import { getElapsedTime } from '../../../utils/functions/getElapsedTime'
 import dayjs from 'dayjs'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import LoadingCircular from '../../../components/layout/LoadingCircular'
 import dynamic from 'next/dynamic'
 import CommentWritingArea from '../../../components/common/CommentWritingArea'
@@ -44,6 +44,9 @@ const PostDetail: NextPage = () => {
   const { handlePostMutation: deletePost } = usePostMutation(postInfo, userInfo?.userId, true)  // 게시글 삭제 함수
 
   const [commentInfoToUpdate, setCommentInfoToUpdate] = useState<CommentInfoType | null>(null)  // 수정할 댓글 State
+
+  const [refId, setRefId] = useState<number>(0) // 대댓글 or 댓글 작성 변수
+  const commentWritingInputRef = useRef<HTMLTextAreaElement>(null)
 
   // 소마인 인증 안했는데 준비생 게시판 외 게시판의 글을 보는 경우 Redirect
   useEffect(() => {
@@ -80,8 +83,10 @@ const PostDetail: NextPage = () => {
 
   return (
     <MainContainer>
-      <SEO title={`${postInfo?.title} : 게시글`} />
-      
+      {!!postInfo &&
+        <SEO title={`${postInfo.title} : 게시글`} />
+      }
+
       <MobileBackHeader title={postInfo?.board.name ?? ''}>
         {postInfo?.user.userId !== userInfo?.userId &&
           [
@@ -126,14 +131,14 @@ const PostDetail: NextPage = () => {
               <div className='lg:mainWidthLimit'>
                 <article className='space-y-3 pb-5 border-b border-gray-100 lg:pb-6'>
                   <button
-                    onClick={viewOtherUserProfile}
+                    onClick={() => viewOtherUserProfile()}
                     className='flex items-center space-x-1.5'
                   >
                     <p className='text-sm font-medium text-gray-400 flex items-center lg:text-base'>
                       {postInfo.isAnonymous ? '익명' : postInfo.user.name}
                       <>
                         {/* 연수생 인증 마크 */}
-                        {postInfo?.board.boardId === 4 && postInfo.user.isCertified &&
+                        {postInfo.board.boardId === 4 && postInfo.user.isCertified &&
                           <Verified className='ml-0.5 !w-4 !h-4 text-emerald-500' />
                         }
                       </>
@@ -159,9 +164,9 @@ const PostDetail: NextPage = () => {
         </Suspense>
 
         {/* 댓글 영역 */}
-        <article className='px-5 py-6 bg-white lg:px-0 lg:py-8'>
+        <article className='py-6 bg-white lg:px-0 lg:py-8'>
           <div className='space-y-6 lg:space-y-9 lg:mainWidthLimit'>
-            <header className='flex items-center space-x-1'>
+            <header className='px-5 flex items-center space-x-1 lg:px-0'>
               <h3 className='text-xl font-medium text-gray-900'>댓글</h3>
               <div className='px-2 py-0.5 flex items-center justify-center rounded-full bg-emerald-400'>
                 <p className='text-sm font-semibold text-emerald-50'>{postInfo?.commentsNum}</p>
@@ -173,19 +178,40 @@ const PostDetail: NextPage = () => {
 
             {/* 댓글 작성 영역 (PC) */}
             {!!userInfo && window.innerWidth >= 1024 &&
-              <CommentWritingArea postId={postId} userInfo={userInfo} commentInfoToUpdate={commentInfoToUpdate} setCommentInfoToUpdate={setCommentInfoToUpdate} />
+              <CommentWritingArea
+                postId={postId}
+                userInfo={userInfo}
+                commentInfoToUpdate={commentInfoToUpdate}
+                setCommentInfoToUpdate={setCommentInfoToUpdate}
+                refId={refId}
+                commentWritingInputRef={commentWritingInputRef}
+              />
             }
 
             {/* 댓글들 */}
             {!!userInfo &&
-              <CommentListSection postId={postId} userInfo={userInfo} setCommentInfoToUpdate={setCommentInfoToUpdate} showCertified={postInfo?.board.boardId === 4} />
+              <CommentListSection
+                postId={postId}
+                userInfo={userInfo}
+                setCommentInfoToUpdate={setCommentInfoToUpdate}
+                showCertified={postInfo?.board.boardId === 4}
+                setRefId={setRefId}
+                commentWritingInputRef={commentWritingInputRef}
+              />
             }
           </div>
         </article>
 
         {/* 댓글 작성 영역 (모바일) */}
         {!!userInfo && window.innerWidth < 1024 &&
-          <CommentWritingArea postId={postId} userInfo={userInfo} commentInfoToUpdate={commentInfoToUpdate} setCommentInfoToUpdate={setCommentInfoToUpdate} />
+          <CommentWritingArea
+            postId={postId}
+            userInfo={userInfo}
+            commentInfoToUpdate={commentInfoToUpdate}
+            setCommentInfoToUpdate={setCommentInfoToUpdate}
+            refId={refId}
+            commentWritingInputRef={commentWritingInputRef}
+          />
         }
       </main>
 
@@ -203,3 +229,10 @@ const PostDetail: NextPage = () => {
 }
 
 export default PostDetail
+
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  return {
+    props: {
+    }
+  }
+}

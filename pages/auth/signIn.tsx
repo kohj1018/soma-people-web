@@ -15,10 +15,6 @@ import SEO from '../../components/SEO'
 import Head from 'next/head'
 import { afterLoadingIsComplete } from '../../utils/functions/flutterBridgeFunc/afterLoadingIsComplete'
 
-interface Props {
-  providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
-}
-
 const SignIn: NextPage<Props> = ({ providers }: Props) => {
   const router = useRouter()
   const { userId, oauthId } = useSignInInfoStore()
@@ -105,6 +101,10 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
 }
 
 export default SignIn
+
+interface Props {
+  providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
+}
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context: GetServerSidePropsContext) => {
   const providers = await getProviders()

@@ -90,8 +90,10 @@ const OtherUserProfile: NextPage = () => {
 
   return (
     <MainContainer>
-      <SEO title={`${otherUserInfo?.name} : 유저 정보 조회`} />
-      
+      {!!otherUserInfo &&
+        <SEO title={`${otherUserInfo.name} : 유저 정보 조회`} />
+      }
+
       <MobileBackHeader title={isBlock ? '(차단한 유저)' : ''}>
         <MenuItem
           onClick={() => router.push({

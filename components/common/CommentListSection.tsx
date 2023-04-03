@@ -5,15 +5,18 @@ import { CommentInfoType, UserInfoType } from '../../utils/types/responseTypes'
 import { postKeys } from '../../utils/constants/reactQueryKeyConstants'
 import { getAllCommentInfoByPostId } from '../../utils/apis/commentsApi'
 import { useRouter } from 'next/router'
+import Reply from './Reply'
 
 interface Props {
   postId: number
   userInfo: UserInfoType
   setCommentInfoToUpdate: (commentInfoToEdit: CommentInfoType | null) => void
   showCertified: boolean
+  setRefId: (refId: number) => void
+  commentWritingInputRef: React.RefObject<HTMLTextAreaElement>
 }
 
-function CommentListSection({ postId, userInfo, setCommentInfoToUpdate, showCertified }: Props) {
+function CommentListSection({ postId, userInfo, setCommentInfoToUpdate, showCertified, setRefId, commentWritingInputRef }: Props) {
   const router = useRouter()
 
   const { data: commentsInfoList } = useQuery<CommentInfoType[]>(
@@ -27,16 +30,30 @@ function CommentListSection({ postId, userInfo, setCommentInfoToUpdate, showCert
   )
 
   return (
-    <section className='space-y-6'>
+    <section>
       {commentsInfoList?.map((commentInfo) =>
-        <Comment
-          key={commentInfo.commentId}
-          router={router}
-          commentInfo={commentInfo}
-          userInfo={userInfo}
-          setCommentInfoToUpdate={setCommentInfoToUpdate}
-          showCertified={showCertified}
-        />
+        <>
+          <Comment
+            key={commentInfo.commentId}
+            router={router}
+            commentInfo={commentInfo}
+            userInfo={userInfo}
+            setCommentInfoToUpdate={setCommentInfoToUpdate}
+            showCertified={showCertified}
+            setRefId={setRefId}
+            commentWritingInputRef={commentWritingInputRef}
+          />
+          {commentInfo.replyList?.map((replyInfo) =>
+            <Reply
+              key={replyInfo.commentId}
+              router={router}
+              replyInfo={replyInfo}
+              userInfo={userInfo}
+              setReplyInfoToUpdate={setCommentInfoToUpdate}
+              showCertified={showCertified}
+            />
+          )}
+        </>
       )}
     </section>
   )

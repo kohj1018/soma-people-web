@@ -1,6 +1,6 @@
 import CheckBox from '@mui/icons-material/CheckBox'
 import Send from '@mui/icons-material/Send'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addComment } from '../../utils/apis/commentsApi'
@@ -14,11 +14,12 @@ interface Props {
   userInfo: UserInfoType
   commentInfoToUpdate: CommentInfoType | null
   setCommentInfoToUpdate: (commentInfoToEdit: CommentInfoType | null) => void
+  refId: number
+  commentWritingInputRef: React.RefObject<HTMLTextAreaElement>
 }
 
-function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentInfoToUpdate }: Props) {
+function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentInfoToUpdate, refId, commentWritingInputRef }: Props) {
   const queryClient = useQueryClient()
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [commentContent, setCommentContent] = useState<string>('')
   const [isCommentAnonymous, setIsCommentAnonymous] = useState<boolean>(true)
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
@@ -31,9 +32,9 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
           .then(() => {
             queryClient.invalidateQueries(postKeys.detail(postId))
               .then(() => {
-                if (!!textareaRef.current) {  // 댓글 입력창 초기화
+                if (!!commentWritingInputRef.current) {  // 댓글 입력창 초기화
                   setCommentContent('')
-                  textareaRef.current.style.height = 'auto'
+                  commentWritingInputRef.current.style.height = 'auto'
                 }
                 setMessage('댓글이 등록되었습니다.')
               })
@@ -48,19 +49,20 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
 
   // 댓글 수정 요청 시 수정 이전 값 채워 넣기
   useEffect(() => {
-    if (!!commentInfoToUpdate && !!textareaRef.current) {
+    if (!!commentInfoToUpdate && !!commentWritingInputRef.current) {
       setCommentContent(commentInfoToUpdate.content)
       setIsCommentAnonymous(commentInfoToUpdate.isAnonymous)
-      textareaRef.current.style.height = 'auto'  // height 초기화
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
+      commentWritingInputRef.current.style.height = 'auto'  // height 초기화
+      commentWritingInputRef.current.style.height = commentWritingInputRef.current.scrollHeight + 'px'
+      commentWritingInputRef.current.focus()
     }
   }, [commentInfoToUpdate])
 
   // 댓글 입력창 자동 크기 조절
   useEffect(() => {
-    if (!!textareaRef.current) {
-      textareaRef.current.style.height = 'auto'  // height 초기화
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
+    if (!!commentWritingInputRef.current) {
+      commentWritingInputRef.current.style.height = 'auto'  // height 초기화
+      commentWritingInputRef.current.style.height = commentWritingInputRef.current.scrollHeight + 'px'
     }
   }, [commentContent])
 
@@ -90,7 +92,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
         commentSaveMutate({
           postId: postId,
           userId: userInfo.userId,
-          refId: 0,
+          refId: refId,
           content: commentContent,
           isAnonymous: isCommentAnonymous
         })
@@ -109,7 +111,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
         <CheckBox className={'!w-4 !h-4 lg:!w-5 lg:!h-5' + (isCommentAnonymous ? ' text-gray-700' : ' text-gray-300')} />
       </button>
       <textarea
-        ref={textareaRef}
+        ref={commentWritingInputRef}
         className='grow px-4 py-2.5 rounded text-sm font-medium text-gray-700 bg-gray-100 resize-none lg:p-0 lg:text-base lg:bg-gray-50 placeholder:text-gray-400 focus:outline-none hide-scrollbar'
         placeholder='댓글을 입력하세요'
         rows={1}

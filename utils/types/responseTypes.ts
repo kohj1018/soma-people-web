@@ -45,6 +45,7 @@ export interface CommentInfoType {
 
 export interface ReplyInfoType {
   commentId: number
+  postId: number
   refId: number
   user: UserInfoType
   content: string
