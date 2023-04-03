@@ -13,12 +13,15 @@ import LoadingCircular from '../../../components/layout/LoadingCircular'
 import Image from 'next/image'
 import traineeBoardBanner from '../../../public/banner/traineeBoardBanner.svg'
 import pcTraineeBoardBanner from '../../../public/banner/pcTraineeBoardBanner.svg'
+import prepStudentBoardBanner from '../../../public/banner/prepStudentBoardBanner.svg'
+import pcPrepStudentBoardBanner from '../../../public/banner/pcPrepStudentBoardBanner.svg'
 import { useSnackbarOpenStore, useTraineeBoardIdOfLastViewedStore } from '../../../stores/stores'
 import SEO from '../../../components/SEO'
 import useKeepScrolling from '../../../hooks/useKeepScrolling'
 import { useInfinitePostsScrollYStore } from '../../../stores/scrollStore/scrollStores'
 import Mode from '@mui/icons-material/Mode'
 const InfiniteTraineePostListSection = dynamic(() => import('../../../components/common/InfiniteTraineePostListSection'), {loading: () => <LoadingCircular />, ssr: false})
+const InfinitePostListSection = dynamic(() => import('../../../components/common/InfinitePostListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const BoardDetail: NextPage = () => {
   const router = useRouter()
@@ -117,11 +120,11 @@ const BoardDetail: NextPage = () => {
         {(isTraineeBoard) ? ( // 연수생 게시판
           <>
             {/* 연수생 게시판 NavBar */}
-            <nav className='pt-4 px-5 pb-px flex space-x-6 lg:px-0 lg:py-6'>
+            <nav className='pt-4 px-5 pb-px flex space-x-6 overflow-scroll hide-scrollbar lg:px-0 lg:py-6'>
               {traineeBoardInfoList.map((boardInfo) =>
                 <div
                   key={boardInfo.boardId}
-                  className='h-[2.0625rem] flex flex-col items-center justify-between lg:h-auto'
+                  className='h-[2.0625rem] flex flex-col items-center justify-between whitespace-nowrap lg:h-auto'
                 >
                   <button
                     onClick={() => setTraineeBoardIdOfLastViewed(boardInfo.boardId)}
@@ -134,18 +137,18 @@ const BoardDetail: NextPage = () => {
               )}
             </nav>
 
-            {/* 소마인 인증 유도 배너 */}
-            {!userInfo!.isCertified &&
-              <Link
-                href='/profile/certification'
+            {/* 팀원 모집 배너 */}
+            {traineeBoardIdOfLastViewed === TRAINEE_BOARD_ID &&
+              <button
+                onClick={() => setTraineeBoardIdOfLastViewed(11)}
                 className='w-full'
               >
                 <Image
                   src={(window.innerWidth < 1024 ? traineeBoardBanner : pcTraineeBoardBanner)}
                   className='w-full h-auto'
-                  alt=''
+                  alt='팀원 모집 배너'
                 />
-              </Link>
+              </button>
             }
 
             {/* 게시글 무한 스크롤 영역 */}
@@ -168,30 +171,47 @@ const BoardDetail: NextPage = () => {
             </Link>
           </>
         ) : ( // 나머지 게시판 (연수생 게시판 외 다른 게시판들)
-          // TODO: 여기 다른 게시판 만들어야됨
-          <></>
+          <>
+            {/* 소마인 인증 유도 배너 */}
+            {(boardId === 4 && !userInfo?.isCertified) &&
+              <Link
+                href='/profile/certification'
+                className='w-full'
+              >
+                <Image
+                  src={(window.innerWidth < 1024 ? prepStudentBoardBanner : pcPrepStudentBoardBanner)}
+                  className='w-full h-auto'
+                  alt='소마인 인증 배너'
+                />
+              </Link>
+            }
+
+            {/* 게시글 무한 스크롤 영역 */}
+            {!!userInfo &&
+             <InfinitePostListSection boardId={boardId} userId={userInfo.userId} />
+            }
+
+            {/* 글쓰기 버튼 */}
+            {!!boardName &&
+              <Link
+                href={{
+                  pathname: `/board/${boardId}/addPost`,
+                  query: {
+                    boardName: boardName
+                  }
+                }}
+                className='fixed bottom-6 right-6'
+              >
+                <div className='px-3 py-3 flex items-center justify-center rounded-full bg-blue-500 drop-shadow-FAB'>
+                  <Mode className='w-6 h-6 text-white' />
+                </div>
+              </Link>
+            }
+          </>
         )}
       </MainArea>
     </MainContainer>
   )
 }
-
-//       {/* 글쓰기 버튼 */}
-//       {!!boardName &&
-//         <Link
-//           href={{
-//             pathname: `/board/${boardIdOfLastViewed}/addPost`,
-//             query: {
-//               boardId: boardIdOfLastViewed,
-//               boardName: boardName
-//             }
-//           }}
-//           className='fixed bottom-6 right-6'
-//         >
-//           <div className='px-3 py-3 flex items-center justify-center rounded-full bg-blue-500 drop-shadow-FAB'>
-//             <Mode className='w-6 h-6 text-white' />
-//           </div>
-//         </Link>
-//       }
 
 export default BoardDetail

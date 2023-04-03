@@ -10,11 +10,15 @@ export const traineeBoardInfoList: BoardInfoType[] = [
     name: '자유게시판'
   },
   {
+    boardId: 10,
+    name: '연수생 공지사항'
+  },
+  {
     boardId: 11,
     name: '팀원 모집'
   },
   {
-    boardId: 10,
-    name: '연수생 공지사항'
+    boardId: 99,
+    name: '맛집 공유'
   }
 ]

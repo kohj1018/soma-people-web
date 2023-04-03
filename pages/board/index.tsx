@@ -45,7 +45,7 @@ const Board: NextPage = () => {
         setSearchTerm={setSearchTerm}
       />
 
-      <MainArea>
+      <MainArea className=''>
         {/* 유저 전용 게시판 모음 */}
         {isNotEmptyArray(userAccessibleBoardInfo.userOnly) &&
           <div className='mt-6 mb-8 px-5 space-y-3'>
@@ -75,7 +75,7 @@ const Board: NextPage = () => {
           </div>
         }
 
-        <section className='px-5 py-8 space-y-8 rounded-t-[2rem] bg-gray-50'>
+        <section className='px-5 space-y-8 rounded-t-[2rem] bg-white'>
           {/* 인증자 게시판 모음 */}
           {isNotEmptyArray(userAccessibleBoardInfo.certificatedUserAll) &&
             <article className='space-y-4'>
@@ -244,7 +244,7 @@ interface BoardMenuProps {
   iconBgColor: string
   haveShadow?: boolean
 }
-function BoardMenu({ boardInfo, boardNameColor = 'text-gray-600', bgColor = 'bg-white', icon, iconBgColor, haveShadow = false }: BoardMenuProps) {
+function BoardMenu({ boardInfo, boardNameColor = 'text-gray-600', bgColor = 'bg-gray-50', icon, iconBgColor, haveShadow = false }: BoardMenuProps) {
   return (
     <Link
       href={`/board/${boardInfo.boardId}`}
