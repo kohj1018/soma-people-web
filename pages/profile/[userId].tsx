@@ -127,7 +127,7 @@ const OtherUserProfile: NextPage = () => {
           <article className='moveToCenter flex flex-col items-center space-y-5'>
             <Image
               src={isMakingIcon}
-              className='w-15 h-15'
+              className='!w-15 !h-15'
               alt='만들고 있는 중 아이콘'
             />
             <p className='text-base font-semibold text-gray-400'>아직 준비 중이에요</p>

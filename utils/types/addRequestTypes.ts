@@ -21,6 +21,7 @@ export interface AddPostType {
 export interface AddCommentType {
   postId: number
   userId: number
+  refId: number
   content: string
   isAnonymous: boolean
 }

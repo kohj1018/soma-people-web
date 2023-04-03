@@ -37,6 +37,18 @@ export interface CommentInfoType {
   user: UserInfoType
   content: string
   isAnonymous: boolean
+  replyList: ReplyInfoType[]
+  isDelete: boolean
+  createdAt: string
+  updatedAt: string | null
+}
+
+export interface ReplyInfoType {
+  commentId: number
+  refId: number
+  user: UserInfoType
+  content: string
+  isAnonymous: boolean
   isDelete: boolean
   createdAt: string
   updatedAt: string | null

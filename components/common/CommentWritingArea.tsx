@@ -90,6 +90,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
         commentSaveMutate({
           postId: postId,
           userId: userInfo.userId,
+          refId: 0,
           content: commentContent,
           isAnonymous: isCommentAnonymous
         })
