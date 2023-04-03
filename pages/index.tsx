@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import MainContainer from '../components/layout/MainContainer'
-import MainArea from '../components/layout/MainArea'
 import Image from 'next/image'
 import mainLogo from '../public/mainLogo.svg'
 import banner from '../public/banner/banner.svg'
@@ -95,7 +94,7 @@ const Home: NextPage = () => {
                 onClick={() => setIsSearchMode(true)}
                 className={(isSearchMode ? ' hidden' : ' inline')}
               >
-                <Search className='w-6 h-6 text-white' />
+                <Search className='!w-6 !h-6 text-white' />
               </button>
 
               <SearchModal

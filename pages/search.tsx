@@ -90,9 +90,9 @@ const Search: NextPage = () => {
       <MainArea className='relative min-h-screen px-5'>
         {!isLoading ? (
           <>
-            <div className='mt-6 flex items-center space-x-1 text-gray-400'>
-              <SearchIcon className='!w-4 !h-4' />
-              <h2 className='text-sm font-medium'>{`${boardName} 검색 · 총 검색결과 ${searchResult.length}건`}</h2>
+            <div className='mt-4 flex items-center space-x-1 text-gray-400 lg:mt-[3.75rem]'>
+              <SearchIcon className='!w-4 !h-4 lg:!w-5 lg:!h-5' />
+              <h2 className='text-sm font-medium lg:text-base'>{`${boardName} 검색 · 총 검색결과 ${searchResult.length}건`}</h2>
             </div>
 
             <section className='mt-2'>
@@ -104,10 +104,10 @@ const Search: NextPage = () => {
                 <div className='moveToCenter flex flex-col items-center space-y-5'>
                   <Image
                     src={noSearchResultIcon}
-                    className='!w-15 !h-15'
+                    className='!w-15 !h-15 lg:!w-[6.25rem] lg:!h-[6.25rem]'
                     alt='검색 결과 없음 아이콘'
                   />
-                  <p className='text-base font-semibold text-gray-400'>검색 결과가 없어요</p>
+                  <p className='text-base font-semibold text-gray-400 lg:text-xl'>검색 결과가 없어요</p>
                 </div>
               )}
             </section>
