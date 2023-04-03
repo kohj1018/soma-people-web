@@ -20,10 +20,9 @@ import { traineeBoardInfoList } from '../../utils/config'
 
 interface Props {
   userId: number
-  isCertified: boolean
 }
 
-function InfiniteTraineePostListSection({ userId, isCertified }: Props) {
+function InfiniteTraineePostListSection({ userId }: Props) {
   const infinitePostListSectionRef = useRef<HTMLDivElement>(null)
   const { traineeBoardIdOfLastViewed, setTraineeBoardIdOfLastViewed } = useTraineeBoardIdOfLastViewedStore()
   const { ref, inView } = useInView()

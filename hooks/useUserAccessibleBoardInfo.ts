@@ -3,7 +3,6 @@ import { boardKeys } from '../utils/constants/reactQueryKeyConstants'
 import { getAllBoardsInfo } from '../utils/apis/boardsApi'
 import { useEffect, useState } from 'react'
 import { BoardInfoType, UserInfoType } from '../utils/types/responseTypes'
-import { useBoardIdOfLastViewedStore } from '../stores/stores'
 
 interface UserAccessibleBoard {
   userOnly: BoardInfoType[]

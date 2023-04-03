@@ -7,9 +7,13 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSnackbarOpenStore } from '../../stores/stores'
+import useUserInfo from '../../hooks/useUserInfo'
+import useUserAccessibleBoardInfo from '../../hooks/useUserAccessibleBoardInfo'
 
 const MainHeader = () => {
   const router = useRouter()
+  const userInfo = useUserInfo()
+  const userAccessibleBoardInfo = useUserAccessibleBoardInfo(userInfo)
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const { setMessage } = useSnackbarOpenStore()
@@ -65,7 +69,7 @@ const MainHeader = () => {
               홈
             </Link>
             <Link
-              href='/board'
+              href={`/board/${userAccessibleBoardInfo.listVerForPcHeader[0]?.boardId ?? ''}`}
               className='w-[2.625rem] text-center text-base font-semibold text-white whitespace-nowrap'
             >
               게시판
@@ -105,28 +109,3 @@ const MainHeader = () => {
 }
 
 export default MainHeader
-
-// <div className='flex items-center justify-end space-x-3'>
-//   {!!userInfo?.isCertified &&
-// <>
-//   <button
-//     onClick={() => setIsSearchMode(true)}
-//     className={(isSearchMode ? ' hidden' : ' inline')}
-//   >
-//     <Search className='w-6 h-6 text-white' />
-//   </button>
-//
-//   <SearchModal
-//     boardId={0}
-//     boardName='통합'
-//     isSearchMode={isSearchMode}
-//     setIsSearchMode={setIsSearchMode}
-//     searchTerm={searchTerm}
-//     setSearchTerm={setSearchTerm}
-//   />
-// </>
-// }
-// <Link href='/profile'>
-//   <AccountCircle className='!w-6 !h-6 text-white' />
-// </Link>
-// </div>

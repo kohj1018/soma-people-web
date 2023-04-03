@@ -247,12 +247,7 @@ interface BoardMenuProps {
 function BoardMenu({ boardInfo, boardNameColor = 'text-gray-600', bgColor = 'bg-white', icon, iconBgColor, haveShadow = false }: BoardMenuProps) {
   return (
     <Link
-      href={{
-        pathname: `/board/${boardInfo.boardId}`,
-        query: {
-          boardName: boardInfo.name
-        }
-      }}
+      href={`/board/${boardInfo.boardId}`}
       className={'w-full px-4 py-2.5 flex items-center justify-between rounded-lg ' + bgColor + (haveShadow ? ' shadow-profileCard' : '')}
     >
       <div className='flex items-center space-x-4'>
