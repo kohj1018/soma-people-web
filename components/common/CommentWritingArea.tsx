@@ -98,18 +98,18 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
   }
 
   return (
-    <article className='fixed bottom-0 inset-x-0 px-5 py-3 flex items-center justify-between space-x-4 bg-white z-50'>
+    <article className='fixed bottom-0 inset-x-0 px-5 py-3 flex items-center justify-between space-x-4 bg-white z-50 lg:static lg:px-6 lg:py-5 lg:rounded-lg lg:bg-gray-50'>
       <button
         onClick={() => setIsCommentAnonymous(!isCommentAnonymous)}
         className='flex items-center space-x-0.5'
         disabled={isDisabled}
       >
-        <p className='text-sm font-semibold text-gray-400 whitespace-nowrap'>익명</p>
-        <CheckBox className={'!w-4 !h-4' + (isCommentAnonymous ? ' text-gray-700' : ' text-gray-300')} />
+        <p className='text-sm font-semibold text-gray-400 whitespace-nowrap lg:text-base'>익명</p>
+        <CheckBox className={'!w-4 !h-4 lg:!w-5 lg:!h-5' + (isCommentAnonymous ? ' text-gray-700' : ' text-gray-300')} />
       </button>
       <textarea
         ref={textareaRef}
-        className='grow px-4 py-2.5 rounded text-sm font-medium text-gray-700 bg-gray-100 resize-none placeholder:text-gray-400 focus:outline-none hide-scrollbar'
+        className='grow px-4 py-2.5 rounded text-sm font-medium text-gray-700 bg-gray-100 resize-none lg:p-0 lg:text-base lg:bg-gray-50 placeholder:text-gray-400 focus:outline-none hide-scrollbar'
         placeholder='댓글을 입력하세요'
         rows={1}
         maxLength={1000}
@@ -122,7 +122,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
         onClick={(e) => handleSubmit(e)}
         disabled={isDisabled}
       >
-        <Send className='!w-6 !h-6 text-blue-500' />
+        <Send className='!w-6 !h-6 text-blue-500 lg:!w-7 lg:!h-7' />
       </button>
     </article>
   )

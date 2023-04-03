@@ -5,6 +5,8 @@ import dayjs from 'dayjs'
 import UserTypeTag from '../tag/UserTypeTag'
 import QuestionAnswer from '@mui/icons-material/QuestionAnswer'
 import { useInfinitePostsScrollYStore } from '../../stores/scrollStore/scrollStores'
+import Verified from '@mui/icons-material/Verified'
+import React from 'react'
 
 interface Props {
   postInfo: PostInfoType
@@ -28,7 +30,15 @@ function PostPreview({ postInfo }: Props) {
         {/* 글 정보 (작성시간, 작성자 정보, 댓글 수) */}
         <footer className='w-full flex items-center justify-between'>
           <article className='flex items-center space-x-1.5'>
-            <p className='text-sm font-medium text-gray-400 lg:text-base'>{getElapsedTime(dayjs(postInfo.createdAt)) + ' · ' + (postInfo.isAnonymous ? '익명' : postInfo.user.name)}</p>
+            <p className='text-sm font-medium text-gray-400 lg:text-base'>
+              {getElapsedTime(dayjs(postInfo.createdAt)) + ' · ' + (postInfo.isAnonymous ? '익명' : postInfo.user.name)}
+              <>
+                {/* 연수생 인증 마크 */}
+                {postInfo.board.boardId === 4 && postInfo.user.isCertified &&
+                  <Verified className='ml-0.5 !w-4 !h-4 text-emerald-500' />
+                }
+              </>
+            </p>
             <UserTypeTag userType={postInfo.user.userType} cardinalNum={postInfo.user.cardinalNum} isAnonymous={postInfo.isAnonymous} />
           </article>
           <div className='flex items-center space-x-1.5'>

@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query'
 import { CommentInfoType, PostInfoType } from '../../../utils/types/responseTypes'
 import { postKeys } from '../../../utils/constants/reactQueryKeyConstants'
 import { getPostInfoByPostId, increaseView } from '../../../utils/apis/postsApi'
-import MainArea from '../../../components/layout/MainArea'
 import UserTypeTag from '../../../components/tag/UserTypeTag'
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye'
 import { getElapsedTime } from '../../../utils/functions/getElapsedTime'
@@ -22,6 +21,7 @@ import { MuiDialog } from '../../../components/common/MuiDialog'
 import { useSnackbarOpenStore } from '../../../stores/stores'
 import { useUserHiddenPostIdListStore } from '../../../stores/localStorageStore/stores'
 import SEO from '../../../components/SEO'
+import Verified from '@mui/icons-material/Verified'
 const CommentListSection = dynamic(() => import('../../../components/common/CommentListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const PostDetail: NextPage = () => {
@@ -118,54 +118,76 @@ const PostDetail: NextPage = () => {
         }
       </MobileBackHeader>
 
-      <MainArea className='min-h-screen pb-16 bg-gray-50'>
+      <main className='paddingHeader min-h-screen pb-16 space-y-3 bg-gray-50'>
         <Suspense fallback={<LoadingCircular />}>
           {/* Post 상세 */}
           {!!postInfo &&
-            <article className='pt-8 px-5 pb-4 bg-white'>
-              <article className='space-y-3 pb-5 border-b border-gray-100'>
-                <button
-                  onClick={viewOtherUserProfile}
-                  className='flex items-center space-x-1.5'
-                >
-                  <p className='text-sm font-medium text-gray-400'>{postInfo.isAnonymous ? '익명' : postInfo.user.name}</p>
-                  <UserTypeTag userType={postInfo.user.userType} cardinalNum={postInfo.user.cardinalNum} isAnonymous={postInfo.isAnonymous} />
-                </button>
-                <h1 className='text-lg font-medium text-gray-900'>{postInfo.title}</h1>
-              </article>
-              <p className='mt-5 text-base font-normal text-gray-700 whitespace-pre-wrap'>{postInfo.content}</p>
-              <footer className='mt-8 w-full flex items-center justify-between'>
-                <div className='flex items-center space-x-1.5'>
-                  <RemoveRedEye className='!w-4 !h-4 text-gray-200' />
-                  <p className='text-sm font-semibold text-gray-500'>{postInfo.hits}</p>
-                </div>
-                <p className='text-sm font-semibold text-gray-400'>{getElapsedTime(dayjs(postInfo.createdAt))}</p>
-              </footer>
+            <article className='pt-8 px-5 pb-4 bg-white lg:pt-[3.75rem] lg:px-0 lg:pb-8'>
+              <div className='lg:mainWidthLimit'>
+                <article className='space-y-3 pb-5 border-b border-gray-100 lg:pb-6'>
+                  <button
+                    onClick={viewOtherUserProfile}
+                    className='flex items-center space-x-1.5'
+                  >
+                    <p className='text-sm font-medium text-gray-400 flex items-center lg:text-base'>
+                      {postInfo.isAnonymous ? '익명' : postInfo.user.name}
+                      <>
+                        {/* 연수생 인증 마크 */}
+                        {postInfo?.board.boardId === 4 && postInfo.user.isCertified &&
+                          <Verified className='ml-0.5 !w-4 !h-4 text-emerald-500' />
+                        }
+                      </>
+                    </p>
+                    <UserTypeTag userType={postInfo.user.userType} cardinalNum={postInfo.user.cardinalNum} isAnonymous={postInfo.isAnonymous} />
+                  </button>
+                  <h1 className='text-lg font-medium text-gray-900 lg:text-xl'>{postInfo.title}</h1>
+                </article>
+                <p className='mt-5 text-base font-normal text-gray-700 whitespace-pre-wrap lg:mt-6 lg:text-lg'>{postInfo.content}</p>
+                <footer className='mt-8 w-full flex items-center justify-between'>
+                  <div className='flex items-center space-x-1.5'>
+                    <RemoveRedEye className='!w-4 !h-4 text-gray-200 lg:!w-5 lg:!h-5' />
+                    <p className='text-sm font-semibold text-gray-500 lg:text-base'>{postInfo.hits}</p>
+                  </div>
+                  <p className='text-sm font-semibold text-gray-400 lg:text-base'>
+                    {getElapsedTime(dayjs(postInfo.createdAt))}
+                    <span className='text-gray-300'>{!!postInfo.updatedAt && ' · 수정됨'}</span>
+                  </p>
+                </footer>
+              </div>
             </article>
           }
         </Suspense>
 
         {/* 댓글 영역 */}
-        <article className='relative px-5 py-8'>
-          <div className='flex items-center space-x-1'>
-            <h2 className='text-xl font-medium text-gray-900'>댓글</h2>
-            <div className='px-2 py-0.5 flex items-center justify-center rounded-full bg-gray-200'>
-              <p className='text-sm font-semibold text-blue-500'>{postInfo?.commentsNum}</p>
-            </div>
-            {postInfo?.commentsNum === 0 &&
-              <p className='pl-4 text-sm font-semibold text-gray-500'>첫 번째 댓글을 달아주세요 :)</p>
+        <article className='px-5 py-6 bg-white lg:px-0 lg:py-8'>
+          <div className='space-y-6 lg:space-y-9 lg:mainWidthLimit'>
+            <header className='flex items-center space-x-1'>
+              <h3 className='text-xl font-medium text-gray-900'>댓글</h3>
+              <div className='px-2 py-0.5 flex items-center justify-center rounded-full bg-emerald-400'>
+                <p className='text-sm font-semibold text-emerald-50'>{postInfo?.commentsNum}</p>
+              </div>
+              {postInfo?.commentsNum === 0 &&
+                <p className='pl-4 text-sm font-semibold text-gray-500'>첫 번째 댓글을 달아주세요 :)</p>
+              }
+            </header>
+
+            {/* 댓글 작성 영역 (PC) */}
+            {!!userInfo && window.innerWidth >= 1024 &&
+              <CommentWritingArea postId={postId} userInfo={userInfo} commentInfoToUpdate={commentInfoToUpdate} setCommentInfoToUpdate={setCommentInfoToUpdate} />
+            }
+
+            {/* 댓글들 */}
+            {!!userInfo &&
+              <CommentListSection postId={postId} userInfo={userInfo} setCommentInfoToUpdate={setCommentInfoToUpdate} showCertified={postInfo?.board.boardId === 4} />
             }
           </div>
-          {!!userInfo &&
-            <CommentListSection postId={postId} userInfo={userInfo} setCommentInfoToUpdate={setCommentInfoToUpdate} />
-          }
         </article>
 
-        {/* 댓글 작성 영역 */}
-        {!!userInfo &&
+        {/* 댓글 작성 영역 (모바일) */}
+        {!!userInfo && window.innerWidth < 1024 &&
           <CommentWritingArea postId={postId} userInfo={userInfo} commentInfoToUpdate={commentInfoToUpdate} setCommentInfoToUpdate={setCommentInfoToUpdate} />
         }
-      </MainArea>
+      </main>
 
       {/* 게시글 삭제 확인 다이얼로그 */}
       <MuiDialog

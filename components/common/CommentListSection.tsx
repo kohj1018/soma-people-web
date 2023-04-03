@@ -10,9 +10,10 @@ interface Props {
   postId: number
   userInfo: UserInfoType
   setCommentInfoToUpdate: (commentInfoToEdit: CommentInfoType | null) => void
+  showCertified: boolean
 }
 
-function CommentListSection({ postId, userInfo, setCommentInfoToUpdate }: Props) {
+function CommentListSection({ postId, userInfo, setCommentInfoToUpdate, showCertified }: Props) {
   const router = useRouter()
 
   const { data: commentsInfoList } = useQuery<CommentInfoType[]>(
@@ -26,7 +27,7 @@ function CommentListSection({ postId, userInfo, setCommentInfoToUpdate }: Props)
   )
 
   return (
-    <section className='mt-4 space-y-4'>
+    <section className='space-y-6'>
       {commentsInfoList?.map((commentInfo) =>
         <Comment
           key={commentInfo.commentId}
@@ -34,6 +35,7 @@ function CommentListSection({ postId, userInfo, setCommentInfoToUpdate }: Props)
           commentInfo={commentInfo}
           userInfo={userInfo}
           setCommentInfoToUpdate={setCommentInfoToUpdate}
+          showCertified={showCertified}
         />
       )}
     </section>
