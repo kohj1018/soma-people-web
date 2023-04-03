@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import MainContainer from '../../components/layout/MainContainer'
 import MainArea from '../../components/layout/MainArea'
 import profilePageBackGround from '../../public/profilePageBackGround.svg'
+import pcProfilePageBackGround from '../../public/pcProfilePageBackGround.svg'
 import Image from 'next/image'
 import useUserInfo from '../../hooks/useUserInfo'
 import UserTypeTag from '../../components/tag/UserTypeTag'
@@ -39,43 +40,43 @@ const Profile: NextPage = () => {
         <h1 className='text-xl font-semibold text-white'>프로필</h1>
       </header>
 
-      <MainArea className='relative pb-8'>
+      <main className='paddingHeader relative pb-8 lg:pb-[7.5rem]'>
         <Image
-          src={profilePageBackGround}
+          src={window.innerWidth > 1024 ? pcProfilePageBackGround : profilePageBackGround}
           className='w-full h-auto'
           alt='배경 이미지'
         />
 
-        <section className='absolute top-20 inset-x-5 space-y-4 z-10'>
+        <section className='absolute top-[5.5rem] inset-x-5 space-y-4 z-10 lg:top-[7.25rem] lg:mainWidthLimit'>
           {/* 프로필 정보 */}
-          <article className='p-7 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'>
+          <article className='p-7 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard lg:p-10'>
             <header className='flex items-center space-x-2'>
-              <p className='text-xl font-semibold text-gray-900'>{userInfo.name}</p>
+              <p className='text-xl font-semibold text-gray-900 lg:text-2xl'>{userInfo.name}</p>
               <UserTypeTag userType={userInfo.userType} cardinalNum={userInfo.cardinalNum} isAnonymous={false} />
             </header>
-            <section className='mt-6 space-y-3'>
+            <section className='mt-6 space-y-3 lg:mt-5'>
               <Link
                 href={`/profile/record/posts`}
-                className='px-4 py-3 flex items-center justify-between rounded bg-gray-50'
+                className='px-4 py-3 flex items-center justify-between rounded bg-gray-50 lg:px-6 lg:py-5'
               >
                 <div className='flex items-center space-x-2'>
-                  <Mode className='!w-5 !h-5 text-gray-300' />
-                  <p className='text-base font-medium text-gray-700'>작성한 글</p>
+                  <Mode className='!w-5 !h-5 text-gray-300 lg:!w-6 lg:!h-6' />
+                  <p className='text-base font-medium text-gray-700 lg:text-lg'>작성한 글</p>
                   <div className='px-2 py-0.5 flex items-center justify-center rounded-full bg-gray-100'>
-                    <p className='text-sm font-semibold text-blue-700'>{userInfo.numOfPostsWritten}</p>
+                    <p className='text-sm font-semibold text-blue-700 lg:text-base'>{userInfo.numOfPostsWritten}</p>
                   </div>
                 </div>
                 <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
               </Link>
               <Link
                 href='/profile/record/comments'
-                className='px-4 py-3 flex items-center justify-between rounded bg-gray-50'
+                className='px-4 py-3 flex items-center justify-between rounded bg-gray-50 lg:px-6 lg:py-5'
               >
                 <div className='flex items-center space-x-2'>
-                  <Mode className='!w-5 !h-5 text-gray-300' />
-                  <p className='text-base font-medium text-gray-700'>작성한 댓글</p>
+                  <Mode className='!w-5 !h-5 text-gray-300 lg:!w-6 lg:!h-6' />
+                  <p className='text-base font-medium text-gray-700 lg:text-lg'>작성한 댓글</p>
                   <div className='px-2 py-0.5 flex items-center justify-center rounded-full bg-gray-100'>
-                    <p className='text-sm font-semibold text-blue-700'>{userInfo.numOfCommentsWritten}</p>
+                    <p className='text-sm font-semibold text-blue-700 lg:text-base'>{userInfo.numOfCommentsWritten}</p>
                   </div>
                 </div>
                 <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
@@ -85,17 +86,17 @@ const Profile: NextPage = () => {
 
           {/* 소마인 인증 */}
           {userInfo.isCertified ? (
-            <div className='w-full p-4 flex items-center space-x-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'>
-              <VerifiedUser className='!w-6 !h-6 text-blue-500' />
-              <p className='text-base font-semibold text-gray-900'>소마인 인증 완료</p>
+            <div className='w-full p-4 flex items-center space-x-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard lg:px-6 lg:py-5'>
+              <VerifiedUser className='!w-6 !h-6 text-blue-500 lg:!w-7 lg:!h-7' />
+              <p className='text-base font-semibold text-gray-900 lg:text-lg'>소마인 인증 완료</p>
             </div>
           ) : (
             <>
               {isAlreadyRequest ? (
-                <div className='p-4 space-y-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'>
+                <div className='p-4 space-y-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard lg:px-6 lg:py-5'>
                   <div className='flex items-center space-x-2'>
-                    <VerifiedUser className='!w-6 !h-6 text-blue-500' />
-                    <p className='text-base font-semibold text-gray-900'>소마인 인증 대기중 ...</p>
+                    <VerifiedUser className='!w-6 !h-6 text-blue-500 lg:!w-7 lg:!h-7' />
+                    <p className='text-base font-semibold text-gray-900 lg:text-lg'>소마인 인증 대기중 ...</p>
                   </div>
                   <div className='w-full flex items-center justify-end'>
                     <button
@@ -109,16 +110,16 @@ const Profile: NextPage = () => {
               ) : (
                 <Link
                   href='/profile/certification'
-                  className='block p-4 space-y-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard'
+                  className='block p-4 space-y-2 rounded outline outline-1 outline-gray-100 bg-white shadow-profileCard lg:px-6 lg:py-5'
                 >
                   <header className='w-full flex items-center justify-between'>
                     <div className='flex items-center space-x-2'>
-                      <VerifiedUser className='!w-6 !h-6 text-blue-500' />
-                      <p className='text-base font-semibold text-gray-900'>소마인 인증하기</p>
+                      <VerifiedUser className='!w-6 !h-6 text-blue-500 lg:!w-7 lg:!h-7' />
+                      <p className='text-base font-semibold text-gray-900 lg:text-lg'>소마인 인증하기</p>
                     </div>
                     <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
                   </header>
-                  <p className='text-sm font-medium text-gray-400'>소마인 인증을 받으면 연수생/수료생 게시판을 이용할 수 있어요!</p>
+                  <p className='text-sm font-medium text-gray-400 lg:text-base'>소마인 인증을 받으면 연수생/수료생 게시판을 이용할 수 있어요!</p>
                 </Link>
               )}
             </>
@@ -126,14 +127,14 @@ const Profile: NextPage = () => {
         </section>
 
         {/* 서비스 목록 */}
-        <article className={'mx-5 space-y-3' + (userInfo.isCertified ? ' mt-[11.375rem]' : ' mt-[14.375rem]')}>
-          <header className='text-sm font-medium text-gray-400'>서비스</header>
+        <article className={'mx-5 space-y-3 lg:mainWidthLimit' + (userInfo.isCertified ? ' mt-[11.375rem] lg:mt-[13.875rem]' : ' mt-[14.375rem] lg:mt-[17.125rem]')}>
+          <header className='text-sm font-medium text-gray-400 lg:text-base'>서비스</header>
           <section className='space-y-6'>
             <Link
               href='/customerService'
               className='w-full flex items-center justify-between'
             >
-              <p className='text-base font-medium text-gray-900'>문의/건의하기</p>
+              <p className='text-base font-medium text-gray-900 lg:text-lg'>문의/건의하기</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
             </Link>
             <Link
@@ -141,7 +142,7 @@ const Profile: NextPage = () => {
               href='/etc/termsOfUse'
               className='w-full flex items-center justify-between'
             >
-              <p className='text-base font-medium text-gray-900'>서비스이용약관</p>
+              <p className='text-base font-medium text-gray-900 lg:text-lg'>서비스이용약관</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
             </Link>
             <Link
@@ -149,33 +150,33 @@ const Profile: NextPage = () => {
               href='/etc/privacyPolicy'
               className='w-full flex items-center justify-between'
             >
-              <p className='text-base font-medium text-gray-900'>개인정보처리방침</p>
+              <p className='text-base font-medium text-gray-900 lg:text-lg'>개인정보처리방침</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
             </Link>
             <Link
               href='/profile/accountManagement'
               className='w-full flex items-center justify-between'
             >
-              <p className='text-base font-medium text-gray-900'>계정관리</p>
+              <p className='text-base font-medium text-gray-900 lg:text-lg'>계정관리</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
             </Link>
           </section>
         </article>
 
         {/* 기타 목록 */}
-        <article className='mt-10 mx-5 pb-7 space-y-3'>
-          <header className='text-sm font-medium text-gray-400'>기타</header>
+        <article className='mt-10 mx-5 space-y-3 lg:mainWidthLimit lg:mt-8'>
+          <header className='text-sm font-medium text-gray-400 lg:text-base'>기타</header>
           <section className='space-y-6'>
             <Link
               // href='https://somapeople.notion.site/c296bd79d0b543ce8b977a55eb303ef5'
               href='/etc/notice'
               className='w-full flex items-center justify-between'
             >
-              <p className='text-base font-medium text-gray-900'>공지사항</p>
+              <p className='text-base font-medium text-gray-900 lg:text-lg'>공지사항</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
             </Link>
             <div className='w-full flex items-center justify-between'>
-              <p className='text-base font-medium text-gray-900'>앱버전</p>
+              <p className='text-base font-medium text-gray-900 lg:text-lg'>앱버전</p>
               <p className='text-base font-semibold text-gray-600 lg:text-xl'>
                 {/*<span className='text-sm font-semibold text-blue-500 lg:text-base'>beta </span>*/}
                 {VERSION}
@@ -183,7 +184,7 @@ const Profile: NextPage = () => {
             </div>
           </section>
         </article>
-      </MainArea>
+      </main>
 
       {/* 인증 재요청 확인 다이얼로그 */}
       <MuiDialog
