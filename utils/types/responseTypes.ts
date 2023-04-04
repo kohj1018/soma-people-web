@@ -60,3 +60,15 @@ export interface MainPagePostListInfoType {
   freePostList: PostInfoType[]
   applicantPostList: PostInfoType[]
 }
+
+export interface NotificationLogInfoType {
+  notificationLogId: number
+  targetUserId: number
+  postId: number
+  boardName: string
+  notificationType: "공지사항" | "댓글" | "대댓글"
+  content: string
+  isChecked: boolean
+  createdAt: string
+  updatedAt: string | null
+}

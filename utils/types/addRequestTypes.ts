@@ -30,3 +30,12 @@ export interface AddBlockUserLogType {
   userId: number
   blockUserId: number
 }
+
+export interface AddNotificationLogType {
+  sendingUserId: number
+  targetUserId: number
+  postId: number
+  boardName: string
+  notificationType: "공지사항" | "댓글" | "대댓글"
+  content: string
+}
