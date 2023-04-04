@@ -57,7 +57,7 @@ export interface ReplyInfoType {
 }
 
 export interface MainPagePostListInfoType {
-  qnaPostList: PostInfoType[]
+  recentPostList: PostInfoType[]
   freePostList: PostInfoType[]
   applicantPostList: PostInfoType[]
 }

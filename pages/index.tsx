@@ -172,18 +172,9 @@ const Home: NextPage = () => {
               <p className='px-5 text-lg font-semibold text-gray-900 lg:px-0 lg:text-xl'>최근에 올라온 글 💬</p>
 
               <section className='px-5 flex items-center space-x-4 overflow-x-scroll whitespace-nowrap hide-scrollbar lg:px-0'>
-                {isNotEmptyArray(mainPagePostSummaryData?.qnaPostList) ? (
-                  mainPagePostSummaryData?.qnaPostList.map((post) =>
-                    <RecentPostPreview
-                      key={post.postId}
-                      postId={post.postId}
-                      title={post.title}
-                      userType={post.user.userType}
-                      cardinalNum={post.user.cardinalNum}
-                      isAnonymous={post.isAnonymous}
-                      commentsNum={post.commentsNum}
-                      createdAt={post.createdAt}
-                    />
+                {isNotEmptyArray(mainPagePostSummaryData?.recentPostList) ? (
+                  mainPagePostSummaryData?.recentPostList.map((postInfo) =>
+                    <RecentPostPreview key={postInfo.postId} postInfo={postInfo} />
                   )
                 ) : (
                   <EmptyPostsNotice />
