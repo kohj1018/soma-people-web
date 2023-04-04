@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import useUserInfo from '../../hooks/useUserInfo'
 import useUserAccessibleBoardInfo from '../../hooks/useUserAccessibleBoardInfo'
+import Notifications from '@mui/icons-material/Notifications'
 
 const MainHeader = () => {
   const router = useRouter()
@@ -61,18 +62,25 @@ const MainHeader = () => {
         </Link>
 
         <div className='w-full h-full flex items-center justify-between'>
-          <nav className={'items-center space-x-10 whitespace-nowrap mr-8'}>
-            <Link
-              href='/'
-              className='w-[2.625rem] text-center text-base font-semibold text-white whitespace-nowrap'
-            >
-              홈
-            </Link>
+          <nav className={'flex items-center space-x-10 whitespace-nowrap mr-8'}>
+            {/*<Link*/}
+            {/*  href='/'*/}
+            {/*  className='text-base font-semibold text-white whitespace-nowrap'*/}
+            {/*>*/}
+            {/*  홈*/}
+            {/*</Link>*/}
             <Link
               href={`/board/${userAccessibleBoardInfo.listVerForPcHeader[0]?.boardId ?? ''}`}
-              className='w-[2.625rem] text-center text-base font-semibold text-white whitespace-nowrap'
+              className='text-base font-semibold text-white whitespace-nowrap'
             >
               게시판
+            </Link>
+            <Link
+              href='/notification'
+              className='flex items-center space-x-1 text-white whitespace-nowrap'
+            >
+              <Notifications className='!w-4 !h-4' />
+              <p className='text-base font-semibold'>알림</p>
             </Link>
           </nav>
 

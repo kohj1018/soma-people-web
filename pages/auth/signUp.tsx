@@ -2,16 +2,15 @@ import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import MainContainer from '../../components/layout/MainContainer'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { UserType } from '../../utils/types/userType'
 import MuiSelectUserType from '../../components/common/MuiSelectUserType'
-import { useBoardIdOfLastViewedStore, useSnackbarOpenStore } from '../../stores/stores'
+import { useSnackbarOpenStore } from '../../stores/stores'
 import { checkCharacter } from '../../utils/functions/checkCharacter'
 import { addUser } from '../../utils/apis/usersApi'
 import { AxiosResponse } from 'axios'
 import { PREP_STUDENT_CARDINAL_NUM, THIS_YEAR_CARDINAL_NUM } from '../../utils/config'
 import { useMutation } from '@tanstack/react-query'
-import { AddUserType } from '../../utils/types/addRequestTypes'
 import SEO from '../../components/SEO'
 
 const SignUp = () => {
@@ -21,7 +20,6 @@ const SignUp = () => {
   const [name, setName] = useState<string>('')
   const [userType, setUserType] = useState<UserType | null>(null)
   const [cardinalNumStr, setCardinalNumStr] = useState<string>('')
-  const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { setMessage } = useSnackbarOpenStore()
 
   const { mutate: addUserMutate, isSuccess } = useMutation(async () => {
@@ -38,7 +36,6 @@ const SignUp = () => {
         }).then((response: AxiosResponse<number>) => {
           setUserId(response.data)
           setOauthId(oauthId)
-          setBoardIdOfLastViewed(4) // 미인증 이용자는 준비생 게시판만 이용 가능
           setMessage('가입을 환영합니다🎉')
           router.replace('/')
         })

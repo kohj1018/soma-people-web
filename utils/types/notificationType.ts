@@ -1,0 +1,1 @@
+export type NotificationType = '공지사항' | '댓글' | '대댓글'

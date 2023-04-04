@@ -1,3 +1,3 @@
 export const REFERENCE_VALUE_TO_SWIPE: number = 75
-export const ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID: number = 999999
+export const ARBITRARY_LARGEST_LAST_ID: number = 999999
 export const INFINITE_SCROLL_LOAD_SIZE: number = 20

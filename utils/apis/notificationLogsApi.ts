@@ -1,10 +1,12 @@
 import { NotificationLogInfoType } from '../types/responseTypes'
 import { ec2 } from './apiConfig'
+import { INFINITE_SCROLL_LOAD_SIZE } from '../constants/systemConstants'
 
 /** 유저가 받은 알림 기록 모두 불러오기 */
-export const getAllNotificationLog = async (userId: number): Promise<NotificationLogInfoType[]> => {
-  const res = await ec2.get<NotificationLogInfoType[]>(`/notificationLogs/getAllNotificationLog/${userId}`)
-  return res.data
+export const getNotificationLogInfoListInfinitely = async (userId: number, lastNotificationLogId: number) => {
+  const res = await ec2.get<NotificationLogInfoType[]>(`/notificationLogs?userId=${userId}&lastNotificationLogId=${lastNotificationLogId}&size=${INFINITE_SCROLL_LOAD_SIZE}`)
+  const notificationLogList: NotificationLogInfoType[] = res.data
+  return { notificationLogList, nextLastNotificationLogId: notificationLogList[notificationLogList.length - 1]?.notificationLogId, isLast: notificationLogList.length < INFINITE_SCROLL_LOAD_SIZE }
 }
 
 /** 알림 확인 완료 */

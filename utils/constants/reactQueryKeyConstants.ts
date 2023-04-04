@@ -26,3 +26,8 @@ export const blockUserLogKeys = {
   all: ['blockUserLogs'] as const,
   list: (userId: number) => [...blockUserLogKeys.all, 'list', { userId: userId }] as const
 }
+
+export const notificationLogKeys = {
+  all: ['notificationLogs'] as const,
+  list: (userId: number) => [...notificationLogKeys.all, 'list', { userId: userId }] as const
+}

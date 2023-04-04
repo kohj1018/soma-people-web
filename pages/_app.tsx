@@ -19,11 +19,6 @@ const queryClient = new QueryClient({
   }
 })
 
-type FirebaseTokenInfo = {
-  userId: number
-  firebaseToken: string | null
-}
-
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const { setFirebaseToken, updatedAt, setUpdatedAt } = useFirebaseTokenStore()
@@ -39,8 +34,14 @@ export default function App({ Component, pageProps }: AppProps) {
         case 1:
           router.push('/board')
           break
-        default:
+        case 2:
+          router.push('/notification')
+          break
+        case 3:
           router.push('/profile')
+          break
+        default:
+          router.push('/')
           break
       }
     }

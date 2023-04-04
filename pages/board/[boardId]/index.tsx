@@ -116,7 +116,7 @@ const BoardDetail: NextPage = () => {
         </div>
       </nav>
 
-      <MainArea className='pb-8 lg:pt-[8.125rem] lg:pb-[6.25rem]'>
+      <MainArea className='min-h-screen pb-8 flex flex-col lg:pt-[8.125rem] lg:pb-[6.25rem]'>
         {(isTraineeBoard) ? ( // 연수생 게시판
           <>
             {/* 연수생 게시판 NavBar */}

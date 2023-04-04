@@ -1,5 +1,3 @@
-import { usePostsWrittenByUserScrollYStore } from './scrollStores'
-
 export type MainPageScrollYState = {
   mainPageScrollY: number
   setMainPageScrollY: (mainPageScrollY: number) => void
@@ -18,6 +16,11 @@ export type PostsWrittenByUserScrollYState = {
 export type CommentsWrittenByUserScrollYState = {
   commentsWrittenByUserScrollY: number
   setCommentsWrittenByUserScrollY: (commentsWrittenByUserScrollY: number) => void
+}
+
+export type NotificationLogsScrollYState = {
+  notificationLogsScrollY: number
+  setNotificationLogsScrollY: (notificationLogsScrollY: number) => void
 }
 
 export type BoardTapScrollXState = {

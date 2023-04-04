@@ -10,7 +10,7 @@ import { isNotEmptyArray } from '../../utils/functions/isNotEmptyArray'
 import noPostsIcon from '../../public/icon/noPostsIcon.svg'
 import Image from 'next/image'
 import {
-  ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID,
+  ARBITRARY_LARGEST_LAST_ID,
   INFINITE_SCROLL_LOAD_SIZE,
   REFERENCE_VALUE_TO_SWIPE,
 } from '../../utils/constants/systemConstants'
@@ -28,7 +28,7 @@ function InfiniteTraineePostListSection({ userId }: Props) {
   const { ref, inView } = useInView()
   const { data: postInfoList, fetchNextPage, isFetchingNextPage, refetch } = useInfiniteQuery(
     postKeys.list(traineeBoardIdOfLastViewed, userId),
-    ({ pageParam = ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID }) => getPostInfoListInfinitely(traineeBoardIdOfLastViewed, pageParam, userId),
+    ({ pageParam = ARBITRARY_LARGEST_LAST_ID }) => getPostInfoListInfinitely(traineeBoardIdOfLastViewed, pageParam, userId),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextLastPostId : undefined,
@@ -90,7 +90,7 @@ function InfiniteTraineePostListSection({ userId }: Props) {
     <>
       <section
         ref={infinitePostListSectionRef}
-        className='mt-0 px-5 min-h-[80vh] lg:px-0 lg:mt-4'  //TODO: 일단 임시로 min-h-[80vh] 하긴 했는데 더 좋은 방법 있으면 바꾸기 (글이 없을 때 영역 차지를 안해서 스와이프가 안되고 있음)
+        className='relative grow mt-0 px-5 lg:px-0 lg:mt-4'
       >
         {isNotEmptyArray(postInfoList?.pages[0].postList) ? (
           <PullToRefresh onRefresh={() => refetch()}>

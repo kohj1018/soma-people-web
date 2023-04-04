@@ -1,6 +1,6 @@
 import { useInView } from 'react-intersection-observer'
 import {
-  ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID,
+  ARBITRARY_LARGEST_LAST_ID,
   INFINITE_SCROLL_LOAD_SIZE,
 } from '../../utils/constants/systemConstants'
 import { useUserHiddenPostIdListStore } from '../../stores/localStorageStore/stores'
@@ -24,7 +24,7 @@ function InfinitePostListSection({ boardId, userId }: Props) {
   const { ref, inView } = useInView()
   const { data: postInfoList, fetchNextPage, isFetchingNextPage, refetch } = useInfiniteQuery(
     postKeys.list(boardId, userId),
-    ({ pageParam = ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID }) => getPostInfoListInfinitely(boardId, pageParam, userId),
+    ({ pageParam = ARBITRARY_LARGEST_LAST_ID }) => getPostInfoListInfinitely(boardId, pageParam, userId),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextLastPostId : undefined,
@@ -44,7 +44,7 @@ function InfinitePostListSection({ boardId, userId }: Props) {
 
   return (
     <>
-      <section className='mt-0 px-5 min-h-[80vh] lg:px-0 lg:mt-4'>
+      <section className='relative grow mt-0 px-5 lg:px-0 lg:mt-4'>
         {isNotEmptyArray(postInfoList?.pages[0].postList) ? (
           <PullToRefresh onRefresh={() => refetch()}>
             <>

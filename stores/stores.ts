@@ -18,13 +18,13 @@ export const useSnackbarOpenStore = create<SnackbarOpenState>((set) => ({
   },
 }))
 
-/** 마지막으로 보고 있던 게시판 Id 관리하는 Store */
-export const useBoardIdOfLastViewedStore = create<BoardIdOfLastViewedState>((set) => ({
-  boardIdOfLastViewed: 1,
-  setBoardIdOfLastViewed: (boardIdOfLastViewed: number) => {
-    set((state) => ({ ...state, boardIdOfLastViewed: boardIdOfLastViewed }))
-  }
-}))
+// /** 마지막으로 보고 있던 게시판 Id 관리하는 Store */
+// export const useBoardIdOfLastViewedStore = create<BoardIdOfLastViewedState>((set) => ({
+//   boardIdOfLastViewed: 1,
+//   setBoardIdOfLastViewed: (boardIdOfLastViewed: number) => {
+//     set((state) => ({ ...state, boardIdOfLastViewed: boardIdOfLastViewed }))
+//   }
+// }))
 
 /** 앱을 실행하고 첫번째 로딩인지 체크하는 Store */
 export const useIsFirstLoadStore = create<IsFirstLoadState>((set) => ({

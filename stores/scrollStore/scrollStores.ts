@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import {
   BoardTapScrollXState, CommentsWrittenByUserScrollYState,
   InfinitePostsScrollYState,
-  MainPageScrollYState,
+  MainPageScrollYState, NotificationLogsScrollYState,
   PostsWrittenByUserScrollYState,
 } from './scrollStoreTypes'
 
@@ -35,6 +35,14 @@ export const useCommentsWrittenByUserScrollYStore = create<CommentsWrittenByUser
   commentsWrittenByUserScrollY: 0,
   setCommentsWrittenByUserScrollY: (commentsWrittenByUserScrollY: number) => {
     set((state) => ({ ...state, commentsWrittenByUserScrollY: commentsWrittenByUserScrollY }))
+  }
+}))
+
+/** 알림 기록 페이지 스크롤 Y값을 저장하는 Store */
+export const useNotificationLogsScrollYStore = create<NotificationLogsScrollYState>((set) => ({
+  notificationLogsScrollY: 0,
+  setNotificationLogsScrollY: (notificationLogsScrollY: number) => {
+    set((state) => ({ ...state, notificationLogsScrollY: notificationLogsScrollY }))
   }
 }))
 

@@ -16,9 +16,9 @@ import { getPostFromEachBoard } from '../utils/apis/postsApi'
 import LoadingCircular from '../components/layout/LoadingCircular'
 import QuestionAnswer from '@mui/icons-material/QuestionAnswer'
 import Search from '@mui/icons-material/Search'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import RecentPostPreview from '../components/common/RecentPostPreview'
-import { useBoardIdOfLastViewedStore, useIsFirstLoadStore } from '../stores/stores'
+import { useIsFirstLoadStore } from '../stores/stores'
 import { useRouter } from 'next/router'
 import useUserInfo from '../hooks/useUserInfo'
 import SearchModal from '../components/common/SearchModal'
@@ -36,7 +36,6 @@ const Home: NextPage = () => {
   const userInfo = useUserInfo()
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
-  const { setBoardIdOfLastViewed } = useBoardIdOfLastViewedStore()
   const { mainPageScrollY, setMainPageScrollY } = useMainPageScrollYStore()
   const { isFirstLoad, setIsFirstLoad } = useIsFirstLoadStore()
   const { data: mainPagePostSummaryData, isLoading } = useQuery(
@@ -58,19 +57,9 @@ const Home: NextPage = () => {
   // 스크롤 위치 유지
   useKeepScrolling(mainPageScrollY)
 
-  // 인증받지 않은 사람들은 준비생 게시판으로 포커싱
-  useEffect(() => {
-    if (!!userInfo && !userInfo.isCertified) {
-      setBoardIdOfLastViewed(4)
-    }
-  }, [userInfo])
-
-
-
   // 게시판으로 이동하기 함수
   const moveToBoardPage = (boardId: number) => {
     setMainPageScrollY(window.scrollY)  // 클릭할 때 window.scrollY 저장
-    setBoardIdOfLastViewed(boardId)
     router.push('/board')
   }
 

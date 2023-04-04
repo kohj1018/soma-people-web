@@ -1,4 +1,5 @@
 import { UserType } from './userType'
+import { NotificationType } from './notificationType'
 
 export interface UserInfoType {
   userId: number
@@ -66,7 +67,7 @@ export interface NotificationLogInfoType {
   targetUserId: number
   postId: number
   boardName: string
-  notificationType: "공지사항" | "댓글" | "대댓글"
+  notificationType: NotificationType
   content: string
   isChecked: boolean
   createdAt: string
