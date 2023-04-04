@@ -9,6 +9,7 @@ import useKeepScrolling from '../../hooks/useKeepScrolling'
 import dynamic from 'next/dynamic'
 import LoadingCircular from '../../components/layout/LoadingCircular'
 import { isWebView } from '../../utils/functions/isWebView'
+import SEO from '../../components/SEO'
 const InfiniteNotificationLogListSection = dynamic(() => import('../../components/common/InfiniteNotificationLogListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const Notification: NextPage = () => {
@@ -22,10 +23,12 @@ const Notification: NextPage = () => {
 
   return (
     <MainContainer>
+      <SEO title='알림' />
+
       <header className='absolute top-0 inset-x-0 px-5 py-3.5 flex items-center justify-between lg:hidden'>
         <h1 className='text-xl font-semibold text-gray-700'>알림</h1>
         {isWebView() &&
-          <Link href='/'>
+          <Link href='/notification/setting'>
             <Settings className='!w-6 !h-6 text-gray-700' />
           </Link>
         }

@@ -32,9 +32,11 @@ export type UserHiddenPostIdListPersist = (
 
 export type FirebaseTokenState = {
   firebaseToken: string | null
-  setFirebaseToken: (firebaseToken: string) => void
+  setFirebaseToken: (firebaseToken: string | null) => void
   updatedAt: string | null
-  setUpdatedAt: (updatedAt: string) => void
+  setUpdatedAt: (updatedAt: string | null) => void
+  isSubscribed: boolean
+  setIsSubscribed: (isUnsubscribed: boolean) => void
 }
 export type FirebaseTokenPersist = (
   config: StateCreator<FirebaseTokenState>,

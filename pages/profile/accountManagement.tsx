@@ -4,7 +4,7 @@ import MainArea from '../../components/layout/MainArea'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import { MuiDialog } from '../../components/common/MuiDialog'
 import { useState } from 'react'
-import { useSignInInfoStore } from '../../stores/localStorageStore/stores'
+import { useFirebaseTokenStore, useSignInInfoStore } from '../../stores/localStorageStore/stores'
 import { useRouter } from 'next/router'
 import { useSnackbarOpenStore } from '../../stores/stores'
 import useUserInfo from '../../hooks/useUserInfo'
@@ -18,12 +18,16 @@ const AccountManagement: NextPage = () => {
   const userInfo = useUserInfo()
   const [isSignOutDialogOpen, setIsSignOutDialogOpen] = useState<boolean>(false)
   const [isDeleteAccountDialogOpen, setIsDeleteAccountDialogOpen] = useState<boolean>(false)
+  const { setFirebaseToken, setUpdatedAt, setIsSubscribed } = useFirebaseTokenStore()
   const { setMessage } = useSnackbarOpenStore()
 
   // 로그아웃 함수
   const signOut = () => {
     setUserId(null)
     setOauthId(null)
+    setFirebaseToken(null)
+    setUpdatedAt(null)
+    setIsSubscribed(true)
     setMessage('로그아웃이 완료되었습니다!')
     router.replace('/')
   }

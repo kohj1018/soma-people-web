@@ -62,12 +62,16 @@ export const useFirebaseTokenStore = create<FirebaseTokenState>(
   (persist as FirebaseTokenPersist)(
     (set) => ({
       firebaseToken: null,
-      setFirebaseToken: (firebaseToken: string) => {
+      setFirebaseToken: (firebaseToken: string | null) => {
         set((state) => ({...state, firebaseToken: firebaseToken, updatedAt: dayjs().format('YYYY-MM-DD')}))
       },
       updatedAt: null,
-      setUpdatedAt: (updatedAt: string) => {
+      setUpdatedAt: (updatedAt: string | null) => {
         set((state) => ({...state, updatedAt: dayjs().format('YYYY-MM-DD')}))
+      },
+      isSubscribed: true,
+      setIsSubscribed: (isSubscribed: boolean) => {
+        set((state) => ({...state, isSubscribed: isSubscribed}))
       }
     }),
     {

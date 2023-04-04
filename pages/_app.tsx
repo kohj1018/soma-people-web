@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
-  const { setFirebaseToken, updatedAt, setUpdatedAt } = useFirebaseTokenStore()
+  const { setFirebaseToken, updatedAt, setUpdatedAt, isSubscribed } = useFirebaseTokenStore()
 
   // Flutter Bridge Function 세팅
   useEffect(() => {
@@ -48,14 +48,16 @@ export default function App({ Component, pageProps }: AppProps) {
 
     // @ts-ignore
     window.registerFirebaseToken = (userId: number, firebaseToken: string | null) => {  // firebaseToken 등록함수
-      if (!!userId && !!firebaseToken) {
-        const today: string = dayjs().format('YYYY-MM-DD')
-        if (updatedAt === null || dayjs(updatedAt).isBefore(today, 'month')) { // 등록한 적 없거나, 마지막 수정 날짜보다 한 달 이상 됐을 때 업데이트
-          registerFirebaseToken(userId, { firebaseToken: firebaseToken })
-            .then(() => {
-              setFirebaseToken(firebaseToken)
-              setUpdatedAt(today)
-            })
+      if (isSubscribed) { // 푸시 알림 수신한 경우만 토큰 등록
+        if (!!userId && !!firebaseToken) {
+          const today: string = dayjs().format('YYYY-MM-DD')
+          if (updatedAt === null || dayjs(updatedAt).isBefore(today, 'month')) { // 등록한 적 없거나, 마지막 수정 날짜보다 한 달 이상 됐을 때 업데이트
+            registerFirebaseToken(userId, { firebaseToken: firebaseToken })
+              .then(() => {
+                setFirebaseToken(firebaseToken)
+                setUpdatedAt(today)
+              })
+          }
         }
       }
     }
