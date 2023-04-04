@@ -41,13 +41,13 @@ function CustomNotificationLog({ notificationLogInfo, bgColor }: CustomNotificat
       onClick={() => checkNotificationLog(notificationLogInfo.notificationLogId)}
     >
       <BoardNameTag boardName={notificationLogInfo.boardName} notificationType={notificationLogInfo.notificationType} />
-      <p className='mt-2 text-base font-medium text-gray-900 ellipsisTwoLine'>
+      <p className='mt-2 text-base font-medium text-gray-900 ellipsisTwoLine lg:text-lg'>
         {notificationLogInfo.notificationType === '공지사항'
           ? notificationLogInfo.content
           : `새로운 ${notificationLogInfo.notificationType}이 달렸어요 : ${notificationLogInfo.content}`
         }
       </p>
-      <p className='mt-4 text-sm font-semibold text-gray-500'>{getElapsedTime(dayjs(notificationLogInfo.createdAt))}</p>
+      <p className='mt-4 text-sm font-semibold text-gray-500 lg:text-base'>{getElapsedTime(dayjs(notificationLogInfo.createdAt))}</p>
     </Link>
   )
 }
@@ -61,13 +61,13 @@ function BoardNameTag({ boardName, notificationType }: BoardNameTagProps) {
     return (
       <div className='inline-block px-1.5 py-1 flex items-center space-x-1 rounded bg-red-100'>
         <Campaign className='!w-4 !h-4 text-red-500' />
-        <p className='text-sm font-semibold text-red-500'>{boardName}</p>
+        <p className='text-sm font-semibold text-red-500 lg:text-base'>{boardName}</p>
       </div>
     )
   } else {
     return (
       <div className='inline-block px-1.5 py-1 rounded bg-blue-100'>
-        <p className='text-sm font-semibold text-blue-500'>{boardName}</p>
+        <p className='text-sm font-semibold text-blue-500 lg:text-base'>{boardName}</p>
       </div>
     )
   }

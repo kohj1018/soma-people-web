@@ -31,7 +31,7 @@ const Notification: NextPage = () => {
         }
       </header>
 
-      <MainArea className='min-h-screen px-5 flex flex-col lg:px-0'>
+      <MainArea className='min-h-screen px-5 flex flex-col'>
         {!!userInfo &&
           <InfiniteNotificationLogListSection userId={userInfo.userId} />
         }
