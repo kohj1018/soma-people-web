@@ -1,5 +1,5 @@
 import Comment from './Comment'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { CommentInfoType, UserInfoType } from '../../utils/types/responseTypes'
 import { postKeys } from '../../utils/constants/reactQueryKeyConstants'
@@ -32,9 +32,8 @@ function CommentListSection({ postId, userInfo, setCommentInfoToUpdate, showCert
   return (
     <section>
       {commentsInfoList?.map((commentInfo) =>
-        <>
+        <Fragment key={commentInfo.commentId}>
           <Comment
-            key={commentInfo.commentId}
             router={router}
             commentInfo={commentInfo}
             userInfo={userInfo}
@@ -53,7 +52,7 @@ function CommentListSection({ postId, userInfo, setCommentInfoToUpdate, showCert
               showCertified={showCertified}
             />
           )}
-        </>
+        </Fragment>
       )}
     </section>
   )

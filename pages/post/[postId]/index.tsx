@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import MainContainer from '../../../components/layout/MainContainer'
 import MobileBackHeader from '../../../components/layout/mobileHeader/MobileBackHeader'
@@ -27,7 +27,7 @@ const CommentListSection = dynamic(() => import('../../../components/common/Comm
 const PostDetail: NextPage = () => {
   const router = useRouter()
   const userInfo = useUserInfo()
-  const postId: number = parseInt(router.query.postId as string)
+  const postId: number = parseInt(router.query.postId as string)  // TODO : 새로고침하면 postId 안불러와지는 버그 해결해야 함
   const { setMessage } = useSnackbarOpenStore()
   const { data: postInfo } = useQuery<PostInfoType>(
     postKeys.detail(postId),
@@ -229,10 +229,3 @@ const PostDetail: NextPage = () => {
 }
 
 export default PostDetail
-
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-  return {
-    props: {
-    }
-  }
-}
