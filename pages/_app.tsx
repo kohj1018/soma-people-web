@@ -28,12 +28,8 @@ export default function App({ Component, pageProps }: AppProps) {
   // Flutter Bridge Function 세팅
   useEffect(() => {
     // @ts-ignore
-    window.changePage = (index: number, tapNum: number | string | null | undefined) => {  // 탭 변경 함수
-      console.log("index : ", index)
-      console.log("tapNum : ", tapNum)
-      console.log("tapNum Type : ", typeof tapNum)
+    window.changePage = (index: number, tapNum: number | null | undefined) => {  // 탭 변경 함수
       if (tapNum === 4) {
-        console.log("들어옴")
         switch (index) {
           case 0:
             router.push('/')
