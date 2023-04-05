@@ -40,3 +40,12 @@ export interface AddNotificationLogType {
   notificationType: NotificationType
   content: string
 }
+
+export interface AddAnnounceNotificationLogType {
+  sendingUserId: number
+  sendingUserOauthId: string
+  postId: number
+  boardName: string
+  notificationType: NotificationType
+  content: string
+}

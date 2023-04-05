@@ -172,7 +172,7 @@ const Profile: NextPage = () => {
               href='/etc/notice'
               className='w-full flex items-center justify-between'
             >
-              <p className='text-base font-medium text-gray-900 lg:text-lg'>공지사항</p>
+              <p className='text-base font-medium text-gray-900 lg:text-lg'>소마인 공지사항</p>
               <KeyboardArrowRight className='!w-6 !h-6 text-gray-300' />
             </Link>
             <div className='w-full flex items-center justify-between'>

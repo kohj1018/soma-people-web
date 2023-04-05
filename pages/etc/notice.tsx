@@ -1,32 +1,55 @@
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import MainContainer from '../../components/layout/MainContainer'
-import Clear from '@mui/icons-material/Clear'
 import MainArea from '../../components/layout/MainArea'
 import SEO from '../../components/SEO'
+import MobileCenterTitleHeader from '../../components/layout/mobileHeader/MobileCenterTitleHeader'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { postKeys } from '../../utils/constants/reactQueryKeyConstants'
+import { ARBITRARY_LARGEST_LAST_ID } from '../../utils/constants/systemConstants'
+import { getPostInfoListInfinitely } from '../../utils/apis/postsApi'
+import { Fragment, useEffect } from 'react'
+import { useInView } from 'react-intersection-observer'
+import PostPreview from '../../components/common/PostPreview'
+import LoadingCircular from '../../components/layout/LoadingCircular'
 
 const Notice: NextPage = () => {
-  const router = useRouter()
+  const { ref, inView } = useInView()
+  const { data: postInfoList, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    postKeys.list(1000, 1),
+    ({ pageParam = ARBITRARY_LARGEST_LAST_ID }) => getPostInfoListInfinitely(1000, pageParam, 1),
+    {
+      getNextPageParam: (lastPage) =>
+        !lastPage.isLast ? lastPage.nextLastPostId : undefined,
+      staleTime: 60000,
+      cacheTime: Infinity,
+      refetchOnWindowFocus: false
+    }
+  )
+
+  // 바닥에 닿으면 새로 불러오기
+  useEffect(() => {
+    if (inView) fetchNextPage()
+  }, [inView])
 
   return (
     <MainContainer>
-      <SEO title='공지사항' />
+      <SEO title='소마인 공지사항' />
 
-      <header className='fixed h-14 top-0 inset-x-0 px-5 py-3.5 flex items-center justify-center bg-white z-50 lg:hidden'>
-        <button
-          onClick={() => router.back()}
-          className='absolute left-5'
-        >
-          <Clear className='!w-6 !h-6 text-gray-700' />
-        </button>
-        <p className='text-base font-semibold text-gray-700'>공지사항</p>
-        <div className='absolute bottom-0 inset-x-0 h-px bg-gray-100'></div>
-      </header>
+      <MobileCenterTitleHeader title='소마인 공지사항' />
 
-      <MainArea className='mt-8 pb-7 px-5'>
-        <div className='p-4 rounded-xl border border-gray-100'>
-          <p>소마인 출시!</p>
-        </div>
+      <MainArea className='px-5 pb-8 lg:px-0'>
+        <section className='mt-4 lg:mt-8'>
+          {postInfoList?.pages.map((page, index) => (
+            <Fragment key={index}>
+              {page.postList.map((postInfo) =>
+                <PostPreview key={postInfo.postId} postInfo={postInfo} />
+              )}
+            </Fragment>
+          ))}
+        </section>
+
+        {/* 무한 스크롤 옵저버 */}
+        {isFetchingNextPage ? <LoadingCircular /> : <div ref={ref}></div>}
       </MainArea>
     </MainContainer>
   )
