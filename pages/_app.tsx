@@ -51,40 +51,42 @@ export default function App({ Component, pageProps }: AppProps) {
 
   // Flutter Bridge Function - 탭 이동 함수 세팅
   useEffect(() => {
-    // @ts-ignore
-    window.changePage = (index: number) => {  // 탭 변경 함수
-      if (appVersion === '1.0.0') {
-        switch (index) {
-          case 0:
-            router.push('/')
-            break
-          case 1:
-            router.push('/board')
-            break
-          case 2:
-            router.push('/notification')
-            break
-          case 3:
-            router.push('/profile')
-            break
-          default:
-            router.push('/')
-            break
-        }
-      } else {
-        switch (index) {
-          case 0:
-            router.push('/')
-            break
-          case 1:
-            router.push('/board')
-            break
-          case 2:
-            router.push('/profile')
-            break
-          default:
-            router.push('/')
-            break
+    if (!!appVersion) {
+      // @ts-ignore
+      window.changePage = (index: number) => {  // 탭 변경 함수
+        if (appVersion === '1.0.0') {
+          switch (index) {
+            case 0:
+              router.push('/')
+              break
+            case 1:
+              router.push('/board')
+              break
+            case 2:
+              router.push('/notification')
+              break
+            case 3:
+              router.push('/profile')
+              break
+            default:
+              router.push('/')
+              break
+          }
+        } else {
+          switch (index) {
+            case 0:
+              router.push('/')
+              break
+            case 1:
+              router.push('/board')
+              break
+            case 2:
+              router.push('/profile')
+              break
+            default:
+              router.push('/')
+              break
+          }
         }
       }
     }
