@@ -29,7 +29,10 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // @ts-ignore
     window.changePage = (index: number, tapNum: number | null | undefined) => {  // 탭 변경 함수
+      console.log("index : ", index)
+      console.log("tapNum : ", tapNum)
       if (tapNum === 4) {
+        console.log("들어옴")
         switch (index) {
           case 0:
             router.push('/')
