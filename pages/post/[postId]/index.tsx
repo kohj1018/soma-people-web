@@ -22,6 +22,8 @@ import { useSnackbarOpenStore } from '../../../stores/stores'
 import { useUserHiddenPostIdListStore } from '../../../stores/localStorageStore/stores'
 import SEO from '../../../components/SEO'
 import Verified from '@mui/icons-material/Verified'
+import { replaceLinkInContentToUrl } from '../../../utils/functions/replaceUrlWithLink'
+import ContentThatTurnsLinksIntoURLs from '../../../utils/functions/ContentThatTurnsLinksIntoURLs'
 const CommentListSection = dynamic(() => import('../../../components/common/CommentListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const PostDetail: NextPage = () => {
@@ -147,7 +149,11 @@ const PostDetail: NextPage = () => {
                   </button>
                   <h1 className='text-lg font-medium text-gray-900 lg:text-xl'>{postInfo.title}</h1>
                 </article>
-                <p className='mt-5 text-base font-normal text-gray-700 whitespace-pre-wrap lg:mt-6 lg:text-lg'>{postInfo.content}</p>
+                {/* TODO: dangerouslySetInnerHTML가 보안상의 위험이 있어 아래를 안쓰는데 나중에 더 고민해서 바꿔봐도 좋을 듯 */}
+                {/*<p className='mt-5 text-base font-normal text-gray-700 whitespace-pre-wrap lg:mt-6 lg:text-lg' dangerouslySetInnerHTML={{ __html: replaceLinkInContentToUrl(postInfo.content) }} />*/}
+                <p className='mt-5 text-base font-normal text-gray-700 whitespace-pre-wrap break-all lg:mt-6 lg:text-lg' >
+                  <ContentThatTurnsLinksIntoURLs content={postInfo.content} />
+                </p>
                 <footer className='mt-8 w-full flex items-center justify-between'>
                   <div className='flex items-center space-x-1.5'>
                     <RemoveRedEye className='!w-4 !h-4 text-gray-200 lg:!w-5 lg:!h-5' />

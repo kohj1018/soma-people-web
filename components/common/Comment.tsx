@@ -11,6 +11,7 @@ import useCommentMutation from '../../hooks/useCommentMutation'
 import { MuiDialog } from './MuiDialog'
 import Verified from '@mui/icons-material/Verified'
 import SubdirectoryArrowRight from '@mui/icons-material/SubdirectoryArrowRight'
+import ContentThatTurnsLinksIntoURLs from '../../utils/functions/ContentThatTurnsLinksIntoURLs'
 
 interface Props {
   router: NextRouter
@@ -95,7 +96,9 @@ function Comment({ router, commentInfo, userInfo, setCommentInfoToUpdate, showCe
       </header>
 
       {/* 댓글 본문 */}
-      <main className='text-base font-normal text-gray-700 whitespace-pre-wrap lg:text-lg'>{commentInfo.content}</main>
+      <main className='text-base font-normal text-gray-700 whitespace-pre-wrap break-all lg:text-lg'>
+        <ContentThatTurnsLinksIntoURLs content={commentInfo.content} />
+      </main>
 
       {/* 댓글 푸터 */}
       <footer className='flex items-center justify-between text-sm lg:text-base'>
