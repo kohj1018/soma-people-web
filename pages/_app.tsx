@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { registerFirebaseToken } from '../utils/apis/usersApi'
 import { useFirebaseTokenStore } from '../stores/localStorageStore/stores'
 import dayjs from 'dayjs'
+import { useAppVersionStore } from '../stores/stores'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,27 +23,45 @@ const queryClient = new QueryClient({
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const { setFirebaseToken, updatedAt, setUpdatedAt, isSubscribed } = useFirebaseTokenStore()
+  const { appVersion, setAppVersion } = useAppVersionStore()
 
   // Flutter Bridge Function 세팅
   useEffect(() => {
     // @ts-ignore
     window.changePage = (index: number) => {  // 탭 변경 함수
-      switch (index) {
-        case 0:
-          router.push('/')
-          break
-        case 1:
-          router.push('/board')
-          break
-        case 2:
-          router.push('/notification')
-          break
-        case 3:
-          router.push('/profile')
-          break
-        default:
-          router.push('/')
-          break
+      if (appVersion === '1.0.0') {
+        switch (index) {
+          case 0:
+            router.push('/')
+            break
+          case 1:
+            router.push('/board')
+            break
+          case 2:
+            router.push('/notification')
+            break
+          case 3:
+            router.push('/profile')
+            break
+          default:
+            router.push('/')
+            break
+        }
+      } else {
+        switch (index) {
+          case 0:
+            router.push('/')
+            break
+          case 1:
+            router.push('/board')
+            break
+          case 2:
+            router.push('/profile')
+            break
+          default:
+            router.push('/')
+            break
+        }
       }
     }
 
@@ -60,6 +79,11 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         }
       }
+    }
+
+    // @ts-ignore
+    window.getAppVersion = (appVersion: string) => {
+      setAppVersion(appVersion)
     }
   }, [])
   

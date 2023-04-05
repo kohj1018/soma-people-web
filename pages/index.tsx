@@ -60,7 +60,7 @@ const Home: NextPage = () => {
   // 게시판으로 이동하기 함수
   const moveToBoardPage = (boardId: number) => {
     setMainPageScrollY(window.scrollY)  // 클릭할 때 window.scrollY 저장
-    router.push('/board')
+    router.push(`/board/${boardId}`)
   }
 
   if (isLoading) return <LoadingCircular />
@@ -188,7 +188,7 @@ const Home: NextPage = () => {
                 onClick={() => moveToBoardPage(1)}
                 className='w-full flex items-center justify-between'
               >
-                <p className='text-lg font-semibold text-gray-900 lg:text-xl'>자유게시판 🧑‍💻</p>
+                <p className='text-lg font-semibold text-gray-900 lg:text-xl'>자유게시판 ‍💻</p>
                 <KeyboardArrowRight className='w-6 h-6 text-gray-300' />
               </button>
               <section>

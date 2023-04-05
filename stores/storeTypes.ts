@@ -19,3 +19,8 @@ export type TraineeBoardIdOfLastViewedState = {
   traineeBoardIdOfLastViewed: number
   setTraineeBoardIdOfLastViewed: (traineeBoardIdOfLastViewed: number) => void
 }
+
+export type AppVersionStoreState = {
+  appVersion: string | null
+  setAppVersion: (appVersion: string) => void
+}

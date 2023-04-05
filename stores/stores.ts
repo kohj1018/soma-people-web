@@ -1,4 +1,5 @@
 import {
+  AppVersionStoreState,
   BoardIdOfLastViewedState,
   IsFirstLoadState,
   SnackbarOpenState, TraineeBoardIdOfLastViewedState,
@@ -39,5 +40,13 @@ export const useTraineeBoardIdOfLastViewedStore = create<TraineeBoardIdOfLastVie
   traineeBoardIdOfLastViewed: parseInt('1' + THIS_YEAR_CARDINAL_NUM),
   setTraineeBoardIdOfLastViewed: (traineeBoardIdOfLastViewed: number) => {
     set((state) => ({ ...state, traineeBoardIdOfLastViewed: traineeBoardIdOfLastViewed }))
+  }
+}))
+
+/** App Version 관리하는 Store */
+export const useAppVersionStore = create<AppVersionStoreState>((set) => ({
+  appVersion: null,
+  setAppVersion: (appVersion: string) => {
+    set((state) => ({ ...state, appVersion: appVersion }))
   }
 }))
