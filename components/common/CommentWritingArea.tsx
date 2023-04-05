@@ -25,7 +25,7 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const { setMessage } = useSnackbarOpenStore()
 
-  const { mutate: commentSaveMutate, isSuccess } = useMutation(
+  const { mutate: commentSaveMutate } = useMutation(
     async (addCommentRequest: AddCommentType) => {
       try {
         addComment(addCommentRequest)
@@ -41,6 +41,15 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
           })
       } catch (error) {
         setMessage('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+      }
+    },
+    {
+      onSuccess: () => {
+        setIsDisabled(true)
+        setTimeout( // 1초 뒤에 disable 해제
+          () => setIsDisabled(false),
+          1000
+        )
       }
     }
   )
@@ -65,17 +74,6 @@ function CommentWritingArea({ postId, userInfo, commentInfoToUpdate, setCommentI
       commentWritingInputRef.current.style.height = commentWritingInputRef.current.scrollHeight + 'px'
     }
   }, [commentContent])
-
-  // 댓글 작성 시 버튼 일시적 disable 처리 TODO: 현재는 첫번째 댓글 작성만 disable 하는데 성공. 추후 수정 필요
-  useEffect(() => {
-    if (isSuccess) {
-      setIsDisabled(true)
-      setTimeout( // 1초 뒤에 disable 해제
-        () => setIsDisabled(false),
-        1000
-      )
-    }
-  }, [isSuccess])
 
 
   // 댓글 작성 함수
