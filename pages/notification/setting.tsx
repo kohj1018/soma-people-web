@@ -34,7 +34,7 @@ const NotificationSetting: NextPage = () => {
           })
       } else {
         setIsSubscribed(true)
-        setMessage('푸시 알림을 수신합니다.')
+        setMessage('푸시 알림을 수신합니다. 수신이 안되는 경우 앱 설정에서 소마인 앱 알림이 켜져있는지 확인해주세요.')
       }
     }
   }
