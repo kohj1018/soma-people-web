@@ -23,37 +23,13 @@ const queryClient = new QueryClient({
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const { setFirebaseToken, updatedAt, setUpdatedAt, isSubscribed } = useFirebaseTokenStore()
-  const { appVersion, setAppVersion } = useAppVersionStore()
+  const { setAppVersion } = useAppVersionStore()
 
   // Flutter Bridge Function 세팅
   useEffect(() => {
     // @ts-ignore
-    window.registerFirebaseToken = (userId: number, firebaseToken: string | null) => {  // firebaseToken 등록함수
-      if (isSubscribed) { // 푸시 알림 수신한 경우만 토큰 등록
-        if (!!userId && !!firebaseToken) {
-          const today: string = dayjs().format('YYYY-MM-DD')
-          if (updatedAt === null || dayjs(updatedAt).isBefore(today, 'month')) { // 등록한 적 없거나, 마지막 수정 날짜보다 한 달 이상 됐을 때 업데이트
-            registerFirebaseToken(userId, { firebaseToken: firebaseToken })
-              .then(() => {
-                setFirebaseToken(firebaseToken)
-                setUpdatedAt(today)
-              })
-          }
-        }
-      }
-    }
-
-    // @ts-ignore
-    window.getAppVersion = (appVersion: string) => {
-      setAppVersion(appVersion)
-    }
-  }, [])
-
-  // Flutter Bridge Function - 탭 이동 함수 세팅
-  useEffect(() => {
-    // @ts-ignore
-    window.changePage = (index: number) => {  // 탭 변경 함수
-      if (appVersion === '1.0.0') {
+    window.changePage = (index: number, tapNum: number | null | undefined) => {  // 탭 변경 함수
+      if (tapNum === 4) {
         switch (index) {
           case 0:
             router.push('/')
@@ -88,7 +64,28 @@ export default function App({ Component, pageProps }: AppProps) {
         }
       }
     }
-  }, [appVersion])
+
+    // @ts-ignore
+    window.registerFirebaseToken = (userId: number, firebaseToken: string | null) => {  // firebaseToken 등록함수
+      if (isSubscribed) { // 푸시 알림 수신한 경우만 토큰 등록
+        if (!!userId && !!firebaseToken) {
+          const today: string = dayjs().format('YYYY-MM-DD')
+          if (updatedAt === null || dayjs(updatedAt).isBefore(today, 'month')) { // 등록한 적 없거나, 마지막 수정 날짜보다 한 달 이상 됐을 때 업데이트
+            registerFirebaseToken(userId, { firebaseToken: firebaseToken })
+              .then(() => {
+                setFirebaseToken(firebaseToken)
+                setUpdatedAt(today)
+              })
+          }
+        }
+      }
+    }
+
+    // @ts-ignore
+    window.getAppVersion = (appVersion: string) => {
+      setAppVersion(appVersion)
+    }
+  }, [])
   
   return (
     <>
