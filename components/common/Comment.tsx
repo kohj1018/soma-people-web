@@ -12,6 +12,8 @@ import { MuiDialog } from './MuiDialog'
 import Verified from '@mui/icons-material/Verified'
 import SubdirectoryArrowRight from '@mui/icons-material/SubdirectoryArrowRight'
 import ContentThatTurnsLinksIntoURLs from '../../utils/functions/ContentThatTurnsLinksIntoURLs'
+import { isNotEmptyArray } from '../../utils/functions/isNotEmptyArray'
+import { useSnackbarOpenStore } from '../../stores/stores'
 
 interface Props {
   router: NextRouter
@@ -27,6 +29,7 @@ function Comment({ router, commentInfo, userInfo, setCommentInfoToUpdate, showCe
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [isDeleteCommentDialogOpen, setIsDeleteCommentDialogOpen] = useState<boolean>(false)
   const { handleCommentMutation: deleteComment } = useCommentMutation(commentInfo, userInfo?.userId, true)  // 댓글 삭제 함수
+  const { setMessage } = useSnackbarOpenStore()
 
   // 프로필 확인 페이지로 이동 함수
   const viewOtherUserProfile = () => {
@@ -35,9 +38,19 @@ function Comment({ router, commentInfo, userInfo, setCommentInfoToUpdate, showCe
     }
   }
 
+  // 대댓글 작성하기 (input 포커싱 이동)
   const writeReply = () => {
     setRefId(commentInfo.commentId)
     commentWritingInputRef.current?.focus()
+  }
+
+  // 댓글 삭제 핸들러
+  const handleDeletingComment = () => {
+    if (isNotEmptyArray(commentInfo.replyList)) {
+      setMessage('답글이 달린 댓글은 삭제할 수 없습니다.')
+    } else {
+      deleteComment()
+    }
   }
 
   return (
@@ -122,7 +135,7 @@ function Comment({ router, commentInfo, userInfo, setCommentInfoToUpdate, showCe
         dialogTitle='댓글 삭제'
         dialogContent='정말로 삭제하시겠습니까?'
         executedBtnName='예'
-        funcToBeExecuted={deleteComment}
+        funcToBeExecuted={handleDeletingComment}
       />
     </article>
   )
