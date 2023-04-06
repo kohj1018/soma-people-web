@@ -24,7 +24,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }))
 
 interface Props {
-  userType: UserType | null
+  userType: UserType | ''
   setUserType: (userType: UserType) => void
 }
 

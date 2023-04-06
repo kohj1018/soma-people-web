@@ -3,17 +3,17 @@ import GoogleProvider from 'next-auth/providers/google'
 import AppleProvider from 'next-auth/providers/apple'
 
 export default NextAuth({
-  cookies: {  // Apple의 callBackUrl 버그 해결을 위해 추가
-    callbackUrl: {
-      name: `__Secure-next-auth.callback-url`,
-      options: {
-        httpOnly: true,
-        sameSite: "None",
-        path: "/",
-        secure: true,
-      },
-    },
-  },
+  // cookies: {  // Apple의 callBackUrl 버그 해결을 위해 추가
+  //   callbackUrl: {
+  //     name: `__Secure-next-auth.callback-url`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "None",
+  //       path: "/",
+  //       secure: true,
+  //     },
+  //   },
+  // },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
