@@ -36,7 +36,7 @@ interface CustomNotificationLogProps {
 function CustomNotificationLog({ notificationLogInfo, bgColor }: CustomNotificationLogProps) {
   return (
     <Link
-      href={`/post/${notificationLogInfo.postId}`}
+      href={notificationLogInfo.postId === 0 ? '/notification' : `/post/${notificationLogInfo.postId}`} // postId 0이면 이동 X (0인건 개별적 공지사항)
       className={'block px-6 py-4 rounded-lg ' + bgColor}
       onClick={() => checkNotificationLog(notificationLogInfo.notificationLogId)}
     >
@@ -59,7 +59,7 @@ interface BoardNameTagProps {
 function BoardNameTag({ boardName, notificationType }: BoardNameTagProps) {
   if (notificationType === '공지사항') {
     return (
-      <div className='inline-block px-1.5 py-1 flex items-center space-x-1 rounded bg-red-100'>
+      <div className='inline-flex px-1.5 py-1 items-center space-x-1 rounded bg-red-100'>
         <Campaign className='!w-4 !h-4 text-red-500' />
         <p className='text-sm font-semibold text-red-500 lg:text-base'>{boardName}</p>
       </div>
