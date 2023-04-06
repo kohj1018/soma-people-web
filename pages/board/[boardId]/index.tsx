@@ -70,8 +70,7 @@ const BoardDetail: NextPage = () => {
 
   // 현재 보고 있는 게시판이 연수생 관련 게시판인지 확인하기
   useEffect(() => {
-    if (!!userInfo && boardId === TRAINEE_BOARD_ID &&
-      userInfo.userType === '연수생' && userInfo.cardinalNum === THIS_YEAR_CARDINAL_NUM) {
+    if (boardId === TRAINEE_BOARD_ID) {
       setIsTraineeBoard(true)
     } else {
       setIsTraineeBoard(false)
