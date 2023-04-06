@@ -60,8 +60,9 @@ const SignUp = () => {
   // 이름 입력 제한 함수
   const nameInputRestriction = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < e.target.maxLength + 1) {
-      // if (!(/[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g).test(e.target.value)) {  // 한글만 입력되게 제한
-      if (!(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi).test(e.target.value)) {  // 특수문자 제한
+      // TODO: 앱스토어 출시 시 변경
+      if (!(/[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g).test(e.target.value)) {  // 한글만 입력되게 제한
+      // if (!(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi).test(e.target.value)) {  // 특수문자 제한
         setName(e.target.value)
       }
     }
@@ -109,13 +110,15 @@ const SignUp = () => {
           <section className='space-y-5'>
             <div>
               <article className='w-full flex items-center justify-between space-x-4'>
-                <p className='text-base font-medium text-gray-900 whitespace-nowrap'>닉네임</p>
-                {/*<p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>*/}
+                {/* TODO: 앱스토어 출시 시 변경 */}
+                {/*<p className='text-base font-medium text-gray-900 whitespace-nowrap'>닉네임</p>*/}
+                <p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>
                 <input
                   type='text'
                   className='w-full px-4 py-2 bg-gray-50 rounded text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
-                  placeholder='사용할 닉네임을 입력해주세요.'
-                  // placeholder='실명을 입력해주세요.'
+                  // TODO: 앱스토어 출시 시 변경
+                  // placeholder='사용할 닉네임을 입력해주세요.'
+                  placeholder='실명을 입력해주세요.'
                   maxLength={20}
                   value={name}
                   onChange={(e) => nameInputRestriction(e)} // 모바일 환경에서는 maxLength 속성이 먹히지 않기 때문에 js 추가
