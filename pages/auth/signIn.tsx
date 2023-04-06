@@ -70,7 +70,7 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
                 return (
                   <button
                     key={provider.name}
-                    className='w-full h-10 px-10 flex items-center justify-center space-x-2 rounded bg-white'
+                    className='w-full h-10 px-10 flex items-center justify-center space-x-2 rounded bg-white lg:w-96'
                     onClick={() => goToSignIn(provider.id)}
                   >
                     <Image src={googleLogo} className='w-[1.125rem] h-[1.125rem]' alt='구글 로고' />
@@ -81,7 +81,7 @@ const SignIn: NextPage<Props> = ({ providers }: Props) => {
                 return (
                   <button
                     key={provider.name}
-                    className='w-full h-10 px-10 flex items-center justify-center rounded bg-white'
+                    className='w-full h-10 px-10 flex items-center justify-center rounded bg-white lg:w-96'
                     onClick={() => goToSignIn(provider.id)}
                   >
                     <Image src={appleLogo} className='w-10 h-10' alt='애플 로고' />
