@@ -109,7 +109,7 @@ const SignUp = () => {
           <section className='space-y-5'>
             <div>
               <article className='w-full flex items-center justify-between space-x-4'>
-                <p className='w-[2.625rem] text-base font-medium text-gray-900 whitespace-nowrap'>닉네임</p>
+                <p className='text-base font-medium text-gray-900 whitespace-nowrap'>닉네임</p>
                 {/*<p className='text-base font-medium text-gray-900 whitespace-nowrap'>이름</p>*/}
                 <input
                   type='text'
