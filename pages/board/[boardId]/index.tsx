@@ -75,7 +75,7 @@ const BoardDetail: NextPage = () => {
     } else {
       setIsTraineeBoard(false)
     }
-  }, [userInfo, boardId])
+  }, [boardId])
 
   return (
     <MainContainer>
