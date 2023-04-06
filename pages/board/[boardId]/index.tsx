@@ -46,10 +46,12 @@ const BoardDetail: NextPage = () => {
 
       // 기수가 다른 경우
       if (boardId.toString().length === 3) {  // 수료생 or 연수생 게시판인 경우
-        if (userInfo.userType !== '연수생'
-          || userInfo.cardinalNum?.toString() !== boardId.toString().slice(-2)) { // 기수가 해당 게시판 기수와 같지 않다면
-          setMessage(`해당 게시판은 ${boardId.toString().slice(-2)}기만 이용할 수 있습니다.`)
-          router.back()
+        if (userInfo.userType !== '사무국' && userInfo.userType !== '관리자') { // 사무국 또는 관리자는 접근 가능
+          if (userInfo.userType !== '연수생'
+            || userInfo.cardinalNum?.toString() !== boardId.toString().slice(-2)) { // 기수가 해당 게시판 기수와 같지 않다면
+            setMessage(`해당 게시판은 ${boardId.toString().slice(-2)}기만 이용할 수 있습니다.`)
+            router.back()
+          }
         }
       }
     }
