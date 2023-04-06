@@ -24,7 +24,7 @@ const SignUp = () => {
 
   const { mutate: addUserMutate, isSuccess } = useMutation(async () => {
     try {
-      if (userType && oauthId) {
+      if (!!userType && !!oauthId) {
         addUser({
           name: name,
           userType: userType,
