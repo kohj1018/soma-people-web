@@ -125,8 +125,8 @@ const Home: NextPage = () => {
               />
               <p className='text-sm font-medium text-slate-400'>소마공지</p>
             </a>
-            <a
-              href='https://www.swmaestro.org/sw/main/contents.do?menuNo=200033'
+            <Link
+              href='/etc/schedule'
               className='flex flex-col items-center space-y-1'
             >
               <Image
@@ -136,7 +136,7 @@ const Home: NextPage = () => {
                 priority
               />
               <p className='text-sm font-medium text-slate-400'>소마일정</p>
-            </a>
+            </Link>
             <a
               href='https://www.swmaestro.org/sw/main/main.do'
               className='flex flex-col items-center space-y-1'

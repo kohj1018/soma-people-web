@@ -45,7 +45,7 @@ function useUserInfo(): UserInfoType | null {
   // 로그인 안한 경우 Redirect
   useEffect(() => {
     if (!userId || !oauthId) {
-      if (!router.pathname.startsWith('/auth')) { // TODO : signUp 페이지에서 이 훅이 불러와지는 알 수 없는 버그로 임시 조건문 달아둠. 추후 해결
+      if (router.pathname !== '/auth/signUp') { // TODO : signUp 페이지에서 이 훅이 불러와지는 알 수 없는 버그로 임시 조건문 달아둠. 추후 해결
         setMessage('로그인 후 이용해주세요!')
         router.replace('/auth/signIn')
       }
