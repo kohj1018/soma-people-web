@@ -22,14 +22,13 @@ import { useSnackbarOpenStore } from '../../../stores/stores'
 import { useUserHiddenPostIdListStore } from '../../../stores/localStorageStore/stores'
 import SEO from '../../../components/SEO'
 import Verified from '@mui/icons-material/Verified'
-import { replaceLinkInContentToUrl } from '../../../utils/functions/replaceUrlWithLink'
 import ContentThatTurnsLinksIntoURLs from '../../../utils/functions/ContentThatTurnsLinksIntoURLs'
 const CommentListSection = dynamic(() => import('../../../components/common/CommentListSection'), {loading: () => <LoadingCircular />, ssr: false})
 
 const PostDetail: NextPage = () => {
   const router = useRouter()
   const userInfo = useUserInfo()
-  const postId: number = parseInt(router.query.postId as string)  // TODO : 새로고침하면 postId 안불러와지는 버그 해결해야 함
+  const postId: number = parseInt(router.query.postId as string)
   const { setMessage } = useSnackbarOpenStore()
   const { data: postInfo } = useQuery<PostInfoType>(
     postKeys.detail(postId),
@@ -82,6 +81,8 @@ const PostDetail: NextPage = () => {
     setMessage('게시글 숨기기를 완료했습니다.')
     router.back()
   }
+
+  if (!postId) return <LoadingCircular />
 
   return (
     <MainContainer>
