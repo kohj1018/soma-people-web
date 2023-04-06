@@ -18,6 +18,7 @@ export default function Document() {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta property='og:title' content='소마인' />
         <meta property='og:description' content='SW 마에스트로들을 위한 커뮤니티' />
+        <meta name="naver-site-verification" content="c0300b9716a5c834d0c4b99bffeaef70631f9047" />
       </Head>
       <body>
         <Main />
