@@ -15,6 +15,8 @@ const Admin = () => {
   const { oauthId: adminOauthId } = useSignInInfo()
   const [targetUserId, setTargetUserId] = useState<number>()
   const [targetUserInfo, setTargetUserInfo] = useState<UserInfoType | null>(null)
+  const [nameToBeUpdated, setNameToBeUpdated] = useState<string>('')
+  const [cardinalNumToBeUpdated, setCardinalNumToBeUpdated] = useState<number>()
   const [isSearchLoading, setIsSearchLoading] = useState<boolean>(false)
   const [isCertificationLoading, setIsCertificationLoading] = useState<boolean>(false)
   const { setMessage } = useSnackbarOpenStore()
@@ -53,7 +55,9 @@ const Admin = () => {
       setIsCertificationLoading(true)
       handlingUserCertification({
         adminOauthId: adminOauthId,
-        targetUserId: targetUserId
+        targetUserId: targetUserId,
+        nameToBeUpdated: nameToBeUpdated,
+        cardinalNumToBeUpdated: cardinalNumToBeUpdated ?? 0
       }).then(() => {
         setMessage('인증 처리가 완료되었습니다!')
         setTargetUserId(undefined)
@@ -135,16 +139,37 @@ const Admin = () => {
               )}
             </div>
             {!!targetUserInfo && !targetUserInfo.isCertified &&
-              <button
-                onClick={() => handleCertification(adminOauthId, targetUserId)}
-                className='mt-4 px-4 py-2 rounded-xl bg-emerald-500'
-              >
-                {!isCertificationLoading ? (
-                  <p className='text-lg font-medium text-white'>소마인 인증 처리하기</p>
-                ) : (
-                  <CircularProgress />
-                )}
-              </button>
+              <div className='mt-6 w-fit flex flex-col space-y-4'>
+                <h2 className='text-xl font-semibold text-gray-900'>정보 수정 및 인증 처리</h2>
+                <div className='p-4 inline-grid grid-cols-[100px_1fr] items-center gap-y-4 rounded-lg border border-gray-100 text-base font-medium text-gray-900'>
+                  <p className='font-bold'>이름 수정</p>
+                  <input
+                    type='text'
+                    className='w-72 px-4 py-2 bg-gray-50 rounded border border-gray-100 text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
+                    placeholder='이름 입력 (수정할 필요 없으면 입력 X)'
+                    value={nameToBeUpdated}
+                    onChange={(e) => setNameToBeUpdated(e.target.value)}
+                  />
+                  <p className='font-bold'>기수 수정</p>
+                  <input
+                    type='number'
+                    className='w-72 px-4 py-2 bg-gray-50 rounded border border-gray-100 text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none'
+                    placeholder='기수 입력 (수정할 필요 없으면 입력 X)'
+                    value={cardinalNumToBeUpdated}
+                    onChange={(e) => setCardinalNumToBeUpdated(parseInt(e.target.value))}
+                  />
+                </div>
+                <button
+                  onClick={() => handleCertification(adminOauthId, targetUserId)}
+                  className='px-4 py-2 rounded-xl bg-emerald-500'
+                >
+                  {!isCertificationLoading ? (
+                    <p className='text-lg font-medium text-white'>소마인 인증 처리하기</p>
+                  ) : (
+                    <CircularProgress />
+                  )}
+                </button>
+              </div>
             }
           </>
         }

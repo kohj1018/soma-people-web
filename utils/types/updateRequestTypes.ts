@@ -24,4 +24,6 @@ export interface UpdateFirebaseToken {
 export interface UpdateUserCertificationType {
   adminOauthId: string
   targetUserId: number
+  nameToBeUpdated: string
+  cardinalNumToBeUpdated: number
 }
