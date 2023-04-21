@@ -20,3 +20,8 @@ export interface UpdateCommentType {
 export interface UpdateFirebaseToken {
   firebaseToken: string
 }
+
+export interface UpdateUserCertificationType {
+  adminOauthId: string
+  targetUserId: number
+}

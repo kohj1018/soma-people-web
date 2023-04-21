@@ -1,6 +1,6 @@
 import { UserInfoType } from '../types/responseTypes'
 import { ec2 } from './apiConfig'
-import { UpdateFirebaseToken, UpdateUserType } from '../types/updateRequestTypes'
+import { UpdateFirebaseToken, UpdateUserCertificationType, UpdateUserType } from '../types/updateRequestTypes'
 import { AddUserType } from '../types/addRequestTypes'
 
 /** userId로 유저 정보 불러오기 */
@@ -23,3 +23,6 @@ export const updateUserByOAuthId = (oauthId: string, updateUserRequest: UpdateUs
 
 /** firebaseToken 등록/수정 */
 export const registerFirebaseToken = (userId: number, firebaseToken: UpdateFirebaseToken) => ec2.put(`/users/firebaseToken/${userId}`, firebaseToken)
+
+/** 유저 인증 처리하기 (관리자 인증 OauthId 있어야 함) */
+export const handlingUserCertification = (updateUserCertificationRequest: UpdateUserCertificationType) => ec2.put('/users/certification', updateUserCertificationRequest)
