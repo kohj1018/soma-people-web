@@ -150,16 +150,16 @@ const Home: NextPage = () => {
               <p className='text-sm font-medium text-slate-400'>소마홈피</p>
             </a>
             <button
-              onClick={() => moveToBoardPage(114)}
+              onClick={() => moveToBoardPage(4)}  // 4: 준비생 게시판 1oo: 연수생(수료생)게시판 (ex. 115 : 15기 연수생 게시판)
               className='flex flex-col items-center space-y-1'
             >
               <Image
                 src={peopleIcon}
                 className='h-9'
-                alt='14기 연수생 아이콘'
+                alt='15기 준비생 아이콘'
                 priority
               />
-              <p className='text-sm font-medium text-slate-400'>14기 연수생</p>
+              <p className='text-sm font-medium text-slate-400'>15기 준비생</p>
             </button>
           </article>
 
